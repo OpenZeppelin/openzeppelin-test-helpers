@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "truffle test"
   },
   "repository": {
     "type": "git",
@@ -29,7 +29,12 @@
   "dependencies": {},
   "devDependencies": {
     "eslint": "^5.9.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-mocha-no-only": "^1.0.0",
-    "eslint-plugin-promise": "^4.0.1"
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "truffle": "^4.1.14"
   }
 }
