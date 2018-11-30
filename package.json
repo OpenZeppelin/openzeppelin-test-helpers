@@ -1,0 +1,28 @@
+{
+  "name": "openzeppelin-test-helpers",
+  "version": "0.1.0",
+  "description": "JavaScript testing helpers for Ethereum smart contract development.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OpenZeppelin/openzeppelin-test-helpers.git"
+  },
+  "keywords": [
+    "ethereum",
+    "smart",
+    "contracts",
+    "test",
+    "solidity",
+    "zeppelin",
+    "openzeppelin"
+  ],
+  "author": "OpenZeppelin Community <maintainers@openzeppelin.org>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/OpenZeppelin/openzeppelin-test-helpers/issues"
+  },
+  "homepage": "https://github.com/OpenZeppelin/openzeppelin-test-helpers#readme"
+}
