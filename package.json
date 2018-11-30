@@ -26,7 +26,10 @@
     "url": "https://github.com/OpenZeppelin/openzeppelin-test-helpers/issues"
   },
   "homepage": "https://github.com/OpenZeppelin/openzeppelin-test-helpers#readme",
-  "dependencies": {},
+  "dependencies": {
+    "chai": "^4.2.0",
+    "chai-bignumber": "^3.0.0"
+  },
   "devDependencies": {
     "eslint": "^5.9.0",
     "eslint-config-standard": "^12.0.0",
