@@ -4,6 +4,7 @@
   "description": "JavaScript testing helpers for Ethereum smart contract development.",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,5 +25,11 @@
   "bugs": {
     "url": "https://github.com/OpenZeppelin/openzeppelin-test-helpers/issues"
   },
-  "homepage": "https://github.com/OpenZeppelin/openzeppelin-test-helpers#readme"
+  "homepage": "https://github.com/OpenZeppelin/openzeppelin-test-helpers#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^5.9.0",
+    "eslint-plugin-mocha-no-only": "^1.0.0",
+    "eslint-plugin-promise": "^4.0.1"
+  }
 }
