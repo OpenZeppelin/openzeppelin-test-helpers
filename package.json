@@ -28,7 +28,9 @@
   "homepage": "https://github.com/OpenZeppelin/openzeppelin-test-helpers#readme",
   "dependencies": {
     "chai": "^4.2.0",
-    "chai-bignumber": "^3.0.0"
+    "chai-bignumber": "^3.0.0",
+    "pify": "^4.0.1",
+    "web3": "^0.20.7"
   },
   "devDependencies": {
     "eslint": "^5.9.0",
