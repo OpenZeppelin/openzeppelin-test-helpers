@@ -31,7 +31,8 @@
     "chai-bignumber": "^3.0.0",
     "ethjs-abi": "^0.2.1",
     "pify": "^4.0.1",
-    "web3": "^0.20.7"
+    "web3": "^0.20.7",
+    "web3-utils": "^1.0.0-beta.36"
   },
   "devDependencies": {
     "eslint": "^5.9.0",
