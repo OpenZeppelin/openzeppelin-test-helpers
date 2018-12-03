@@ -29,6 +29,7 @@
   "dependencies": {
     "chai": "^4.2.0",
     "chai-bignumber": "^3.0.0",
+    "ethjs-abi": "^0.2.1",
     "pify": "^4.0.1",
     "web3": "^0.20.7"
   },
