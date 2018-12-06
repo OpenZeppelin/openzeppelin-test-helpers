@@ -20,6 +20,4 @@ function makeInterfaceId (interfaces = []) {
   return `0x${interfaceIdBuffer.toString('hex')}`;
 }
 
-module.exports = {
-  makeInterfaceId,
-};
+module.exports = makeInterfaceId;

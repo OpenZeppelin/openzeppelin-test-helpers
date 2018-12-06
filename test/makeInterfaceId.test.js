@@ -1,4 +1,4 @@
-const { makeInterfaceId } = require('../src/makeInterfaceId');
+const makeInterfaceId = require('../src/makeInterfaceId');
 
 const OwnableInterfaceId = artifacts.require('OwnableInterfaceId');
 
