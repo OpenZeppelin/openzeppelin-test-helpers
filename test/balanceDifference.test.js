@@ -1,4 +1,4 @@
-const { balanceDifference } = require('../src/balanceDifference');
+const balanceDifference = require('../src/balanceDifference');
 const send = require('../src/send');
 const { ether } = require('../src/ether');
 
