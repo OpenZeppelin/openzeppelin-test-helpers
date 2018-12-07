@@ -12,13 +12,17 @@ cache:
 jobs:
   fast_finish: true
   include:
-    - stage: tests
+    - stage: Unit tests
       name: "Linter"
       script: npm run lint
 
-    - stage: tests
+    - stage: Unit tests
       name: "Unit tests"
       script: npm run test
+
+    - stage: Integration tests
+      name: "Truffle 4.x"
+      script: cd test/integration/simple-project-truffle-4.x && npm install && npm test
 
 notifications:
   slack:
