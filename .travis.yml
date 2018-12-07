@@ -22,7 +22,7 @@ jobs:
 
     - stage: Integration tests
       name: "Truffle 4.x"
-      script: cd test/integration/simple-project-truffle-4.x && npm install && npm test
+      script: cd test-integration/simple-project-truffle-4.x && npm install && npm test
 
 notifications:
   slack:
