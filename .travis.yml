@@ -24,6 +24,10 @@ jobs:
       name: "Truffle 4.x"
       script: cd test-integration/simple-project-truffle-4.x && ./test.sh
 
+    - stage: Integration tests
+      name: "Truffle 5.x"
+      script: cd test-integration/simple-project-truffle-5.x && ./test.sh
+
 notifications:
   slack:
     rooms:
