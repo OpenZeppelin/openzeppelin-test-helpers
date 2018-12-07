@@ -1,4 +1,4 @@
-const { BigNumber, should } = require('setup');
+const { BigNumber, should } = require('./src/setup');
 
 module.exports = {
   balanceDifference: require('./src/balanceDifference'),
