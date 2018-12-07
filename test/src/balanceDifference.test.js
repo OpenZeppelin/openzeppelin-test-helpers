@@ -1,6 +1,6 @@
-const balanceDifference = require('../src/balanceDifference');
-const send = require('../src/send');
-const ether = require('../src/ether');
+const balanceDifference = require('../../src/balanceDifference');
+const send = require('../../src/send');
+const ether = require('../../src/ether');
 
 const BigNumber = web3.BigNumber;
 require('chai')

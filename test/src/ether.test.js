@@ -1,4 +1,4 @@
-const ether = require('../src/ether');
+const ether = require('../../src/ether');
 
 const BigNumber = web3.BigNumber;
 require('chai')

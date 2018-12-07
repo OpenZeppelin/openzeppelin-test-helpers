@@ -1,5 +1,5 @@
-const expectEvent = require('../src/expectEvent');
-const shouldFail = require('../src/shouldFail');
+const expectEvent = require('../../src/expectEvent');
+const shouldFail = require('../../src/shouldFail');
 
 const EventEmitter = artifacts.require('EventEmitter');
 const IndirectEventEmitter = artifacts.require('IndirectEventEmitter');

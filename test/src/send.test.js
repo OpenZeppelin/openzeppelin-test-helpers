@@ -1,8 +1,8 @@
-const send = require('../src/send');
-const shouldFail = require('../src/shouldFail');
-const expectEvent = require('../src/expectEvent');
-const ether = require('../src/ether');
-const { ethGetBalance } = require('../src/web3');
+const send = require('../../src/send');
+const shouldFail = require('../../src/shouldFail');
+const expectEvent = require('../../src/expectEvent');
+const ether = require('../../src/ether');
+const { ethGetBalance } = require('../../src/web3');
 
 const Acknowledger = artifacts.require('Acknowledger');
 

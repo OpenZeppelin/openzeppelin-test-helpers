@@ -1,4 +1,4 @@
-const shouldFail = require('../src/shouldFail');
+const shouldFail = require('../../src/shouldFail');
 
 const BigNumber = web3.BigNumber;
 const should = require('chai')

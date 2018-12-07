@@ -1,5 +1,5 @@
-const time = require('../src/time');
-const shouldFail = require('../src/shouldFail');
+const time = require('../../src/time');
+const shouldFail = require('../../src/shouldFail');
 
 const BigNumber = web3.BigNumber;
 require('chai')
