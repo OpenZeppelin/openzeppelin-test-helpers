@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "truffle test"
+    "test": "truffle test",
+    "test-integration": "./test-integration/run-all.sh"
   },
   "repository": {
     "type": "git",
