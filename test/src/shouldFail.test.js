@@ -1,9 +1,5 @@
+const { should } = require('../../src/setup');
 const shouldFail = require('../../src/shouldFail');
-
-const BigNumber = web3.BigNumber;
-const should = require('chai')
-  .use(require('chai-bignumber')(BigNumber))
-  .should();
 
 const Failer = artifacts.require('Failer');
 

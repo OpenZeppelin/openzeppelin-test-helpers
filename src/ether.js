@@ -1,7 +1,7 @@
-const { BigNumber } = require('./setup');
+const { BN } = require('./setup');
 
 function ether (n) {
-  return new BigNumber(web3.toWei(n, 'ether'));
+  return new BN(web3.utils.toWei(n, 'ether'));
 }
 
 module.exports = ether;

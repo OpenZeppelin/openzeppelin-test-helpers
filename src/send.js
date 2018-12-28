@@ -1,5 +1,4 @@
 const ethjsABI = require('ethjs-abi');
-const { ethSendTransaction } = require('./web3');
 
 function findMethod (abi, name, args) {
   for (let i = 0; i < abi.length; i++) {
