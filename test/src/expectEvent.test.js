@@ -1,13 +1,9 @@
+const { BN, should } = require('../../src/setup');
 const expectEvent = require('../../src/expectEvent');
 const shouldFail = require('../../src/shouldFail');
 
 const EventEmitter = artifacts.require('EventEmitter');
 const IndirectEventEmitter = artifacts.require('IndirectEventEmitter');
-
-const BigNumber = web3.BigNumber;
-const should = require('chai')
-  .use(require('chai-bignumber')(BigNumber))
-  .should();
 
 describe('expectEvent', function () {
   beforeEach(async function () {
@@ -26,9 +22,15 @@ describe('expectEvent', function () {
 
   describe('inConstructor', function () {
     context('short uint value', function () {
-      it('accepts emitted events with correct number', async function () {
+      it('accepts emitted events with correct BN', async function () {
         await expectEvent.inConstruction(this.emitter, 'ShortUint',
-          { value: this.constructionValues.uint }
+          { value: new BN(this.constructionValues.uint) }
+        );
+      });
+
+      it('throws if a correct JavaScript number is passed', async function () {
+        await shouldFail(
+          expectEvent.inConstruction(this.emitter, 'ShortUint', { value: this.constructionValues.uint })
         );
       });
 
@@ -86,12 +88,12 @@ describe('expectEvent', function () {
           ({ logs: this.logs } = await this.emitter.emitShortUint(this.value));
         });
 
-        it('accepts emitted events with correct JavaScript number', function () {
-          expectEvent.inLogs(this.logs, 'ShortUint', { value: this.value });
+        it('accepts emitted events with correct BN', function () {
+          expectEvent.inLogs(this.logs, 'ShortUint', { value: new BN(this.value) });
         });
 
-        it('accepts emitted events with correct BigNumber', function () {
-          expectEvent.inLogs(this.logs, 'ShortUint', { value: new BigNumber(this.value) });
+        it('throws if an emitted event with correct JavaScript number is requested', function () {
+          should.Throw(() => expectEvent.inLogs(this.logs, 'ShortUint', { value: this.value }));
         });
 
         it('throws if an unemitted event is requested', function () {
@@ -109,12 +111,12 @@ describe('expectEvent', function () {
           ({ logs: this.logs } = await this.emitter.emitShortInt(this.value));
         });
 
-        it('accepts emitted events with correct JavaScript number', function () {
-          expectEvent.inLogs(this.logs, 'ShortInt', { value: this.value });
+        it('accepts emitted events with correct BN', function () {
+          expectEvent.inLogs(this.logs, 'ShortInt', { value: new BN(this.value) });
         });
 
-        it('accepts emitted events with correct BigNumber', function () {
-          expectEvent.inLogs(this.logs, 'ShortInt', { value: new BigNumber(this.value) });
+        it('throws if an emitted event with correct JavaScript number is requested', function () {
+          should.Throw(() => expectEvent.inLogs(this.logs, 'ShortInt', { value: this.value }));
         });
 
         it('throws if an unemitted event is requested', function () {
@@ -128,11 +130,11 @@ describe('expectEvent', function () {
 
       context('long uint value', function () {
         beforeEach(async function () {
-          this.bigNumValue = new BigNumber('123456789012345678901234567890');
+          this.bigNumValue = new BN('123456789012345678901234567890');
           ({ logs: this.logs } = await this.emitter.emitLongUint(this.bigNumValue));
         });
 
-        it('accepts emitted events with correct BigNumber', function () {
+        it('accepts emitted events with correct BN', function () {
           expectEvent.inLogs(this.logs, 'LongUint', { value: this.bigNumValue });
         });
 
@@ -147,11 +149,11 @@ describe('expectEvent', function () {
 
       context('long int value', function () {
         beforeEach(async function () {
-          this.bigNumValue = new BigNumber('-123456789012345678901234567890');
+          this.bigNumValue = new BN('-123456789012345678901234567890');
           ({ logs: this.logs } = await this.emitter.emitLongInt(this.bigNumValue));
         });
 
-        it('accepts emitted events with correct BigNumber', function () {
+        it('accepts emitted events with correct BN', function () {
           expectEvent.inLogs(this.logs, 'LongInt', { value: this.bigNumValue });
         });
 
@@ -166,7 +168,7 @@ describe('expectEvent', function () {
 
       context('address value', function () {
         beforeEach(async function () {
-          this.value = '0x811412068e9fbf25dc300a29e5e316f7122b282c';
+          this.value = '0x811412068E9Fbf25dc300a29E5E316f7122b282c';
           ({ logs: this.logs } = await this.emitter.emitAddress(this.value));
         });
 
@@ -226,7 +228,7 @@ describe('expectEvent', function () {
 
     describe('with multiple arguments', function () {
       beforeEach(async function () {
-        this.uintValue = new BigNumber('123456789012345678901234567890');
+        this.uintValue = new BN('123456789012345678901234567890');
         this.booleanValue = true;
         this.stringValue = 'OpenZeppelin';
         ({ logs: this.logs } =
@@ -268,7 +270,7 @@ describe('expectEvent', function () {
       });
 
       it('accepts all emitted events with correct values', function () {
-        expectEvent.inLogs(this.logs, 'LongUint', { value: this.uintValue });
+        expectEvent.inLogs(this.logs, 'LongUint', { value: new BN(this.uintValue) });
         expectEvent.inLogs(this.logs, 'Boolean', { value: this.booleanValue });
       });
 
