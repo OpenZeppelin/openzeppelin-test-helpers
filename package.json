@@ -29,7 +29,7 @@
   "homepage": "https://github.com/OpenZeppelin/openzeppelin-test-helpers#readme",
   "dependencies": {
     "chai": "^4.2.0",
-    "chai-bignumber": "^3.0.0",
+    "chai-bn": "0.1.0-alpha.1",
     "ethjs-abi": "^0.2.1",
     "pify": "^4.0.1",
     "truffle": "^5.0.0",

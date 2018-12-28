@@ -3,7 +3,7 @@ const chai = require('chai');
 const BN = web3.utils.BN;
 
 const should = chai
-  .use(require('chai-bignumber')(BN))
+  .use(require('chai-bn')(BN))
   .should();
 
 module.exports = {
