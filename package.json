@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "truffle test",
+    "test": "./scripts/test.sh --network ganache",
     "test-integration": "./test-integration/run-all.sh"
   },
   "repository": {
@@ -40,6 +40,7 @@
     "eslint-plugin-mocha-no-only": "^1.1.0",
     "eslint-plugin-node": "^8.0.0",
     "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0"
+    "eslint-plugin-standard": "^4.0.0",
+    "ganache-cli": "6.1.8"
   }
 }
