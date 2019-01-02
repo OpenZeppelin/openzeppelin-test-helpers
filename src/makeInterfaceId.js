@@ -1,10 +1,8 @@
-const { soliditySha3 } = require('web3-utils');
-
 const INTERFACE_ID_LENGTH = 4;
 
 function makeInterfaceId (interfaces = []) {
   const interfaceIdBuffer = interfaces
-    .map(methodSignature => soliditySha3(methodSignature)) // keccak256
+    .map(methodSignature => web3.utils.soliditySha3(methodSignature)) // keccak256
     .map(h =>
       Buffer
         .from(h.substring(2), 'hex')

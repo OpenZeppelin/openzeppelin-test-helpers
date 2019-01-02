@@ -1,7 +1,9 @@
+const { BN } = require('./setup');
+
 async function balanceDifference (account, promiseFunc) {
-  const balanceBefore = web3.eth.getBalance(account);
+  const balanceBefore = new BN(await web3.eth.getBalance(account));
   await promiseFunc();
-  const balanceAfter = web3.eth.getBalance(account);
+  const balanceAfter = new BN(await web3.eth.getBalance(account));
   return balanceAfter.sub(balanceBefore);
 }
 

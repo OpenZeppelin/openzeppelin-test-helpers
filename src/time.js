@@ -1,8 +1,8 @@
-const { ethGetBlock } = require('./web3');
+const { BN } = require('./setup');
 const { promisify } = require('util');
 
 function advanceBlock () {
-  return promisify(web3.currentProvider.sendAsync)({
+  return promisify(web3.currentProvider.send)({
     jsonrpc: '2.0',
     method: 'evm_mine',
   });
@@ -10,15 +10,20 @@ function advanceBlock () {
 
 // Returns the time of the last mined block in seconds
 async function latest () {
-  const block = await ethGetBlock('latest');
+  const block = await web3.eth.getBlock('latest');
   return block.timestamp;
+}
+
+async function latestBlock () {
+  const block = await web3.eth.getBlock('latest');
+  return new BN(block.number);
 }
 
 // Increases ganache time by the passed duration in seconds
 async function increase (duration) {
   if (duration < 0) throw Error(`Cannot increase time by a negative amount (${duration})`);
 
-  await promisify(web3.currentProvider.sendAsync)({
+  await promisify(web3.currentProvider.send)({
     jsonrpc: '2.0',
     method: 'evm_increaseTime',
     params: [duration],
@@ -54,6 +59,7 @@ const duration = {
 module.exports = {
   advanceBlock,
   latest,
+  latestBlock,
   increase,
   increaseTo,
   duration,

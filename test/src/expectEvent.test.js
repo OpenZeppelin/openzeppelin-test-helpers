@@ -309,8 +309,8 @@ describe('expectEvent', function () {
           this.secondEmitter = await IndirectEventEmitter.new();
 
           this.value = 'OpenZeppelin';
-          const receipt = await this.emitter.emitStringAndEmitIndirectly(this.value, this.secondEmitter.address);
-          this.txHash = receipt.tx;
+          const { receipt } = await this.emitter.emitStringAndEmitIndirectly(this.value, this.secondEmitter.address);
+          this.txHash = receipt.transactionHash;
         });
 
         context('with directly called contract', function () {

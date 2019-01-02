@@ -1,10 +1,7 @@
+const { BN } = require('../../src/setup');
+
 const time = require('../../src/time');
 const shouldFail = require('../../src/shouldFail');
-
-const BigNumber = web3.BigNumber;
-require('chai')
-  .use(require('chai-bignumber')(BigNumber))
-  .should();
 
 describe('time', function () {
   const TOLERANCE_SECONDS = 1;
@@ -37,9 +34,15 @@ describe('time', function () {
 
   describe('advanceBlock', function () {
     it('increases the block number by one', async function () {
-      const startingBlock = web3.eth.blockNumber;
+      const startingBlock = await time.latestBlock();
       await time.advanceBlock();
-      web3.eth.blockNumber.should.be.bignumber.equal(startingBlock + 1);
+      (await time.latestBlock()).should.be.bignumber.equal(startingBlock.add(new BN(1)));
+    });
+  });
+
+  describe('latestBlock', function () {
+    it('returns a BN with the current block number', async function () {
+      (await time.latestBlock()).should.be.bignumber.equal(new BN(await web3.eth.getBlockNumber()));
     });
   });
 

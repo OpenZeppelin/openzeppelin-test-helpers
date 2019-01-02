@@ -9,14 +9,14 @@ function findMethod (abi, name, args) {
   }
 }
 
-async function transaction (target, name, argsTypes, argsValues, opts) {
+async function transaction (target, from, name, argsTypes, argsValues, opts) {
   const abiMethod = findMethod(target.abi, name, argsTypes);
   const encodedData = ethjsABI.encodeMethod(abiMethod, argsValues);
-  return target.sendTransaction(Object.assign({ data: encodedData }, opts));
+  return web3.eth.sendTransaction({ data: encodedData, to: target.address, from, ...opts });
 }
 
 function ether (from, to, value) {
-  return ethSendTransaction({ from, to, value, gasPrice: 0 });
+  return web3.eth.sendTransaction({ from, to, value, gasPrice: 0 });
 }
 
 module.exports = {
