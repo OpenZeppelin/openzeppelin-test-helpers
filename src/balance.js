@@ -7,4 +7,6 @@ async function balanceDifference (account, promiseFunc) {
   return balanceAfter.sub(balanceBefore);
 }
 
-module.exports = balanceDifference;
+module.exports = {
+  difference: balanceDifference,
+};
