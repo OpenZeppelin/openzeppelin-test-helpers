@@ -2,7 +2,11 @@
   "name": "openzeppelin-test-helpers",
   "version": "0.1.0-beta.1",
   "description": "JavaScript testing helpers for Ethereum smart contract development.",
-  "main": "index.js",
+  "main": "openzeppelin-test-helpers.js",
+  "files": [
+    "src",
+    "openzeppelin-test-helpers.js"
+  ],
   "scripts": {
     "lint": "eslint .",
     "test": "./scripts/test.sh --network ganache",
