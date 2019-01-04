@@ -11,7 +11,7 @@ function advanceBlock () {
 // Returns the time of the last mined block in seconds
 async function latest () {
   const block = await web3.eth.getBlock('latest');
-  return block.timestamp;
+  return new BN(block.timestamp);
 }
 
 async function latestBlock () {
@@ -21,12 +21,16 @@ async function latestBlock () {
 
 // Increases ganache time by the passed duration in seconds
 async function increase (duration) {
-  if (duration < 0) throw Error(`Cannot increase time by a negative amount (${duration})`);
+  if (!BN.isBN(duration)) {
+    duration = new BN(duration);
+  }
+
+  if (duration.isNeg()) throw Error(`Cannot increase time by a negative amount (${duration})`);
 
   await promisify(web3.currentProvider.send)({
     jsonrpc: '2.0',
     method: 'evm_increaseTime',
-    params: [duration],
+    params: [duration.toNumber()],
   });
 
   await advanceBlock();
@@ -40,20 +44,24 @@ async function increase (duration) {
  * @param target time in seconds
  */
 async function increaseTo (target) {
+  if (!BN.isBN(target)) {
+    target = new BN(target);
+  }
+
   const now = (await latest());
 
-  if (target < now) throw Error(`Cannot increase current time (${now}) to a moment in the past (${target})`);
-  const diff = target - now;
+  if (target.lt(now)) throw Error(`Cannot increase current time (${now}) to a moment in the past (${target})`);
+  const diff = target.sub(now);
   return increase(diff);
 }
 
 const duration = {
-  seconds: function (val) { return val; },
-  minutes: function (val) { return val * this.seconds(60); },
-  hours: function (val) { return val * this.minutes(60); },
-  days: function (val) { return val * this.hours(24); },
-  weeks: function (val) { return val * this.days(7); },
-  years: function (val) { return val * this.days(365); },
+  seconds: function (val) { return new BN(val); },
+  minutes: function (val) { return new BN(val).mul(this.seconds('60')); },
+  hours:   function (val) { return new BN(val).mul(this.minutes('60')); },
+  days:    function (val) { return new BN(val).mul(this.hours('24')); },
+  weeks:   function (val) { return new BN(val).mul(this.days('7')); },
+  years:   function (val) { return new BN(val).mul(this.days('365')); },
 };
 
 module.exports = {
