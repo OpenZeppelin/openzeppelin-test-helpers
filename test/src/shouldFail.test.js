@@ -61,11 +61,11 @@ describe('shouldFail', function () {
         await assertFailure(shouldFail.reverting.withMessage(this.failer.dontFail()));
       });
 
-       it('accepts a revert with an expected reason', async function () {
+      it('accepts a revert with an expected reason', async function () {
         await shouldFail.reverting.withMessage(this.failer.failWithRevertReason(), 'Doomed to fail');
       });
 
-       it('accepts require() revert with an expected reason', async function () {
+      it('accepts require() revert with an expected reason', async function () {
         await shouldFail.reverting.withMessage(this.failer.failRequirementWithReason(), 'Unsatisfied');
       });
     });
