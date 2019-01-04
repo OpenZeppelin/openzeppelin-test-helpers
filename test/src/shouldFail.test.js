@@ -26,6 +26,10 @@ describe('shouldFail', function () {
       await shouldFail(this.failer.failWithRevert());
     });
 
+    it('accepts a require() revert', async function () {
+      await shouldFail(this.failer.failRequirement());
+    });
+
     it('accepts a throw', async function () {
       await shouldFail(this.failer.failWithThrow());
     });
@@ -50,6 +54,20 @@ describe('shouldFail', function () {
 
     it('rejects an outOfGas', async function () {
       await assertFailure(shouldFail.reverting(this.failer.failWithOutOfGas({ gas: 2000000 })));
+    });
+
+    describe('reverting.withMessage', function () {
+      it('rejects if no failure occurs', async function () {
+        await assertFailure(shouldFail.reverting.withMessage(this.failer.dontFail()));
+      });
+
+       it('accepts a revert with an expected reason', async function () {
+        await shouldFail.reverting.withMessage(this.failer.failWithRevertReason(), 'Doomed to fail');
+      });
+
+       it('accepts require() revert with an expected reason', async function () {
+        await shouldFail.reverting.withMessage(this.failer.failRequirementWithReason(), 'Unsatisfied');
+      });
     });
   });
 
