@@ -58,10 +58,10 @@ async function increaseTo (target) {
 const duration = {
   seconds: function (val) { return new BN(val); },
   minutes: function (val) { return new BN(val).mul(this.seconds('60')); },
-  hours:   function (val) { return new BN(val).mul(this.minutes('60')); },
-  days:    function (val) { return new BN(val).mul(this.hours('24')); },
-  weeks:   function (val) { return new BN(val).mul(this.days('7')); },
-  years:   function (val) { return new BN(val).mul(this.days('365')); },
+  hours: function (val) { return new BN(val).mul(this.minutes('60')); },
+  days: function (val) { return new BN(val).mul(this.hours('24')); },
+  weeks: function (val) { return new BN(val).mul(this.days('7')); },
+  years: function (val) { return new BN(val).mul(this.days('365')); },
 };
 
 module.exports = {
