@@ -21,10 +21,6 @@ jobs:
       script: npm run test
 
     - stage: Integration tests
-      name: "Truffle 4.x"
-      script: ./test-integration/simple-project-truffle-4.x/run.sh
-
-    - stage: Integration tests
       name: "Truffle 5.x"
       script: ./test-integration/simple-project-truffle-5.x/run.sh
 
