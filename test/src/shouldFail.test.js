@@ -48,6 +48,10 @@ describe('shouldFail', function () {
       await shouldFail.reverting(this.failer.failWithRevert());
     });
 
+    it('accepts a require() revert', async function () {
+      await shouldFail.reverting(this.failer.failRequirement());
+    });
+
     it('rejects a throw', async function () {
       await assertFailure(shouldFail.reverting(this.failer.failWithThrow()));
     });
@@ -65,8 +69,16 @@ describe('shouldFail', function () {
         await shouldFail.reverting.withMessage(this.failer.failWithRevertReason(), 'Doomed to fail');
       });
 
+      it('rejects a revert with an unexpected reason', async function () {
+        await assertFailure(shouldFail.reverting.withMessage(this.failer.failWithRevertReason(), 'Wrong reason'));
+      });
+
       it('accepts require() revert with an expected reason', async function () {
         await shouldFail.reverting.withMessage(this.failer.failRequirementWithReason(), 'Unsatisfied');
+      });
+
+      it('rejects a require() revert with an unexpected reason', async function () {
+        await assertFailure(shouldFail.reverting.withMessage(this.failer.failRequirementWithReason(), 'Wrong reason'));
       });
     });
   });

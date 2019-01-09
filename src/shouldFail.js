@@ -32,8 +32,9 @@ async function shouldFail (promise) {
 
 async function withMessage (promise, message) {
   // Find out if current version of ganache-core supports revert reason i.e >= 2.2.0.
-  const web3Version = await web3.eth.getNodeInfo();
-  const matches = /TestRPC\/v([0-9.]+)\/ethereum-js/.exec(web3Version);
+  // https://github.com/trufflesuite/ganache-core/releases/tag/v2.2.0
+  const nodeInfo = await web3.eth.getNodeInfo();
+  const matches = /TestRPC\/v([0-9.]+)\/ethereum-js/.exec(nodeInfo);
   if (1 in matches && semver.satisfies(matches[1], '>=2.2.0')) {
     return shouldFailWithMessage(promise, message);
   } else {
