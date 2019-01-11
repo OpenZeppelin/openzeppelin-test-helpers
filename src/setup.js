@@ -8,5 +8,6 @@ const should = chai
 
 module.exports = {
   BN,
+  expect: chai.expect,
   should,
 };

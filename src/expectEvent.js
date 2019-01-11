@@ -1,4 +1,4 @@
-const { BN, should } = require('./setup');
+const { BN, expect, should } = require('./setup');
 
 function inLogs (logs, eventName, eventArgs = {}) {
   const event = logs.find(function (e) {
@@ -24,17 +24,19 @@ async function inTransaction (txHash, emitter, eventName, eventArgs = {}) {
 }
 
 function contains (args, key, value) {
-  if (isBN(args[key])) {
-    args[key].should.be.bignumber.equal(value);
+  (key in args).should.equal(true, `Unknown event argument '${key}'`);
+
+  if (value === null) {
+    expect(args[key]).to.equal(null);
+  } else if (isBN(args[key])) {
+    expect(args[key]).to.be.bignumber.equal(value);
   } else {
-    args[key].should.be.equal(value);
+    expect(args[key]).to.be.equal(value);
   }
 }
 
 function isBN (object) {
-  return BN.isBN(object) ||
-    object instanceof BN ||
-    (object.constructor && object.constructor.name === 'BN');
+  return BN.isBN(object) || object instanceof BN;
 }
 
 module.exports = {

@@ -96,6 +96,10 @@ describe('expectEvent', function () {
           should.Throw(() => expectEvent.inLogs(this.logs, 'ShortUint', { value: this.value }));
         });
 
+        it('throws if an emitted event with correct BN and incorrect name is requested', function () {
+          should.Throw(() => expectEvent.inLogs(this.logs, 'ShortUint', { number: new BN(this.value) }));
+        });
+
         it('throws if an unemitted event is requested', function () {
           should.Throw(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.value }));
         });
@@ -222,6 +226,46 @@ describe('expectEvent', function () {
 
         it('throws if an incorrect value is passed', function () {
           should.Throw(() => expectEvent.inLogs(this.logs, 'String', { value: 'ClosedZeppelin' }));
+        });
+      });
+
+      context('bytes value', function () {
+        context('with non-null value', function () {
+          beforeEach(async function () {
+            this.value = '0x12345678';
+            ({ logs: this.logs } = await this.emitter.emitBytes(this.value));
+          });
+
+          it('accepts emitted events with correct bytes', function () {
+            expectEvent.inLogs(this.logs, 'Bytes', { value: this.value });
+          });
+
+          it('throws if an unemitted event is requested', function () {
+            should.Throw(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.value }));
+          });
+
+          it('throws if an incorrect value is passed', function () {
+            should.Throw(() => expectEvent.inLogs(this.logs, 'Bytes', { value: '0x123456' }));
+          });
+        });
+
+        context('with null value', function () {
+          beforeEach(async function () {
+            this.value = '0x';
+            ({ logs: this.logs } = await this.emitter.emitBytes(this.value));
+          });
+
+          it('accepts emitted events with correct bytes', function () {
+            expectEvent.inLogs(this.logs, 'Bytes', { value: null });
+          });
+
+          it('throws if an unemitted event is requested', function () {
+            should.Throw(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: null }));
+          });
+
+          it('throws if an incorrect value is passed', function () {
+            should.Throw(() => expectEvent.inLogs(this.logs, 'Bytes', { value: '0x123456' }));
+          });
         });
       });
     });

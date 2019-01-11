@@ -12,6 +12,7 @@ contract EventEmitter {
     event Boolean(bool value);
     event String(string value);
     event LongUintBooleanString(uint256 uintValue, bool booleanValue, string stringValue);
+    event Bytes(bytes value);
 
     constructor (uint8 uintValue, bool booleanValue, string stringValue) public {
         emit ShortUint(uintValue);
@@ -49,6 +50,10 @@ contract EventEmitter {
 
     function emitString(string value) public {
         emit String(value);
+    }
+
+    function emitBytes(bytes memory value) public {
+        emit Bytes(value);
     }
 
     function emitLongUintBooleanString(uint256 uintValue, bool booleanValue, string stringValue) public {
