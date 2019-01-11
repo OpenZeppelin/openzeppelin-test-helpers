@@ -46,6 +46,8 @@ This documentation is a work in progress: if in doubt, head over to the [tests d
 
 All returned numbers are of type [BN](https://github.com/indutny/bn.js).
 
+---
+
 ### balance
 #### async balance.current (account)
 Returns the current Ether balance of an account.
@@ -59,11 +61,17 @@ Returns the change in the Ether balance of an account caused by executing `promi
 ).should.be.bignumber.equal(ether('1'));
 ```
 
+---
+
 ### BN
 A [bn.js](https://github.com/indutny/bn.js) object. Use `new BN(number)` to create `BN` instances.
 
+---
+
 ### ether
 Converts a value in Ether to wei.
+
+---
 
 ### expect
 A chai [expect](https://www.chaijs.com/api/bdd/) instance, containing the `bignumber` property (via [chai-bn](https://github.com/ZeppelinSolutions/chai-bn)).
@@ -71,6 +79,8 @@ A chai [expect](https://www.chaijs.com/api/bdd/) instance, containing the `bignu
 ```javascript
 expect(new BN('2')).to.be.bignumber.equal('2');
 ```
+
+---
 
 ### expectEvent
 #### inLogs (logs, eventName, eventArgs = {})
@@ -86,9 +96,13 @@ await expectEvent.inConstruction(contract, 'Created', { value: 5 });
 
 #### async inTransaction (txHash, emitter, eventName, eventArgs = {})
 Same as `inLogs`, but for events emitted in an arbitrary transaction (of hash `txHash`), by an arbitrary contract (`emitter`), even it it was indirectly called (i.e. if it was called another smart contract and not an externally owned account).
+---
+
 
 ### makeInterfaceId (interfaces = [])
 Calculates the [EIP 165](https://eips.ethereum.org/EIPS/eip-165) interface ID of a contract, given a series of function signatures.
+
+---
 
 ### send
 #### async send.ether (from, to, value)
@@ -97,8 +111,12 @@ Sends `value` Ether from `from` to `to`.
 #### async function send.transaction (target, name, argsTypes, argsValues, opts = {})
 Sends a transaction to contract `target`, calling method `name` with `argValues`, which are of type `argTypes` (as per the method's signature).
 
+---
+
 ### should
 A chai [should](https://www.chaijs.com/api/bdd/) instance, containing the `bignumber` property (via [chai-bn](https://github.com/ZeppelinSolutions/chai-bn)).
+
+---
 
 ### shouldFail
 Collection of assertions for failures (similar to [chai's `throw`](https://www.chaijs.com/api/bdd/#method_throw)). `shouldFail` will accept any exception type, but more specific functions exist and their usage is encouraged.
@@ -111,6 +129,8 @@ Only accepts failures due to a failed `assert` (which executes an invalid opcode
 
 #### async shouldFail.outOfGas (promise)
 Only accepts failures due to the transaction running out of gas.
+
+---
 
 ### time
 #### async time.advanceBlock()
