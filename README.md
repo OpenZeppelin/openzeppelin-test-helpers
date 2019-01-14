@@ -162,7 +162,7 @@ contract('Owned', ([owner, other]) => {
   ...
 ```
 
-Use this helper to specify expected error message, when you're testing a function that can revert for multiple reasons.
+Use this helper to specify the expected error message, when you're testing a function that can revert for multiple reasons.
 
 #### async shouldFail.throwing (promise)
 Only accepts failures due to a failed `assert` (which executes an invalid opcode).
