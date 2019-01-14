@@ -96,6 +96,7 @@ await expectEvent.inConstruction(contract, 'Created', { value: 5 });
 
 #### async inTransaction (txHash, emitter, eventName, eventArgs = {})
 Same as `inLogs`, but for events emitted in an arbitrary transaction (of hash `txHash`), by an arbitrary contract (`emitter`), even it it was indirectly called (i.e. if it was called another smart contract and not an externally owned account).
+
 ---
 
 
