@@ -19,7 +19,7 @@ const { BN, constants, expectEvent, shouldFail } = require('openzeppelin-test-he
 const ERC20 = artifacts.require('ERC20');
 
 contract('ERC20', ([sender, receiver]) => {
-  beforeEaach(async function () {
+  beforeEach(async function () {
     this.erc20 = ERC20.new();
     this.value = new BN(1);
   });
@@ -124,6 +124,45 @@ Collection of assertions for failures (similar to [chai's `throw`](https://www.c
 
 #### async shouldFail.reverting (promise)
 Only accepts failures caused due to an EVM revert (e.g. a failed `require`).
+
+#### async shouldFail.reverting.withMessage (promise, message)
+Like `shouldFail.reverting`, this helper only accepts failures caused due to an EVM revert (e.g. a failed `require`). Furthermore, it checks whether revert reason string includes passed `message`. For example:
+
+```solidity
+contract Owned {
+    address private _owner;
+
+    constructor () {
+        _owner = msg.sender;
+    }
+
+    function doOwnerOperation() public view {
+        require(msg.sender == _owner, "Unauthorized");
+        ....
+    }
+}
+```
+
+Can be tested as follows:
+```javascript
+const { shouldFail } = require('openzeppelin-test-helpers');
+
+const Owned = artifacts.require('Owned');
+
+contract('Owned', ([owner, other]) => {
+  beforeEach(async function () {
+    this.owned = Owned.new();
+  });
+
+  describe('doOwnerOperation', function() {
+    it('Fails when called by a non-owner account', async function () {
+      await shouldFail.reverting.withMessage(this.owned.doOwnerOperation({ from: other }), "Unauthorized");
+    });
+  });
+  ...
+```
+
+Use this helper to specify the expected error message, when you're testing a function that can revert for multiple reasons.
 
 #### async shouldFail.throwing (promise)
 Only accepts failures due to a failed `assert` (which executes an invalid opcode).
