@@ -65,8 +65,7 @@ describe('time', function () {
         const end = this.start.add(time.duration.hours(1));
 
         const now = await time.latest();
-        now.should.be.bignumber.gt(end.sub(TOLERANCE_SECONDS));
-        now.should.be.bignumber.lt(end.add(TOLERANCE_SECONDS));
+        now.should.be.bignumber.closeTo(end, TOLERANCE_SECONDS);
       });
 
       it('throws with negative durations', async function () {
@@ -80,8 +79,7 @@ describe('time', function () {
         await time.increaseTo(end);
 
         const now = await time.latest();
-        now.should.be.bignumber.gt(end.sub(TOLERANCE_SECONDS));
-        now.should.be.bignumber.lt(end.add(TOLERANCE_SECONDS));
+        now.should.be.bignumber.closeTo(end, TOLERANCE_SECONDS);
       });
 
       it('throws with a time in the past', async function () {
