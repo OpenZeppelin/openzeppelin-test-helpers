@@ -33,7 +33,7 @@ contract('ERC20', ([sender, receiver]) => {
     expectEvent.inLogs(logs, 'Transfer', { from: sender, to: receiver, value: this.value });
   });
 
-  it('updates balances on succesful transfers', async function () {
+  it('updates balances on successful transfers', async function () {
     this.erc20.transfer(receiver, this.value, { from: sender });
     (await this.token.balanceOf(receiver)).should.be.bignumber.equal(this.value);
   });
@@ -95,7 +95,7 @@ await expectEvent.inConstruction(contract, 'Created', { value: 5 });
 ```
 
 #### async inTransaction (txHash, emitter, eventName, eventArgs = {})
-Same as `inLogs`, but for events emitted in an arbitrary transaction (of hash `txHash`), by an arbitrary contract (`emitter`), even it it was indirectly called (i.e. if it was called another smart contract and not an externally owned account).
+Same as `inLogs`, but for events emitted in an arbitrary transaction (of hash `txHash`), by an arbitrary contract (`emitter`), even if it was indirectly called (i.e. if it was called by another smart contract and not an externally owned account).
 
 ---
 
