@@ -40,7 +40,7 @@ async function withMessage (promise, message) {
   } else {
     // Otherwise, warn users and skip reason check.
     console.log(`Warning: shouldFail.reverting.withMessage: current version of Ganache (${matches[1]}) doesn't return\
-revert reason.`);
+ revert reason.`);
     return shouldFailWithMessage(promise);
   }
 }
