@@ -7,11 +7,12 @@ class Tracker {
   }
   async delta () {
     const current = await this.get();
-    return current.sub(this.balances[this.balances.length - 2]);
+    return current.sub(this.balances[0]);
   }
   async get () {
     const bal = new BN(await web3.eth.getBalance(this.account));
-    this.balances.push(bal);
+    const len = this.balances.push(bal);
+    if (len > 2) { this.balances.shift(); }
     return bal;
   }
 }
@@ -27,6 +28,6 @@ async function balanceCurrent (account) {
 }
 
 module.exports = {
-  balanceCurrent,
-  balanceTracker,
+  current: balanceCurrent,
+  tracker: balanceTracker,
 };

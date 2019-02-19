@@ -55,14 +55,14 @@ Helper to keep track of ether balances of a specific account
 ##### async balance.current(account)
 Returns the current balance of an account
 ```javascript
-const balance = await balanceCurrent(account)
+const balance = await balance.current(account)
 ```
 
 #### balance tracker
 ##### async balance.get
 Returns the current Ether balance of an account.
 ```javascript
-const balanceTracker = await balanceTracker(account) //instantiation
+const balanceTracker = await balance.tracker(account) //instantiation
 const accounBalance = await balanceTracker.get() //returns the current balance of account
 ```
 
@@ -70,7 +70,7 @@ const accounBalance = await balanceTracker.get() //returns the current balance o
 Returns the change in the Ether since the last check(either `get()` or `delta()`)
 
 ```javascript
-const balanceTracker = await balance(receiver)
+const balanceTracker = await balance.tracker(receiver)
 send.ether(sender, receiver, ether('10'))
 (await balanceTracker.delta()).should.be.bignumber.equal('10');
 (await balanceTracker.delta()).should.be.bignumber.equal('0');/
