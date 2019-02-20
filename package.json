@@ -32,6 +32,7 @@
   },
   "homepage": "https://github.com/OpenZeppelin/openzeppelin-test-helpers#readme",
   "dependencies": {
+    "ansi-colors": "^3.2.3",
     "chai": "^4.2.0",
     "chai-bn": "^0.1.1",
     "ethjs-abi": "^0.2.1",

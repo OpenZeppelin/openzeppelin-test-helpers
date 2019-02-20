@@ -1,0 +1,15 @@
+{
+  "name": "ganache-core-2.1.x",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "./test.sh"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "truffle": "^5.0.1",
+    "ganache-cli": "6.1.0"
+  }
+}

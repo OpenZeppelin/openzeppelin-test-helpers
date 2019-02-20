@@ -1,4 +1,5 @@
 const { should } = require('./setup');
+const colors = require('ansi-colors');
 const semver = require('semver');
 
 async function shouldFailWithMessage (promise, message) {
@@ -39,8 +40,8 @@ async function withMessage (promise, message) {
     return shouldFailWithMessage(promise, message);
   } else {
     // Otherwise, warn users and skip reason check.
-    console.log(`Warning: shouldFail.reverting.withMessage: current version of Ganache (${matches[1]}) doesn't return\
-revert reason.`);
+    console.log(`${colors.white.bgBlack('openzeppelin-test-helpers')} ${colors.black.bgYellow('WARN')} \
+shouldFail.reverting.withMessage: current version of Ganache (${matches[1]}) doesn't return revert reason.`);
     return shouldFailWithMessage(promise);
   }
 }
