@@ -40,8 +40,8 @@ async function withMessage (promise, message) {
     return shouldFailWithMessage(promise, message);
   } else {
     // Otherwise, warn users and skip reason check.
-    console.log(`${c.white.bgBlack('openzeppelin-test-helpers')} ${c.bgYellow('WARN')} shouldFail.reverting.withMessage: \
-current version of Ganache (${matches[1]}) doesn't return revert reason.`);
+    console.log(`${c.white.bgBlack('openzeppelin-test-helpers')} ${c.bgYellow('WARN')} shouldFail.reverting.withMessage\
+: current version of Ganache (${matches[1]}) doesn't return revert reason.`);
     return shouldFailWithMessage(promise);
   }
 }
