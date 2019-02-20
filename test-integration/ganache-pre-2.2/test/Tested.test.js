@@ -5,7 +5,7 @@ const Tested = artifacts.require('Tested');
 contract('Tested', function (accounts) {
   context('shouldFail.reverting.withMessage', async function () {
     beforeEach(async function () {
-      this.contract = await Tested.new(0);
+      this.contract = await Tested.new();
     })
 
     context('with ganache-core < 2.2.0', async function () {
