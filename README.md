@@ -65,7 +65,6 @@ Returns the current Ether balance of an account.
 const balanceTracker = await balance.tracker(account) //instantiation
 const accounBalance = await balanceTracker.get() //returns the current balance of account
 ```
-
 ##### async balance.delta
 Returns the change in the Ether since the last check(either `get()` or `delta()`)
 
@@ -73,7 +72,13 @@ Returns the change in the Ether since the last check(either `get()` or `delta()`
 const balanceTracker = await balance.tracker(receiver)
 send.ether(sender, receiver, ether('10'))
 (await balanceTracker.delta()).should.be.bignumber.equal('10');
-(await balanceTracker.delta()).should.be.bignumber.equal('0');/
+(await balanceTracker.delta()).should.be.bignumber.equal('0');
+```
+Or using `get()`:
+```javascript
+const balanceTracker = await balance.tracker(account) //instantiation
+const accounBalance = await balanceTracker.get() //returns the current balance of account
+(await balanceTracker.delta()).should.be.bignumber.equal('0');
 ```
 
 ---

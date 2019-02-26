@@ -3,17 +3,17 @@ const { BN } = require('./setup');
 class Tracker {
   constructor (acc) {
     this.account = acc;
-    this.balances = [];
-  }
+    this.current = async () => new BN(await web3.eth.getBalance(this.account));
+  };
   async delta () {
-    const current = await this.get();
-    return current.sub(this.balances[0]);
+    const current = await this.current();
+    const delta = current.sub(this.prev);
+    this.prev = current;
+    return delta;
   }
   async get () {
-    const bal = new BN(await web3.eth.getBalance(this.account));
-    const len = this.balances.push(bal);
-    if (len > 2) { this.balances.shift(); }
-    return bal;
+    this.prev = await this.current();
+    return this.prev;
   }
 }
 
