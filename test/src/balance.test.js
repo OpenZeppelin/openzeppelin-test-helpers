@@ -14,7 +14,7 @@ contract('balance', function ([sender, receiver]) {
   describe('balance tracker', function () {
     it('returns current balance ', async function () {
       const tracker = await balance.tracker(receiver);
-      (await tracker.get()).should.be.bignumber.equal(await web3.eth.getBalance(sender));
+      (await tracker.get()).should.be.bignumber.equal(await web3.eth.getBalance(receiver));
     });
 
     it('get() adds a new checkpoint ', async function () {
