@@ -3,16 +3,27 @@ require('./setup');
 const ether = require('./ether');
 const send = require('./send');
 
-const { ERC1820_REGISTRY_DEPLOY_TX } = require('./data');
+const {
+  ERC1820_REGISTRY_ABI,
+  ERC1820_REGISTRY_ADDRESS,
+  ERC1820_REGISTRY_BYTECODE,
+  ERC1820_REGISTRY_DEPLOY_TX,
+} = require('./data');
+
+const contract = require('truffle-contract');
+
+const ERC1820RegistryArtifact = contract({
+  abi: ERC1820_REGISTRY_ABI,
+  unlinked_binary: ERC1820_REGISTRY_BYTECODE, /* eslint-disable-line camelcase */
+});
+ERC1820RegistryArtifact.setProvider(web3.currentProvider);
 
 async function ERC1820Registry (funder) {
   // Read https://eips.ethereum.org/EIPS/eip-1820 for more information as to how the ERC1820 registry is deployed to
   // ensure its address is the same on all chains.
 
-  const ERC1820RegistryAddress = '0x1820b744B33945482C17Dc37218C01D858EBc714';
-
-  if ((await web3.eth.getCode(ERC1820RegistryAddress)).length > '0x'.length) {
-    throw new Error(`An ERC1820 registry contract instance already exists at ${ERC1820RegistryAddress}`);
+  if ((await web3.eth.getCode(ERC1820_REGISTRY_ADDRESS)).length > '0x'.length) {
+    return ERC1820RegistryArtifact.at(ERC1820_REGISTRY_ADDRESS);
   }
 
   // 0.08 ether is needed to deploy the registry, and those funds need to be transferred to the account that will deploy
@@ -21,7 +32,7 @@ async function ERC1820Registry (funder) {
 
   await web3.eth.sendSignedTransaction(ERC1820_REGISTRY_DEPLOY_TX);
 
-  return ERC1820RegistryAddress;
+  return ERC1820RegistryArtifact.at(ERC1820_REGISTRY_ADDRESS);
 }
 
 module.exports = {

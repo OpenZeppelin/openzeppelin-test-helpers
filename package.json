@@ -36,7 +36,8 @@
     "chai": "^4.2.0",
     "chai-bn": "^0.1.1",
     "ethjs-abi": "^0.2.1",
-    "semver": "^5.6.0"
+    "semver": "^5.6.0",
+    "truffle-contract": "^4.0.8"
   },
   "devDependencies": {
     "eslint": "^5.9.0",
