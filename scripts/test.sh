@@ -35,9 +35,10 @@ start_ganache() {
   )
 
   node_modules/.bin/ganache-cli --version
-  node_modules/.bin/ganache-cli --gasLimit 0xfffffffffff "${accounts[@]}" > /dev/null &
-
+  node_modules/.bin/ganache-cli --gasLimit 0xfffffffffff --port "$ganache_port" "${accounts[@]}" > /dev/null &
   ganache_pid=$!
+
+  sleep 1
 }
 
 if ganache_running; then
