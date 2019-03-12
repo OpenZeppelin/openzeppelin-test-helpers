@@ -12,7 +12,7 @@ async function ERC1820Registry (funder) {
   const ERC1820RegistryAddress = '0x1820b744B33945482C17Dc37218C01D858EBc714';
 
   if ((await web3.eth.getCode(ERC1820RegistryAddress)).length > '0x'.length) {
-  	throw new Error(`An ERC1820 registry contract instance already exists at ${ERC1820RegistryAddress}`);
+    throw new Error(`An ERC1820 registry contract instance already exists at ${ERC1820RegistryAddress}`);
   }
 
   // 0.08 ether is needed to deploy the registry, and those funds need to be transferred to the account that will deploy
