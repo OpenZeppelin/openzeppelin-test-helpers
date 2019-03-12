@@ -4,6 +4,7 @@ module.exports = {
   balance: require('./src/balance'),
   BN,
   constants: require('./src/constants'),
+  deploy: require('./src/deploy'),
   ether: require('./src/ether'),
   expect,
   expectEvent: require('./src/expectEvent'),
