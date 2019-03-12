@@ -4,7 +4,6 @@ module.exports = {
   balance: require('./src/balance'),
   BN,
   constants: require('./src/constants'),
-  deploy: require('./src/deploy'),
   ether: require('./src/ether'),
   expect,
   expectEvent: require('./src/expectEvent'),
@@ -12,5 +11,6 @@ module.exports = {
   send: require('./src/send'),
   should,
   shouldFail: require('./src/shouldFail'),
+  singletons: require('./src/singletons'),
   time: require('./src/time'),
 };

@@ -1,12 +1,12 @@
 require('../../src/setup');
-const deploy = require('../../src/deploy');
+const singletons = require('../../src/singletons');
 const shouldFail = require('../../src/shouldFail');
 const { ERC1820_REGISTRY_BYTECODE } = require('../../src/data');
 
-contract('deploy', function ([deployer]) {
+contract('singletons', function ([funder]) {
   describe('ERC1820Registry', function () {
     before(async function () {
-      this.registry = await deploy.ERC1820Registry(deployer);
+      this.registry = await singletons.ERC1820Registry(funder);
     });
 
     it('returns the canonical registry address', async function () {
@@ -18,7 +18,7 @@ contract('deploy', function ([deployer]) {
     });
 
     it('fails to deploy a second registry', async function () {
-      await shouldFail(deploy.ERC1820Registry(deployer));
+      await shouldFail(singletons.ERC1820Registry(funder));
     });
   });
 });
