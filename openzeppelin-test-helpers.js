@@ -11,5 +11,6 @@ module.exports = {
   send: require('./src/send'),
   should,
   shouldFail: require('./src/shouldFail'),
+  singletons: require('./src/singletons'),
   time: require('./src/time'),
 };
