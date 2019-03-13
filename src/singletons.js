@@ -22,7 +22,7 @@ async function ERC1820Registry (funder) {
   // Read https://eips.ethereum.org/EIPS/eip-1820 for more information as to how the ERC1820 registry is deployed to
   // ensure its address is the same on all chains.
 
-  if ((await web3.eth.getCode(ERC1820_REGISTRY_ADDRESS)).length > '0x'.length) {
+  if ((await web3.eth.getCode(ERC1820_REGISTRY_ADDRESS)).length > '0x0'.length) {
     return ERC1820RegistryArtifact.at(ERC1820_REGISTRY_ADDRESS);
   }
 
