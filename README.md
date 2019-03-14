@@ -49,36 +49,16 @@ All returned numbers are of type [BN](https://github.com/indutny/bn.js).
 ---
 
 ### balance
-Helper to keep track of ether balances of a specific account
-
-#### balance current
-##### async balance.current(account)
-Returns the current balance of an account
-```javascript
-const balance = await balance.current(account)
-```
-
-#### balance tracker
-##### async balance.get
+#### async balance.current (account)
 Returns the current Ether balance of an account.
-```javascript
-const balanceTracker = await balance.tracker(account) //instantiation
-const accounBalance = await balanceTracker.get() //returns the current balance of account
-```
-##### async balance.delta
-Returns the change in the Ether since the last check(either `get()` or `delta()`)
+
+#### async balance.difference (account, promiseFunc)
+Returns the change in the Ether balance of an account caused by executing `promiseFunc` (which will be awaited on).
 
 ```javascript
-const balanceTracker = await balance.tracker(receiver)
-send.ether(sender, receiver, ether('10'))
-(await balanceTracker.delta()).should.be.bignumber.equal('10');
-(await balanceTracker.delta()).should.be.bignumber.equal('0');
-```
-Or using `get()`:
-```javascript
-const balanceTracker = await balance.tracker(account) //instantiation
-const accounBalance = await balanceTracker.get() //returns the current balance of account
-(await balanceTracker.delta()).should.be.bignumber.equal('0');
+(await balance.difference(receiver, () =>
+  send.ether(sender, receiver, ether('1')))
+).should.be.bignumber.equal(ether('1'));
 ```
 
 ---
