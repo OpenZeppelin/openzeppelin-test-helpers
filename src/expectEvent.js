@@ -6,7 +6,7 @@ function inLogs (logs, eventName, eventArgs = {}) {
       for (const [k, v] of Object.entries(eventArgs)) {
         try {
           contains(e.args, k, v);
-        } catch {
+        } catch (ignored) {
           return false;
         }
       }

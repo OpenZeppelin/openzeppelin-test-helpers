@@ -336,16 +336,16 @@ describe('expectEvent', function () {
       });
 
       it('accepts all emitted events of the same type', function () {
-        expectEvent.inLogs(this.logs, "LongUint", { value: new BN(this.firstUintValue) });
-        expectEvent.inLogs(this.logs, "LongUint", { value: new BN(this.secondUintValue) });
+        expectEvent.inLogs(this.logs, 'LongUint', { value: new BN(this.firstUintValue) });
+        expectEvent.inLogs(this.logs, 'LongUint', { value: new BN(this.secondUintValue) });
       });
 
       it('throws if an unemitted event is requested', function () {
-        should.Throw(() => expectEvent.inLogs(this.logs, "UnemittedEvent", { value: this.uintValue }));
+        should.Throw(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.uintValue }));
       });
 
       it('throws if incorrect values are passed', function () {
-        should.Throw(() => expectEvent.inLogs(this.logs, "LongUint", { value: 41 }));
+        should.Throw(() => expectEvent.inLogs(this.logs, 'LongUint', { value: 41 }));
         should.Throw(() => expectEvent.inLogs(this.logs, 'LongUint', { value: 23 }));
       });
     });
