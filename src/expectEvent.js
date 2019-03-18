@@ -4,7 +4,11 @@ function inLogs (logs, eventName, eventArgs = {}) {
   const event = logs.find(function (e) {
     if (e.event === eventName) {
       for (const [k, v] of Object.entries(eventArgs)) {
-        contains(e.args, k, v);
+        try {
+          contains(e.args, k, v);
+        } catch {
+          return false;
+        }
       }
       return true;
     }
