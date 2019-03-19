@@ -1,5 +1,3 @@
-require('./setup');
-
 const ether = require('./ether');
 const send = require('./send');
 

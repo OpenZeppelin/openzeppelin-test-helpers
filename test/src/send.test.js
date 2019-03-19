@@ -1,4 +1,5 @@
 const { BN } = require('../../src/setup');
+const { expect } = require('chai');
 const send = require('../../src/send');
 const shouldFail = require('../../src/shouldFail');
 const expectEvent = require('../../src/expectEvent');
@@ -19,8 +20,8 @@ contract('send', function ([sender, receiver]) {
       const finalSenderBalance = new BN(await web3.eth.getBalance(sender));
       const finalReceiverBalance = new BN(await web3.eth.getBalance(receiver));
 
-      finalSenderBalance.sub(initialSenderBalance).should.be.bignumber.equal(value.neg());
-      finalReceiverBalance.sub(initialReceiverBalance).should.be.bignumber.equal(value);
+      expect(finalSenderBalance.sub(initialSenderBalance)).to.be.bignumber.equal(value.neg());
+      expect(finalReceiverBalance.sub(initialReceiverBalance)).to.be.bignumber.equal(value);
     });
 
     it('throws if the sender balance is insufficient', async function () {

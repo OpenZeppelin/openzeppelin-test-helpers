@@ -1,4 +1,5 @@
-const { BN, should } = require('../../src/setup');
+const { BN } = require('../../src/setup');
+const { expect } = require('chai');
 const expectEvent = require('../../src/expectEvent');
 const shouldFail = require('../../src/shouldFail');
 
@@ -77,7 +78,7 @@ describe('expectEvent', function () {
       });
 
       it('throws if an unemitted event is requested', function () {
-        should.Throw(() => expectEvent.inLogs(this.logs, 'UnemittedEvent'));
+        expect(() => expectEvent.inLogs(this.logs, 'UnemittedEvent')).to.throw();
       });
     });
 
@@ -93,19 +94,19 @@ describe('expectEvent', function () {
         });
 
         it('throws if an emitted event with correct JavaScript number is requested', function () {
-          should.Throw(() => expectEvent.inLogs(this.logs, 'ShortUint', { value: this.value }));
+          expect(() => expectEvent.inLogs(this.logs, 'ShortUint', { value: this.value })).to.throw();
         });
 
         it('throws if an emitted event with correct BN and incorrect name is requested', function () {
-          should.Throw(() => expectEvent.inLogs(this.logs, 'ShortUint', { number: new BN(this.value) }));
+          expect(() => expectEvent.inLogs(this.logs, 'ShortUint', { number: new BN(this.value) })).to.throw();
         });
 
         it('throws if an unemitted event is requested', function () {
-          should.Throw(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.value }));
+          expect(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.value })).to.throw();
         });
 
         it('throws if an incorrect value is passed', function () {
-          should.Throw(() => expectEvent.inLogs(this.logs, 'ShortUint', { value: 23 }));
+          expect(() => expectEvent.inLogs(this.logs, 'ShortUint', { value: 23 })).to.throw();
         });
       });
 
@@ -120,15 +121,15 @@ describe('expectEvent', function () {
         });
 
         it('throws if an emitted event with correct JavaScript number is requested', function () {
-          should.Throw(() => expectEvent.inLogs(this.logs, 'ShortInt', { value: this.value }));
+          expect(() => expectEvent.inLogs(this.logs, 'ShortInt', { value: this.value })).to.throw();
         });
 
         it('throws if an unemitted event is requested', function () {
-          should.Throw(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.value }));
+          expect(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.value })).to.throw();
         });
 
         it('throws if an incorrect value is passed', function () {
-          should.Throw(() => expectEvent.inLogs(this.logs, 'ShortInt', { value: -23 }));
+          expect(() => expectEvent.inLogs(this.logs, 'ShortInt', { value: -23 })).to.throw();
         });
       });
 
@@ -143,11 +144,11 @@ describe('expectEvent', function () {
         });
 
         it('throws if an unemitted event is requested', function () {
-          should.Throw(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.bigNumValue }));
+          expect(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.bigNumValue })).to.throw();
         });
 
         it('throws if an incorrect value is passed', function () {
-          should.Throw(() => expectEvent.inLogs(this.logs, 'LongUint', { value: 2300 }));
+          expect(() => expectEvent.inLogs(this.logs, 'LongUint', { value: 2300 })).to.throw();
         });
       });
 
@@ -162,11 +163,11 @@ describe('expectEvent', function () {
         });
 
         it('throws if an unemitted event is requested', function () {
-          should.Throw(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.bigNumValue }));
+          expect(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.bigNumValue })).to.throw();
         });
 
         it('throws if an incorrect value is passed', function () {
-          should.Throw(() => expectEvent.inLogs(this.logs, 'LongInt', { value: -2300 }));
+          expect(() => expectEvent.inLogs(this.logs, 'LongInt', { value: -2300 })).to.throw();
         });
       });
 
@@ -181,13 +182,13 @@ describe('expectEvent', function () {
         });
 
         it('throws if an unemitted event is requested', function () {
-          should.Throw(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.value }));
+          expect(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.value })).to.throw();
         });
 
         it('throws if an incorrect value is passed', function () {
-          should.Throw(() =>
+          expect(() =>
             expectEvent.inLogs(this.logs, 'Address', { value: '0x21d04e022e0b52b5d5bcf90b7f1aabf406be002d' })
-          );
+          ).to.throw();
         });
       });
 
@@ -202,11 +203,11 @@ describe('expectEvent', function () {
         });
 
         it('throws if an unemitted event is requested', function () {
-          should.Throw(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.value }));
+          expect(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.value })).to.throw();
         });
 
         it('throws if an incorrect value is passed', function () {
-          should.Throw(() => expectEvent.inLogs(this.logs, 'Boolean', { value: false }));
+          expect(() => expectEvent.inLogs(this.logs, 'Boolean', { value: false })).to.throw();
         });
       });
 
@@ -221,11 +222,11 @@ describe('expectEvent', function () {
         });
 
         it('throws if an unemitted event is requested', function () {
-          should.Throw(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.value }));
+          expect(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.value })).to.throw();
         });
 
         it('throws if an incorrect value is passed', function () {
-          should.Throw(() => expectEvent.inLogs(this.logs, 'String', { value: 'ClosedZeppelin' }));
+          expect(() => expectEvent.inLogs(this.logs, 'String', { value: 'ClosedZeppelin' })).to.throw();
         });
       });
 
@@ -241,11 +242,11 @@ describe('expectEvent', function () {
           });
 
           it('throws if an unemitted event is requested', function () {
-            should.Throw(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.value }));
+            expect(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.value })).to.throw();
           });
 
           it('throws if an incorrect value is passed', function () {
-            should.Throw(() => expectEvent.inLogs(this.logs, 'Bytes', { value: '0x123456' }));
+            expect(() => expectEvent.inLogs(this.logs, 'Bytes', { value: '0x123456' })).to.throw();
           });
         });
 
@@ -260,11 +261,11 @@ describe('expectEvent', function () {
           });
 
           it('throws if an unemitted event is requested', function () {
-            should.Throw(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: null }));
+            expect(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: null })).to.throw();
           });
 
           it('throws if an incorrect value is passed', function () {
-            should.Throw(() => expectEvent.inLogs(this.logs, 'Bytes', { value: '0x123456' }));
+            expect(() => expectEvent.inLogs(this.logs, 'Bytes', { value: '0x123456' })).to.throw();
           });
         });
       });
@@ -286,23 +287,23 @@ describe('expectEvent', function () {
       });
 
       it('throws with correct values assigned to wrong arguments', function () {
-        should.Throw(() => expectEvent.inLogs(this.logs, 'LongUintBooleanString', {
+        expect(() => expectEvent.inLogs(this.logs, 'LongUintBooleanString', {
           uintValue: this.booleanValue, booleanValue: this.uintValue, stringValue: this.stringValue,
-        }));
+        })).to.throw();
       });
 
       it('throws when any of the values is incorrect', function () {
-        should.Throw(() => expectEvent.inLogs(this.logs, 'LongUintBooleanString', {
+        expect(() => expectEvent.inLogs(this.logs, 'LongUintBooleanString', {
           uintValue: 23, booleanValue: this.booleanValue, stringValue: this.stringValue,
-        }));
+        })).to.throw();
 
-        should.Throw(() => expectEvent.inLogs(this.logs, 'LongUintBooleanString', {
+        expect(() => expectEvent.inLogs(this.logs, 'LongUintBooleanString', {
           uintValue: this.uintValue, booleanValue: false, stringValue: this.stringValue,
-        }));
+        })).to.throw();
 
-        should.Throw(() => expectEvent.inLogs(this.logs, 'LongUintBooleanString', {
+        expect(() => expectEvent.inLogs(this.logs, 'LongUintBooleanString', {
           uintValue: this.uintValue, booleanValue: this.booleanValue, stringValue: 'ClosedZeppelin',
-        }));
+        })).to.throw();
       });
     });
 
@@ -319,12 +320,12 @@ describe('expectEvent', function () {
       });
 
       it('throws if an unemitted event is requested', function () {
-        should.Throw(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.uintValue }));
+        expect(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.uintValue })).to.throw();
       });
 
       it('throws if incorrect values are passed', function () {
-        should.Throw(() => expectEvent.inLogs(this.logs, 'LongUint', { value: 23 }));
-        should.Throw(() => expectEvent.inLogs(this.logs, 'Boolean', { value: false }));
+        expect(() => expectEvent.inLogs(this.logs, 'LongUint', { value: 23 })).to.throw();
+        expect(() => expectEvent.inLogs(this.logs, 'Boolean', { value: false })).to.throw();
       });
     });
 
@@ -341,12 +342,12 @@ describe('expectEvent', function () {
       });
 
       it('throws if an unemitted event is requested', function () {
-        should.Throw(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.uintValue }));
+        expect(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.uintValue })).to.throw();
       });
 
       it('throws if incorrect values are passed', function () {
-        should.Throw(() => expectEvent.inLogs(this.logs, 'LongUint', { value: new BN(41) }));
-        should.Throw(() => expectEvent.inLogs(this.logs, 'LongUint', { value: 24 }));
+        expect(() => expectEvent.inLogs(this.logs, 'LongUint', { value: new BN(41) })).to.throw();
+        expect(() => expectEvent.inLogs(this.logs, 'LongUint', { value: 24 })).to.throw();
       });
     });
 
@@ -363,7 +364,7 @@ describe('expectEvent', function () {
       });
 
       it('throws when passing events emitted by the indirectly called contract', function () {
-        should.Throw(() => expectEvent.inLogs(this.logs, 'IndirectString', { value: this.value }));
+        expect(() => expectEvent.inLogs(this.logs, 'IndirectString', { value: this.value })).to.throw();
       });
     });
   });

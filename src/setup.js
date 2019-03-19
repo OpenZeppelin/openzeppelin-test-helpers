@@ -1,13 +1,8 @@
 const chai = require('chai');
-
 const BN = web3.utils.BN;
 
-const should = chai
-  .use(require('chai-bn')(BN))
-  .should();
+chai.use(require('chai-bn')(BN));
 
 module.exports = {
   BN,
-  expect: chai.expect,
-  should,
 };

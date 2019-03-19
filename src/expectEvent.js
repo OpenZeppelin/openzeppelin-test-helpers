@@ -1,4 +1,5 @@
-const { BN, expect } = require('./setup');
+const { BN } = require('./setup');
+const { expect } = require('chai');
 
 function inLogs (logs, eventName, eventArgs = {}) {
   const events = logs.filter(e => e.event === eventName);
@@ -35,7 +36,7 @@ async function inTransaction (txHash, emitter, eventName, eventArgs = {}) {
 }
 
 function contains (args, key, value) {
-  (key in args).should.equal(true, `Unknown event argument '${key}'`);
+  expect(key in args).to.equal(true, `Unknown event argument '${key}'`);
 
   if (value === null) {
     expect(args[key]).to.equal(null);
