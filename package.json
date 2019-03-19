@@ -39,6 +39,7 @@
     "truffle-contract": "^4.0.8"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "eslint": "^5.9.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
