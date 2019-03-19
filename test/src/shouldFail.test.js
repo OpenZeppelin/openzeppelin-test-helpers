@@ -1,4 +1,4 @@
-const { should } = require('../../src/setup');
+const { expect } = require('chai');
 const shouldFail = require('../../src/shouldFail');
 
 const Failer = artifacts.require('Failer');
@@ -9,7 +9,7 @@ async function assertFailure (promise) {
   } catch (error) {
     return;
   }
-  should.fail();
+  expect.fail();
 }
 
 describe('shouldFail', function () {

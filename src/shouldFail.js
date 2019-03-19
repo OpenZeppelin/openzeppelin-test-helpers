@@ -1,4 +1,4 @@
-const { should } = require('./setup');
+const { expect } = require('chai');
 const colors = require('ansi-colors');
 const semver = require('semver');
 
@@ -7,12 +7,12 @@ async function shouldFailWithMessage (promise, message) {
     await promise;
   } catch (error) {
     if (message) {
-      error.message.should.include(message, `Wrong failure type, expected '${message}'`);
+      expect(error.message).to.include(message, `Wrong failure type, expected '${message}'`);
     }
     return;
   }
 
-  should.fail('Expected failure not received');
+  expect.fail('Expected failure not received');
 }
 
 async function reverting (promise) {
