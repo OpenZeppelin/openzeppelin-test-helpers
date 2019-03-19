@@ -20,7 +20,7 @@ const ERC20 = artifacts.require('ERC20');
 
 contract('ERC20', ([sender, receiver]) => {
   beforeEach(async function () {
-    this.erc20 = ERC20.new();
+    this.erc20 = await ERC20.new();
     this.value = new BN(1);
   });
 
