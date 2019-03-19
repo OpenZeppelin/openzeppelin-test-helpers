@@ -69,4 +69,9 @@ contract EventEmitter {
         emit String(value);
         emitter.emitStringIndirectly(value);
     }
+
+    function emitTwoLongUint(uint256 firstValue, uint256 secondValue) public {
+        emit LongUint(firstValue);
+        emit LongUint(secondValue);
+    }
 }

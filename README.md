@@ -14,28 +14,35 @@ npm install --save-dev openzeppelin-test-helpers
 ## Usage
 
 ```javascript
+// Import all required modules from openzeppelin-test-helpers
 const { BN, constants, expectEvent, shouldFail } = require('openzeppelin-test-helpers');
+
+// Import preferred chai flavor: both expect and should are supported
+const { expect } = require('chai');
 
 const ERC20 = artifacts.require('ERC20');
 
 contract('ERC20', ([sender, receiver]) => {
   beforeEach(async function () {
-    this.erc20 = ERC20.new();
-    this.value = new BN(1);
+    this.erc20 = await ERC20.new();
+    this.value = new BN(1); // The bundled BN library is the same one truffle and web3 use under the hood
   });
 
   it('reverts when transferring tokens to the zero address', async function () {
+    // Edge cases that trigger a require statement can be tested for, optionally checking the revert reason as well
     await shouldFail.reverting(this.erc20.transfer(constants.ZERO_ADDRESS, this.value, { from: sender }));
   });
 
   it('emits a Transfer event on successful transfers', async function () {
     const { logs } = this.erc20.transfer(receiver, this.value, { from: sender });
+    // Log-checking will not only look at the event name, but also the values, which can be addresses, strings, numbers, etc.
     expectEvent.inLogs(logs, 'Transfer', { from: sender, to: receiver, value: this.value });
   });
 
   it('updates balances on successful transfers', async function () {
     this.erc20.transfer(receiver, this.value, { from: sender });
-    (await this.token.balanceOf(receiver)).should.be.bignumber.equal(this.value);
+    // chai-bn is installed, which means BN values can be tested and compared using the bignumber property in chai
+    expect(await this.token.balanceOf(receiver)).to.be.bignumber.equal(this.value);
   });
 });
 ```

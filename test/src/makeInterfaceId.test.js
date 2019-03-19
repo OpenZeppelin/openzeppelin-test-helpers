@@ -1,4 +1,5 @@
 require('../../src/setup');
+const { expect } = require('chai');
 const makeInterfaceId = require('../../src/makeInterfaceId');
 
 const OwnableInterfaceId = artifacts.require('OwnableInterfaceId');
@@ -8,11 +9,11 @@ describe('makeInterfaceId', function () {
     const calculator = await OwnableInterfaceId.new();
     const ownableId = await calculator.getInterfaceId();
 
-    makeInterfaceId([
+    expect(makeInterfaceId([
       'owner()',
       'isOwner()',
       'renounceOwnership()',
       'transferOwnership(address)',
-    ]).should.equal(ownableId);
+    ])).to.equal(ownableId);
   });
 });
