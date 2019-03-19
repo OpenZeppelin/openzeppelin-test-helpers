@@ -345,8 +345,8 @@ describe('expectEvent', function () {
       });
 
       it('throws if incorrect values are passed', function () {
-        should.Throw(() => expectEvent.inLogs(this.logs, 'LongUint', { value: 41 }));
-        should.Throw(() => expectEvent.inLogs(this.logs, 'LongUint', { value: 23 }));
+        should.Throw(() => expectEvent.inLogs(this.logs, 'LongUint', { value: new BN(41) }));
+        should.Throw(() => expectEvent.inLogs(this.logs, 'LongUint', { value: 24 }));
       });
     });
 
