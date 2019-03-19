@@ -328,6 +328,28 @@ describe('expectEvent', function () {
       });
     });
 
+    describe('with multiple events of the same type', function () {
+      beforeEach(async function () {
+        this.firstUintValue = 42;
+        this.secondUintValue = 24;
+        ({ logs: this.logs } = await this.emitter.emitTwoLongUint(this.firstUintValue, this.secondUintValue));
+      });
+
+      it('accepts all emitted events of the same type', function () {
+        expectEvent.inLogs(this.logs, 'LongUint', { value: new BN(this.firstUintValue) });
+        expectEvent.inLogs(this.logs, 'LongUint', { value: new BN(this.secondUintValue) });
+      });
+
+      it('throws if an unemitted event is requested', function () {
+        should.Throw(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.uintValue }));
+      });
+
+      it('throws if incorrect values are passed', function () {
+        should.Throw(() => expectEvent.inLogs(this.logs, 'LongUint', { value: new BN(41) }));
+        should.Throw(() => expectEvent.inLogs(this.logs, 'LongUint', { value: 24 }));
+      });
+    });
+
     describe('with events emitted by an indirectly called contract', function () {
       beforeEach(async function () {
         this.secondEmitter = await IndirectEventEmitter.new();

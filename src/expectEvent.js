@@ -1,15 +1,26 @@
-const { BN, expect, should } = require('./setup');
+const { BN, expect } = require('./setup');
 
 function inLogs (logs, eventName, eventArgs = {}) {
-  const event = logs.find(function (e) {
-    if (e.event === eventName) {
-      for (const [k, v] of Object.entries(eventArgs)) {
+  const events = logs.filter(e => e.event === eventName);
+  expect(events.length > 0).to.equal(true, `There is no '${eventName}'`);
+
+  const exception = [];
+  const event = events.find(function (e) {
+    for (const [k, v] of Object.entries(eventArgs)) {
+      try {
         contains(e.args, k, v);
+      } catch (error) {
+        exception.push(error);
+        return false;
       }
-      return true;
     }
+    return true;
   });
-  should.exist(event);
+
+  if (event === undefined) {
+    throw exception[0];
+  }
+
   return event;
 }
 
