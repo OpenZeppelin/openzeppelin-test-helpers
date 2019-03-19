@@ -342,12 +342,12 @@ describe('expectEvent', function () {
       });
 
       it('throws if an unemitted event is requested', function () {
-        should.Throw(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.uintValue }));
+        expect(() => expectEvent.inLogs(this.logs, 'UnemittedEvent', { value: this.uintValue })).to.throw();
       });
 
       it('throws if incorrect values are passed', function () {
-        should.Throw(() => expectEvent.inLogs(this.logs, 'LongUint', { value: new BN(41) }));
-        should.Throw(() => expectEvent.inLogs(this.logs, 'LongUint', { value: 24 }));
+        expect(() => expectEvent.inLogs(this.logs, 'LongUint', { value: new BN(41) })).to.throw();
+        expect(() => expectEvent.inLogs(this.logs, 'LongUint', { value: 24 })).to.throw();
       });
     });
 
