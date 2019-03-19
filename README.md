@@ -24,7 +24,7 @@ const ERC20 = artifacts.require('ERC20');
 
 contract('ERC20', ([sender, receiver]) => {
   beforeEach(async function () {
-    this.erc20 = ERC20.new();
+    this.erc20 = await ERC20.new();
     this.value = new BN(1); // The bundled BN library is the same one truffle and web3 use under the hood
   });
 
