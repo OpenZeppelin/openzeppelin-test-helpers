@@ -192,20 +192,26 @@ Only accepts failures due to the transaction running out of gas.
 
 ---
 
+### singletons
+#### async time.ERC1820Registry (funder)
+Returns an instance of an [ERC1820Registry](https://eips.ethereum.org/EIPS/eip-1820) deployed as per the specification (i.e. the registry is located at the canonical address). This can be called multiple times to retrieve the same instance.
+
+---
+
 ### time
-#### async time.advanceBlock()
+#### async time.advanceBlock ()
 Forces a block to be mined, incrementing the block height.
 
-#### async time.latest()
+#### async time.latest ()
 Returns the timestamp of the latest mined block. Should be coupled with `advanceBlock` to retrieve the current blockchain time.
 
-#### async time.latestBlock()
+#### async time.latestBlock ()
 Returns the latest mined block number.
 
-#### async time.increase(duration)
+#### async time.increase (duration)
 Increases the time of the blockchain by `duration` (in seconds), and mines a new block with that timestamp.
 
-#### async time.increaseTo(target)
+#### async time.increaseTo (target)
 Same as `increase`, but a target time is specified instead of a duration.
 
 #### async time.duration
