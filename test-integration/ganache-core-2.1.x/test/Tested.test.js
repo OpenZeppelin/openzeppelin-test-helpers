@@ -1,4 +1,5 @@
 const { shouldFail } = require('openzeppelin-test-helpers');
+const { expect } = require('chai');
 
 const Tested = artifacts.require('Tested');
 
@@ -14,13 +15,13 @@ contract('Tested', function (accounts) {
         const expectedMessage = 'lorem ipsum';
         // Asserting that locally installed ganache-core is v2.1.0.
         const nodeInfo = await web3.eth.getNodeInfo();
-        nodeInfo.should.include('2.1.0');
+        expect(nodeInfo).to.include('2.1.0');
         try {
           await this.contract.failWithRevertReason();
         }
         catch (error) {
           // Asserting that older ganache does NOT return reason message.
-          error.message.should.not.include(expectedMessage);
+          expect(error.message).to.not.include(expectedMessage);
         }
         // With that said, following revert should be accepted without regard to the specified
         // reason message.
