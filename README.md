@@ -225,7 +225,7 @@ Same as `increase`, but a target time is specified instead of a duration.
 Helpers to convert different time units to seconds. Available helpers are: `seconds`, `minutes`, `hours`, `days`, `weeks` and `years`.
 
 ```javascript
-await time.increase(time.years(2));
+await time.increase(time.duration.years(2));
 ```
 
 ## License
