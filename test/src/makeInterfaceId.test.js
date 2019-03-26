@@ -18,4 +18,12 @@ describe('makeInterfaceId', function () {
       ])).to.equal(ownableId);
     });
   });
+
+  describe('ERC165', function () {
+    it('calculates the interface id from function signatures', async function () {
+      expect(makeInterfaceId.ERC1820('ERC777Token')).to.equal(
+        '0xac7fbab5f54a3ca8194167523c6753bfeb96a445279294b6125b68cce2177054'
+      );
+    });
+  });
 });

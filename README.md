@@ -131,6 +131,9 @@ Same as `inLogs`, but for events emitted in an arbitrary transaction (of hash `t
 #### ERC165
 Calculates the [ERC165](https://eips.ethereum.org/EIPS/eip-165) interface ID of a contract, given a series of function signatures.
 
+#### ERC1820
+Calculates the [ERC1820](https://eips.ethereum.org/EIPS/eip-1820) interface hash of a function, given its signature.
+
 ---
 
 ### send
