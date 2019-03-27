@@ -18,8 +18,8 @@ function ERC165 (functionSignatures = []) {
   return `0x${interfaceIdBuffer.toString('hex')}`;
 }
 
-function ERC1820 (functionSignature) {
-  return web3.utils.soliditySha3(functionSignature); // keccak256
+function ERC1820 (interfaceName) {
+  return web3.utils.soliditySha3(interfaceName); // keccak256
 }
 
 module.exports = {
