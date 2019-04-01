@@ -2,7 +2,7 @@ const { BN } = require('./setup');
 const { promisify } = require('util');
 
 function advanceBlock () {
-  return promisify(web3.currentProvider.send)({
+  return promisify(web3.currentProvider.send.bind(web3.currentProvider))({
     jsonrpc: '2.0',
     method: 'evm_mine',
   });
@@ -27,7 +27,7 @@ async function increase (duration) {
 
   if (duration.isNeg()) throw Error(`Cannot increase time by a negative amount (${duration})`);
 
-  await promisify(web3.currentProvider.send)({
+  await promisify(web3.currentProvider.send.bind(web3.currentProvider))({
     jsonrpc: '2.0',
     method: 'evm_increaseTime',
     params: [duration.toNumber()],
