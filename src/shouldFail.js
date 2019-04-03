@@ -36,13 +36,21 @@ async function withMessage (promise, message) {
   // https://github.com/trufflesuite/ganache-core/releases/tag/v2.2.0
   const nodeInfo = await web3.eth.getNodeInfo();
   const matches = /TestRPC\/v([0-9.]+)\/ethereum-js/.exec(nodeInfo);
-  if (1 in matches && semver.satisfies(matches[1], '>=2.2.0')) {
-    return shouldFailWithMessage(promise, message);
-  } else {
-    // Otherwise, warn users and skip reason check.
+  const warn = function (msg) {
     console.log(`${colors.white.bgBlack('openzeppelin-test-helpers')} ${colors.black.bgYellow('WARN')} \
-shouldFail.reverting.withMessage: current version of Ganache (${matches[1]}) doesn't return revert reason.`);
+shouldFail.reverting.withMessage: ` + msg);
+  };
+  if (matches === null || !(1 in matches)) {
+    // warn users and skip reason check.
+    warn('revert reason checking only supported on Ganache>=2.2.0');
     return shouldFailWithMessage(promise);
+  } else if (!semver.satisfies(matches[1], '>=2.2.0')) {
+    // warn users and skip reason check.
+    warn(`current version of Ganache (${matches[1]}) doesn't return revert reason.`);
+    return shouldFailWithMessage(promise);
+  } else {
+    // actually perform revert reason check.
+    return shouldFailWithMessage(promise, message);
   }
 }
 
