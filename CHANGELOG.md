@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.2 (unreleased)
+## 0.3.2 (2019-04-10)
  * Update ERC1820Registry address. ([#26](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/26))
 
 ## 0.3.1 (2019-04-01)
