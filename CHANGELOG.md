@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.3.2 (unreleased)
+ * Update ERC1820Registry address. ([#26](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/26))
+
 ## 0.3.1 (2019-04-01)
  * Add support for environments using `web3-provider-engine`. ([#24](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/24))
 

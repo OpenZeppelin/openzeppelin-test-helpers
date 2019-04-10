@@ -13,7 +13,7 @@ contract('singletons', function ([funder]) {
     });
 
     it('the registry is stored at the correct address', function () {
-      expect(this.registry.address).to.equal('0x1820b744B33945482C17Dc37218C01D858EBc714');
+      expect(this.registry.address).to.equal('0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24');
     });
 
     it('stores the correct code at the registry address', async function () {
@@ -22,7 +22,7 @@ contract('singletons', function ([funder]) {
 
     it('returns the same truffle-contract when attempting to deploy a second registry', async function () {
       const newRegistry = await singletons.ERC1820Registry(funder);
-      expect(newRegistry.address).to.equal('0x1820b744B33945482C17Dc37218C01D858EBc714');
+      expect(newRegistry.address).to.equal('0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24');
     });
   });
 });
