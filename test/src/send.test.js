@@ -62,6 +62,13 @@ contract('send', function ([sender, receiver]) {
         );
       });
 
+      it('calls fallback function', async function () {
+        const receipt = await send.transaction(this.acknowledger, '', '', [], opts);
+        await expectEvent.inTransaction(
+          receipt.transactionHash, Acknowledger, 'AcknowledgeFallback'
+        );
+      });
+
       it('throws if the number of arguments does not match', async function () {
         await shouldFail(send.transaction(this.acknowledger, 'foo', 'uint256, uint256', [3, 5]), opts);
       });
