@@ -18,7 +18,7 @@ contract Acknowledger {
         emit AcknowledgeBarDouble(a, b);
     }
 
-    function () {
+    function () external {
         emit AcknowledgeFallback();
     }
 }
