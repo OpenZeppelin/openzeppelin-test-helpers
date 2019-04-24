@@ -8,6 +8,8 @@ async function shouldFailWithMessage (promise, message) {
   } catch (error) {
     if (message) {
       expect(error.message).to.include(message, `Wrong failure type, expected '${message}'`);
+    } else {
+      expect.fail('Message not provided');
     }
     return;
   }
@@ -28,7 +30,12 @@ async function outOfGas (promise) {
 }
 
 async function shouldFail (promise) {
-  await shouldFailWithMessage(promise);
+  try {
+    await promise;
+  } catch (error) {
+    return;
+  }
+  expect.fail('Failure not received');
 }
 
 async function withMessage (promise, message) {
@@ -43,11 +50,11 @@ shouldFail.reverting.withMessage: ` + msg);
   if (matches === null || !(1 in matches)) {
     // warn users and skip reason check.
     warn('revert reason checking only supported on Ganache>=2.2.0');
-    return shouldFailWithMessage(promise);
+    return shouldFail(promise);
   } else if (!semver.satisfies(matches[1], '>=2.2.0')) {
     // warn users and skip reason check.
     warn(`current version of Ganache (${matches[1]}) doesn't return revert reason.`);
-    return shouldFailWithMessage(promise);
+    return shouldFail(promise);
   } else {
     // actually perform revert reason check.
     return shouldFailWithMessage(promise, message);

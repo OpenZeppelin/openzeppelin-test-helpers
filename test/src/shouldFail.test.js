@@ -73,6 +73,10 @@ describe('shouldFail', function () {
         await assertFailure(shouldFail.reverting.withMessage(this.failer.failWithRevertReason(), 'Wrong reason'));
       });
 
+      it('rejects if no reason string passed', async function () {
+        await assertFailure(shouldFail.reverting.withMessage(this.failer.failWithRevertReason()));
+      });
+
       it('accepts require() revert with an expected reason', async function () {
         await shouldFail.reverting.withMessage(this.failer.failRequirementWithReason(), 'Unsatisfied');
       });
