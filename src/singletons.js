@@ -26,7 +26,7 @@ async function ERC1820Registry (funder) {
 
   // 0.08 ether is needed to deploy the registry, and those funds need to be transferred to the account that will deploy
   // the contract.
-  await send.ether(funder, '0x5808bA8E60E0367C9067b328D75C1f3d29de58cf', ether('0.08'));
+  await send.ether(funder, '0xa990077c3205cbDf861e17Fa532eeB069cE9fF96', ether('0.08'));
 
   await web3.eth.sendSignedTransaction(ERC1820_REGISTRY_DEPLOY_TX);
 
