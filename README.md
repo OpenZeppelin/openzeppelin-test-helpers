@@ -95,6 +95,11 @@ A [bn.js](https://github.com/indutny/bn.js) object. Use `new BN(number)` to crea
 
 ---
 
+### constants
+A collection of useful [constants](src/constants.js).
+
+---
+
 ### ether
 Converts a value in Ether to wei.
 
