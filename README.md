@@ -105,7 +105,7 @@ The initial value of a type `address` variable, i.e., `address(0)` in Solidity.
 The maximum unsigned integer `2^256 - 1` represented in `BN`.
 
 #### constants.MAX_INT256
-The maximum signed integer `2^255 -1` represented in `BN`.
+The maximum signed integer `2^255 - 1` represented in `BN`.
 
 #### constants.MIN_INT256
 The minimum signed integer `-2^255` represented in `BN`.
