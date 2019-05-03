@@ -12,14 +12,11 @@ function findMethod (abi, name, args) {
 }
 
 async function transaction (target, name, argsTypes, argsValues, opts = {}) {
-  let encodedData;
-  if (name === '') {
-    encodedData = '0x';
-  } else {
-    const abiMethod = findMethod(target.abi, name, argsTypes);
-    encodedData = ethjsABI.encodeMethod(abiMethod, argsValues);
-  }
+  const abiMethod = findMethod(target.abi, name, argsTypes);
+  const encodedData = ethjsABI.encodeMethod(abiMethod, argsValues);
+
   opts.from = opts.from || (await web3.eth.getAccounts())[0];
+
   return web3.eth.sendTransaction({ data: encodedData, to: target.address, ...opts });
 }
 
