@@ -2,6 +2,7 @@
 
 ## 0.4.0 (unreleased)
  * Fix `shouldFail.reverting.withMessage` on non-Ganache chains. ([#25](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/25)
+ * Fix `send.transaction` not working on contracts with a fallback function. ([#26](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/26)
  * `shouldFail.reverting.withMessage` fails if no error string is provided. ([#28](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/28)
  * Rename `makeInterfaceId` to `makeInterfaceId.ERC165`, and add `makeInterfaceId.ERC1820`. ([#21](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/21)
  

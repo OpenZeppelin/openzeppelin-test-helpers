@@ -29,6 +29,14 @@ contract('send', function ([sender, receiver]) {
 
       await shouldFail(send.ether(sender, receiver, value));
     });
+
+    it('calls fallback function', async function () {
+      this.acknowledger = await Acknowledger.new();
+      const receipt = await send.ether(sender, this.acknowledger.address, 0);
+      await expectEvent.inTransaction(
+        receipt.transactionHash, Acknowledger, 'AcknowledgeFallback'
+      );
+    });
   });
 
   describe('transaction', function () {
