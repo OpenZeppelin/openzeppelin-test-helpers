@@ -1,8 +1,8 @@
-const INTERFACE_ID_LENGTH = 4;
+function ERC165 (functionSignatures = []) {
+  const INTERFACE_ID_LENGTH = 4;
 
-function makeInterfaceId (interfaces = []) {
-  const interfaceIdBuffer = interfaces
-    .map(methodSignature => web3.utils.soliditySha3(methodSignature)) // keccak256
+  const interfaceIdBuffer = functionSignatures
+    .map(signature => web3.utils.soliditySha3(signature)) // keccak256
     .map(h =>
       Buffer
         .from(h.substring(2), 'hex')
@@ -18,4 +18,11 @@ function makeInterfaceId (interfaces = []) {
   return `0x${interfaceIdBuffer.toString('hex')}`;
 }
 
-module.exports = makeInterfaceId;
+function ERC1820 (interfaceName) {
+  return web3.utils.soliditySha3(interfaceName); // keccak256
+}
+
+module.exports = {
+  ERC165,
+  ERC1820,
+};

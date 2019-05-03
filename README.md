@@ -95,6 +95,23 @@ A [bn.js](https://github.com/indutny/bn.js) object. Use `new BN(number)` to crea
 
 ---
 
+### constants
+A collection of useful [constants](src/constants.js).
+
+#### constants.ZERO_ADDRESS
+The initial value of a type `address` variable, i.e., `address(0)` in Solidity.
+
+#### constants.MAX_UINT256
+The maximum unsigned integer `2^256 - 1` represented in `BN`.
+
+#### constants.MAX_INT256
+The maximum signed integer `2^255 - 1` represented in `BN`.
+
+#### constants.MIN_INT256
+The minimum signed integer `-2^255` represented in `BN`.
+
+---
+
 ### ether
 Converts a value in Ether to wei.
 
@@ -127,8 +144,12 @@ Same as `inLogs`, but for events emitted in an arbitrary transaction (of hash `t
 ---
 
 
-### makeInterfaceId (interfaces = [])
-Calculates the [EIP 165](https://eips.ethereum.org/EIPS/eip-165) interface ID of a contract, given a series of function signatures.
+### makeInterfaceId
+#### ERC165 (interfaces = [])
+Calculates the [ERC165](https://eips.ethereum.org/EIPS/eip-165) interface ID of a contract, given a series of function signatures.
+
+#### ERC1820 (name)
+Calculates the [ERC1820](https://eips.ethereum.org/EIPS/eip-1820) interface hash of a contract, given its name.
 
 ---
 
@@ -200,7 +221,7 @@ Only accepts failures due to the transaction running out of gas.
 ---
 
 ### singletons
-#### async time.ERC1820Registry (funder)
+#### async singletons.ERC1820Registry (funder)
 Returns an instance of an [ERC1820Registry](https://eips.ethereum.org/EIPS/eip-1820) deployed as per the specification (i.e. the registry is located at the canonical address). This can be called multiple times to retrieve the same instance.
 
 ---
