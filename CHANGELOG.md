@@ -2,6 +2,7 @@
 
 ## 0.4.0 (unreleased)
  * Fix `shouldFail.reverting.withMessage` on non-Ganache chains. ([#25](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/25)
+ * Fix `send.transaction` not working on contracts with a fallback function. ([#26](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/26)
 
 ## 0.3.2 (2019-04-10)
  * Update ERC1820Registry address. ([#26](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/26))
