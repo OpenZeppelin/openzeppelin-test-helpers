@@ -217,7 +217,7 @@ Only accepts failures due to the transaction running out of gas.
 ---
 
 ### singletons
-#### async time.ERC1820Registry (funder)
+#### async singletons.ERC1820Registry (funder)
 Returns an instance of an [ERC1820Registry](https://eips.ethereum.org/EIPS/eip-1820) deployed as per the specification (i.e. the registry is located at the canonical address). This can be called multiple times to retrieve the same instance.
 
 ---
