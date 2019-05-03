@@ -144,8 +144,12 @@ Same as `inLogs`, but for events emitted in an arbitrary transaction (of hash `t
 ---
 
 
-### makeInterfaceId (interfaces = [])
-Calculates the [EIP 165](https://eips.ethereum.org/EIPS/eip-165) interface ID of a contract, given a series of function signatures.
+### makeInterfaceId
+#### ERC165 (interfaces = [])
+Calculates the [ERC165](https://eips.ethereum.org/EIPS/eip-165) interface ID of a contract, given a series of function signatures.
+
+#### ERC1820 (name)
+Calculates the [ERC1820](https://eips.ethereum.org/EIPS/eip-1820) interface hash of a contract, given its name.
 
 ---
 
