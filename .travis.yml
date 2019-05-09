@@ -28,6 +28,11 @@ jobs:
       name: "Ganache Core 2.1.x"
       script: ./test-integration/ganache-core-2.1.x/run.sh
 
+    - stage: Integration tests
+      name: "Truffle Migration"
+      script: ./test-integration/truffle-migration/run.sh
+
+
 notifications:
   slack:
     rooms:
