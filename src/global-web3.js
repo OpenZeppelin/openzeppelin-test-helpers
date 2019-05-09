@@ -4,7 +4,11 @@ let globalWeb3;
 
 function setWeb3(web3) {
   if (globalWeb3 !== undefined) {
-    throw new Error('Web3 instance has already been injected');
+    if (globalWeb3 === web3) {
+      return;
+    } else {
+      throw new Error('A different Web3 instance has already been injected');
+    }
   }
 
   // this could be taken from package.dependencies in the future
