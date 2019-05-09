@@ -1,8 +1,10 @@
+const { soliditySha3 } = require('web3-utils');
+
 function ERC165 (functionSignatures = []) {
   const INTERFACE_ID_LENGTH = 4;
 
   const interfaceIdBuffer = functionSignatures
-    .map(signature => web3.utils.soliditySha3(signature)) // keccak256
+    .map(signature => soliditySha3(signature)) // keccak256
     .map(h =>
       Buffer
         .from(h.substring(2), 'hex')
@@ -19,7 +21,7 @@ function ERC165 (functionSignatures = []) {
 }
 
 function ERC1820 (interfaceName) {
-  return web3.utils.soliditySha3(interfaceName); // keccak256
+  return soliditySha3(interfaceName); // keccak256
 }
 
 module.exports = {
