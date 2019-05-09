@@ -7,6 +7,6 @@ module.exports = function(deployer) {
     require('openzeppelin-test-helpers/inject-web3')(web3);
     console.error('Successfully injected web3 instance');
   } catch (e) {
-    throw new Error('Could not inject web3 instance');
+    throw new Error(`Could not inject web3 instance.\n${e}`);
   }
 };
