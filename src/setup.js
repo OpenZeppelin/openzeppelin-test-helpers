@@ -6,6 +6,6 @@ const BN = web3.utils.BN;
 chai.use(require('chai-bn')(BN));
 
 module.exports = {
-  web3, 
+  web3,
   BN,
 };

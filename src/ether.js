@@ -1,4 +1,4 @@
-const { toWei } = require('web3-utils')
+const { toWei } = require('web3-utils');
 const { BN } = require('./setup');
 
 function ether (n) {
