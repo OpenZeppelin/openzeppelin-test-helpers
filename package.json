@@ -5,7 +5,8 @@
   "main": "index.js",
   "files": [
     "src",
-    "index.js"
+    "index.js",
+    "inject-web3.js"
   ],
   "scripts": {
     "lint": "eslint .",

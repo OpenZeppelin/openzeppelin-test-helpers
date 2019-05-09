@@ -1,3 +1,5 @@
+const { web3 } = require('./setup');
+
 const { expect } = require('chai');
 const colors = require('ansi-colors');
 const semver = require('semver');
