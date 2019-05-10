@@ -2,7 +2,7 @@ const { setWeb3 } = require('./src/configure-web3');
 
 let loadedConfig;
 
-function configure(config) {
+function configure (config) {
   if (!config) {
     // if there already is a loaded config keep it
     if (!loadedConfig) {
@@ -11,7 +11,7 @@ function configure(config) {
     }
   } else {
     if (loadedConfig) {
-      const errorMessage = `Cannot configure openzeppelin-test-helpers a second time.`;
+      let errorMessage = 'Cannot configure openzeppelin-test-helpers a second time.';
 
       if (loadedConfig === 'default') {
         errorMessage += `
@@ -28,14 +28,14 @@ A configuration has been loaded by default. Make sure to do custom configuration
     }
 
     customConfigure(config);
-    loadedConfig = 'custom'
+    loadedConfig = 'custom';
   }
 };
 
-function defaultConfigure() {
+function defaultConfigure () {
   if (typeof web3 === 'undefined') {
     throw new Error(
-`Cannot find a global Web3 instance. Please configure one manually:
+      `Cannot find a global Web3 instance. Please configure one manually:
 
     require('openzeppelin-test-helpers/configure')({ web3: ... });
 
@@ -47,7 +47,7 @@ function defaultConfigure() {
   setWeb3(web3);
 }
 
-function customConfigure(config) {
+function customConfigure (config) {
   setWeb3(config.web3);
 }
 
