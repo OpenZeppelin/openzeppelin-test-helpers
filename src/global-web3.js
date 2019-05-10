@@ -7,7 +7,7 @@ function setWeb3 (web3) {
     if (globalWeb3 === web3) {
       return;
     } else {
-      throw new Error('A different Web3 instance has already been injected');
+      throw new Error('web3 is already configured');
     }
   }
 
@@ -24,13 +24,7 @@ function setWeb3 (web3) {
 
 function getWeb3 () {
   if (globalWeb3 === undefined) {
-    if (typeof web3 !== 'undefined') {
-      // if there is a global web3 instance we use it
-      setWeb3(web3);
-    } else {
-      // eslint-disable-next-line max-len
-      throw new Error('No Web3 instance can be found. Please manually inject one: require(\'openzeppelin-test-helpers/configure\')({ web3 })');
-    }
+    throw new Error('web3 is not configured');
   }
 
   return globalWeb3;

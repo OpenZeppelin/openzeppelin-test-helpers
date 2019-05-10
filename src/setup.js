@@ -1,3 +1,5 @@
+require('../configure')();
+
 const web3 = require('./global-web3').getWeb3();
 
 const chai = require('chai');
