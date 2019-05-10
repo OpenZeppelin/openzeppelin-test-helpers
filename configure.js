@@ -1,3 +1,5 @@
+/* global web3 */
+
 const { setWeb3 } = require('./src/configure-web3');
 
 let loadedConfig;
