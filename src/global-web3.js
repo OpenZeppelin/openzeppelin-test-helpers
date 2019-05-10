@@ -29,7 +29,7 @@ function getWeb3 () {
       setWeb3(web3);
     } else {
       // eslint-disable-next-line max-len
-      throw new Error('No Web3 instance can be found. Please manually inject one: require(\'openzeppelin-test-helpers/inject-web3\')(web3)');
+      throw new Error('No Web3 instance can be found. Please manually inject one: require(\'openzeppelin-test-helpers/configure\')({ web3 })');
     }
   }
 

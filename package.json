@@ -6,7 +6,7 @@
   "files": [
     "src",
     "index.js",
-    "inject-web3.js"
+    "configure.js"
   ],
   "scripts": {
     "lint": "eslint .",

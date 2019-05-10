@@ -4,10 +4,10 @@ module.exports = function(deployer) {
   deployer.deploy(Migrations);
 
   try {
-    require('openzeppelin-test-helpers/inject-web3')(web3);
+    require('openzeppelin-test-helpers/configure')({ web3 });
 
-    console.error('Successfully injected Web3 instance');
+    console.error('Successfully configured Web3 instance');
   } catch (e) {
-    throw new Error(`Could not inject Web3 instance.\n${e}`);
+    throw new Error(`Could not configure Web3 instance.\n${e}`);
   }
 };
