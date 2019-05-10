@@ -13,12 +13,6 @@
     "mocha"   : true,
     "jest"    : true,
   },
-  "globals" : {
-    "artifacts": false,
-    "contract": false,
-    "assert": false,
-    "web3": false,
-  },
   "rules": {
 
     // Strict mode

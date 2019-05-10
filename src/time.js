@@ -1,4 +1,4 @@
-const { BN } = require('./setup');
+const { web3, BN } = require('./setup');
 const { promisify } = require('util');
 
 function advanceBlock () {

@@ -1,3 +1,4 @@
+const { web3 } = require('./setup');
 const ethjsABI = require('ethjs-abi');
 
 function findMethod (abi, name, args) {

@@ -1,4 +1,4 @@
-const { BN } = require('./setup');
+const { web3, BN } = require('./setup');
 
 class Tracker {
   constructor (acc) {

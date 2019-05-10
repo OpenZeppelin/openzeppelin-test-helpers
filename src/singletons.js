@@ -1,3 +1,4 @@
+const { web3 } = require('./setup');
 const ether = require('./ether');
 const send = require('./send');
 

@@ -1,4 +1,4 @@
-const { BN } = require('./setup');
+const { web3, BN } = require('./setup');
 const { expect } = require('chai');
 
 function inLogs (logs, eventName, eventArgs = {}) {

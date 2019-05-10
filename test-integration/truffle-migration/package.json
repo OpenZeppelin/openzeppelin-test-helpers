@@ -1,0 +1,11 @@
+{
+  "name": "migration",
+  "private": true,
+  "scripts": {
+    "test": "truffle test"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "truffle": "^5.0.15"
+  }
+}

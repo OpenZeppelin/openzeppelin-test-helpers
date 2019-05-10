@@ -47,6 +47,16 @@ contract('ERC20', ([sender, receiver]) => {
 });
 ```
 
+### Configuration
+
+By default, this library will look for a global web3 instance, but you can run a manual configuration and supply a custom one.
+
+```javascript
+require('openzeppelin-test-helpers/configure')({ web3: ... });
+
+const { expectEvent } = require('openzeppelin-test-helpers');
+```
+
 ## Reference
 
 This documentation is a work in progress: if in doubt, head over to the [tests directory](https://github.com/OpenZeppelin/openzeppelin-test-helpers/tree/master/test/src) to see examples of how each helper can be used.
