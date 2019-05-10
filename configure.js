@@ -36,8 +36,7 @@ A configuration has been loaded by default. Make sure to do custom configuration
 
 function defaultConfigure () {
   if (typeof web3 === 'undefined') {
-    throw new Error(
-      `Cannot find a global Web3 instance. Please configure one manually:
+    throw new Error(`Cannot find a global Web3 instance. Please configure one manually:
 
     require('openzeppelin-test-helpers/configure')({ web3: ... });
 

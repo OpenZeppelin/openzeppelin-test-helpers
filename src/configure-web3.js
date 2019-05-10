@@ -15,8 +15,7 @@ function setWeb3 (web3) {
   const requiredVersion = '1.0.0-beta.37';
 
   if (!semver.satisfies(web3.version, requiredVersion)) {
-    throw new Error(`web3@${web3.version} detected, incompatible with requirement of web3@${requiredVersion}`
-    );
+    throw new Error(`web3@${web3.version} detected, incompatible with requirement of web3@${requiredVersion}`);
   }
 
   globalWeb3 = web3;
