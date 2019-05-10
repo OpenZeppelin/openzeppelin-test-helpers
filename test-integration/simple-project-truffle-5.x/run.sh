@@ -10,6 +10,8 @@ pkg="$(npm pack ../../ 2> /dev/null)"
 # Clean it up afterwards
 trap "rm -f $pkg" EXIT
 
+npm install
+
 npm install --no-save "$pkg"
 
 npm test
