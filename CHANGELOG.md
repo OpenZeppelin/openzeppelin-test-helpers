@@ -6,7 +6,8 @@
  * `shouldFail.reverting.withMessage` fails if no error string is provided. ([#28](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/28)
  * Rename `makeInterfaceId` to `makeInterfaceId.ERC165`, and add `makeInterfaceId.ERC1820`. ([#21](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/21)
  * Add possibility to configure a custom web3 instance. ([#38](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/38))
- 
+ * Rename `shouldFail` to `expectFailure`. ([#39](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/39))
+
 #### How to upgrade from 0.3
 - Change all occurences of `makeInterfaceId` to `makeInterfaceId.ERC165`.
 - Some uses of `shouldFail.reverting.withMessage` may fail now. This means it was being used incorrectly and an error string to match against should be added. Alternatively, if the error message is unknown, use `shouldFail.reverting` instead.

@@ -4,7 +4,7 @@ const { expect } = require('chai');
 const colors = require('ansi-colors');
 const semver = require('semver');
 
-async function shouldFailWithMessage (promise, message) {
+async function expectFailureWithMessage (promise, message) {
   try {
     await promise;
   } catch (error) {
@@ -19,19 +19,7 @@ async function shouldFailWithMessage (promise, message) {
   expect.fail('Expected failure not received');
 }
 
-async function reverting (promise) {
-  await shouldFailWithMessage(promise, 'revert');
-}
-
-async function throwing (promise) {
-  await shouldFailWithMessage(promise, 'invalid opcode');
-}
-
-async function outOfGas (promise) {
-  await shouldFailWithMessage(promise, 'out of gas');
-}
-
-async function shouldFail (promise) {
+async function expectFailure (promise) {
   try {
     await promise;
   } catch (error) {
@@ -47,25 +35,25 @@ async function withMessage (promise, message) {
   const matches = /TestRPC\/v([0-9.]+)\/ethereum-js/.exec(nodeInfo);
   const warn = function (msg) {
     console.log(`${colors.white.bgBlack('openzeppelin-test-helpers')} ${colors.black.bgYellow('WARN')} \
-shouldFail.reverting.withMessage: ` + msg);
+expectFailure.revert.withMessage: ` + msg);
   };
   if (matches === null || !(1 in matches)) {
     // warn users and skip reason check.
     warn('revert reason checking only supported on Ganache>=2.2.0');
-    return shouldFail(promise);
+    return expectFailure(promise);
   } else if (!semver.satisfies(matches[1], '>=2.2.0')) {
     // warn users and skip reason check.
     warn(`current version of Ganache (${matches[1]}) doesn't return revert reason.`);
-    return shouldFail(promise);
+    return expectFailure(promise);
   } else {
     // actually perform revert reason check.
-    return shouldFailWithMessage(promise, message);
+    return expectFailureWithMessage(promise, message);
   }
 }
 
-shouldFail.reverting = reverting;
-shouldFail.reverting.withMessage = withMessage;
-shouldFail.throwing = throwing;
-shouldFail.outOfGas = outOfGas;
+expectFailure.revert = (promise) => expectFailureWithMessage(promise, 'revert');
+expectFailure.revert.withMessage = withMessage;
+expectFailure.throw = (promise) => expectFailureWithMessage(promise, 'invalid opcode');
+expectFailure.outOfGas = (promise) => expectFailureWithMessage(promise, 'out of gas');
 
-module.exports = shouldFail;
+module.exports = expectFailure;
