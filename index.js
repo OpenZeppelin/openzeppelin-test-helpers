@@ -8,7 +8,7 @@ module.exports = {
   expectEvent: require('./src/expectEvent'),
   makeInterfaceId: require('./src/makeInterfaceId'),
   send: require('./src/send'),
-  expectFailure: require('./src/expectFailure'),
+  expectRevert: require('./src/expectRevert'),
   singletons: require('./src/singletons'),
   time: require('./src/time'),
 };

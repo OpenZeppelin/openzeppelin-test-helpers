@@ -1,7 +1,7 @@
 const { BN } = require('../../src/setup');
 const { expect } = require('chai');
 const send = require('../../src/send');
-const expectFailure = require('../../src/expectFailure');
+const expectRevert = require('../../src/expectRevert');
 const expectEvent = require('../../src/expectEvent');
 const ether = require('../../src/ether');
 
@@ -27,7 +27,7 @@ contract('send', function ([sender, receiver]) {
     it('throws if the sender balance is insufficient', async function () {
       const value = new BN(await web3.eth.getBalance(sender)).add(new BN(1));
 
-      await expectFailure(send.ether(sender, receiver, value));
+      await expectRevert(send.ether(sender, receiver, value));
     });
 
     it('calls fallback function', async function () {
@@ -71,15 +71,15 @@ contract('send', function ([sender, receiver]) {
       });
 
       it('throws if the number of arguments does not match', async function () {
-        await expectFailure(send.transaction(this.acknowledger, 'foo', 'uint256, uint256', [3, 5]), opts);
+        await expectRevert(send.transaction(this.acknowledger, 'foo', 'uint256, uint256', [3, 5]), opts);
       });
 
       it('throws if the method does not exist', async function () {
-        await expectFailure(send.transaction(this.acknowledger, 'baz', 'uint256', [3]), opts);
+        await expectRevert(send.transaction(this.acknowledger, 'baz', 'uint256', [3]), opts);
       });
 
       it('throws if there is a mismatch in the number of types and values', async function () {
-        await expectFailure(send.transaction(this.acknowledger, 'foo', 'uint256', [3, 3]), opts);
+        await expectRevert(send.transaction(this.acknowledger, 'foo', 'uint256', [3, 3]), opts);
       });
     }
   });

@@ -1,7 +1,7 @@
 const { BN } = require('../../src/setup');
 const { expect } = require('chai');
 const time = require('../../src/time');
-const expectFailure = require('../../src/expectFailure');
+const expectRevert = require('../../src/expectRevert');
 
 describe('time', function () {
   const TOLERANCE_SECONDS = new BN(1);
@@ -69,7 +69,7 @@ describe('time', function () {
       });
 
       it('throws with negative durations', async function () {
-        await expectFailure(time.increase(-1));
+        await expectRevert(time.increase(-1));
       });
     });
 
@@ -83,7 +83,7 @@ describe('time', function () {
       });
 
       it('throws with a time in the past', async function () {
-        await expectFailure(time.increaseTo(this.start.sub(new BN(30))));
+        await expectRevert(time.increaseTo(this.start.sub(new BN(30))));
       });
     });
   });
