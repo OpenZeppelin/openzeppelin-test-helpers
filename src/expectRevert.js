@@ -40,7 +40,7 @@ const expectRevert = async function (promise, expectedError) {
     // warn users and skip reason check.
     warn('revert reason checking only supported on Ganache v2.2.0 or newer.');
     expectedErrors = ['revert'];
-  } else if (!semver.satisfies(matches[1], '>=2.2.0')) {
+  } else if (!semver.gt(matches[1], '2.2.0')) {
     // warn users and skip reason check.
     warn(`current version of Ganache (v${matches[1]}) doesn't return revert reason. Use v2.2.0 or newer.`);
     expectedErrors = ['revert'];
