@@ -13,7 +13,7 @@ contract('Tested', function (accounts) {
     })
 
     it('detect reverts', async function () {
-      await expectRevert.revert(this.contract.reverts());
+      await expectRevert.unspecified(this.contract.reverts());
     });
 
     it('accepts calls with non-zero address', async function () {
@@ -22,7 +22,7 @@ contract('Tested', function (accounts) {
     });
 
     it('reverts with calls with non-zero address', async function () {
-      await expectRevert.revert(this.contract.nonZeroAddress(constants.ZERO_ADDRESS));
+      await expectRevert.unspecified(this.contract.nonZeroAddress(constants.ZERO_ADDRESS));
     });
   });
 });

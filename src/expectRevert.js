@@ -4,13 +4,11 @@ const { expect } = require('chai');
 const colors = require('ansi-colors');
 const semver = require('semver');
 
-async function expectException (promise, expectedErrors) {
+async function expectException (promise, expectedError) {
   try {
     await promise;
   } catch (error) {
-    for (const expectedError of expectedErrors) {
-      expect(error.message).to.include(expectedError, `Wrong failure type, expected '${expectedError}'`);
-    }
+    expect(error.message).to.include(expectedError, `Wrong failure type, expected '${expectedError}'`);
     return;
   }
 
@@ -20,8 +18,8 @@ async function expectException (promise, expectedErrors) {
 const expectRevert = async function (promise, expectedError) {
   if (!expectedError) {
     promise.catch(() => { });
-    throw Error('No revert reason specified: call expectRevert with the reason string, or use expectRevert.unspecified\
-      if your \'require\' statement doesn\'t have one.');
+    throw Error('No revert reason specified: call expectRevert with the reason string, or use expectRevert.unspecified \
+if your \'require\' statement doesn\'t have one.');
   }
 
   // Find out if current version of ganache-core supports revert reason i.e >= 2.2.0.
@@ -34,26 +32,21 @@ const expectRevert = async function (promise, expectedError) {
       expectRevert: ` + msg);
   };
 
-  let expectedErrors;
-
   if (matches === null || !(1 in matches)) {
     // warn users and skip reason check.
     warn('revert reason checking only supported on Ganache v2.2.0 or newer.');
-    expectedErrors = ['revert'];
+    expectedError = 'revert';
   } else if (!semver.gte(matches[1], '2.2.0')) {
     // warn users and skip reason check.
     warn(`current version of Ganache (v${matches[1]}) doesn't return revert reason. Use v2.2.0 or newer.`);
-    expectedErrors = ['revert'];
-  } else {
-    // actually perform revert reason check.
-    expectedErrors = ['revert', expectedError];
+    expectedError = 'revert';
   }
 
-  await expectException(promise, expectedErrors);
+  await expectException(promise, expectedError);
 };
 
-expectRevert.assertion = (promise) => expectException(promise, ['invalid opcode']);
-expectRevert.outOfGas = (promise) => expectException(promise, ['out of gas']);
-expectRevert.unspecified = (promise) => expectException(promise, ['revert']);
+expectRevert.assertion = (promise) => expectException(promise, 'invalid opcode');
+expectRevert.outOfGas = (promise) => expectException(promise, 'out of gas');
+expectRevert.unspecified = (promise) => expectException(promise, 'revert');
 
 module.exports = expectRevert;

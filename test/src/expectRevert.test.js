@@ -1,16 +1,7 @@
-const { expect } = require('chai');
+const assertFailure = require('../helpers/assertFailure');
 const expectRevert = require('../../src/expectRevert');
 
 const Reverter = artifacts.require('Reverter');
-
-async function assertFailure (promise) {
-  try {
-    await promise;
-  } catch (error) {
-    return;
-  }
-  expect.fail();
-}
 
 describe('expectRevert', function () {
   beforeEach(async function () {
