@@ -20,8 +20,8 @@ async function expectException (promise, expectedErrors) {
 const expectRevert = async function (promise, expectedError) {
   if (!expectedError) {
     try { await promise; } catch (error) { }
-    throw Error('No revert reason specified: call expectRevert with the reason string, or use expectRevert.unspecified\
-      if your \'require\' statement doesn\'t have one.');
+    throw Error('No revert reason specified: call expectRevert with the reason string, or use expectRevert.unspecified \
+if your \'require\' statement doesn\'t have one.');
   }
 
   // Find out if current version of ganache-core supports revert reason i.e >= 2.2.0.
