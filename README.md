@@ -224,7 +224,7 @@ This helper asserts that `promise` was rejected due to a reverted transaction ca
 This helper asserts that `promise` was rejected due to a reverted transaction caused by an `assert` statement or an invalid opcode.
 
 #### async expectRevert.outOfGas (promise)
-This helper asserts that `promise` was rejected due to a a transaction running out of gas.
+This helper asserts that `promise` was rejected due to a transaction running out of gas.
 
 ---
 
