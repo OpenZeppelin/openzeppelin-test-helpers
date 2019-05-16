@@ -1,6 +1,6 @@
-# OpenZeppelin test helpers
+# OpenZeppelin Test Helpers
 
-[![NPM Package](https://img.shields.io/npm/v/openzeppelin-test-helpers.svg?style=flat-square)](https://www.npmjs.org/package/openzeppelin-test-helpers)
+[![NPM Package](https://img.shields.io/npm/v/openzeppelin-test-helpers.svg)](https://www.npmjs.org/package/openzeppelin-test-helpers)
 [![Build Status](https://travis-ci.com/OpenZeppelin/openzeppelin-test-helpers.svg?branch=master)](https://travis-ci.com/OpenZeppelin/openzeppelin-test-helpers)
 
 JavaScript testing helpers for Ethereum smart contract development. These are specially suited for [truffle 5](https://truffleframework.com/truffle) (using [web3 1.0](https://github.com/ethereum/web3.js/)). [chai](http://chaijs.com/) [bn.js](https://github.com/indutny/bn.js) assertions using [chai-bn](https://github.com/ZeppelinSolutions/chai-bn) are also included.
