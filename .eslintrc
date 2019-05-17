@@ -33,6 +33,7 @@
     "no-dupe-args": "error",
     "no-dupe-keys": "error",
     "no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
+    "no-multi-str": "off",
     "no-redeclare": ["error", {"builtinGlobals": true}],
     "no-trailing-spaces": ["error", { "skipBlankLines": false }],
     "no-undef": "error",

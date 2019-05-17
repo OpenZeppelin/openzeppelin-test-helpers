@@ -15,7 +15,7 @@ npm install --save-dev openzeppelin-test-helpers
 
 ```javascript
 // Import all required modules from openzeppelin-test-helpers
-const { BN, constants, expectEvent, shouldFail } = require('openzeppelin-test-helpers');
+const { BN, constants, expectEvent, expectRevert } = require('openzeppelin-test-helpers');
 
 // Import preferred chai flavor: both expect and should are supported
 const { expect } = require('chai');
@@ -30,7 +30,7 @@ contract('ERC20', ([sender, receiver]) => {
 
   it('reverts when transferring tokens to the zero address', async function () {
     // Edge cases that trigger a require statement can be tested for, optionally checking the revert reason as well
-    await shouldFail.reverting(this.erc20.transfer(constants.ZERO_ADDRESS, this.value, { from: sender }));
+    await expectRevert.unspecified(this.erc20.transfer(constants.ZERO_ADDRESS, this.value, { from: sender }));
   });
 
   it('emits a Transfer event on successful transfers', async function () {
@@ -177,14 +177,11 @@ A chai [should](https://www.chaijs.com/api/bdd/) instance, containing the `bignu
 
 ---
 
-### shouldFail
-Collection of assertions for failures (similar to [chai's `throw`](https://www.chaijs.com/api/bdd/#method_throw)). `shouldFail` will accept any exception type, but more specific functions exist and their usage is encouraged.
+### expectRevert
+Collection of assertions for transaction errors (similar to [chai's `throw`](https://www.chaijs.com/api/bdd/#method_throw)).
 
-#### async shouldFail.reverting (promise)
-Only accepts failures caused due to an EVM revert (e.g. a failed `require`).
-
-#### async shouldFail.reverting.withMessage (promise, message)
-Like `shouldFail.reverting`, this helper only accepts failures caused due to an EVM revert (e.g. a failed `require`). Furthermore, it checks whether revert reason string includes passed `message`. For example:
+#### async expectRevert (promise, message)
+This helper asserts that `promise` was rejected due to a reverted transaction, and it will check that the revert reason includes `message`. Use `expectRevert.unspecified` when the revert reason is unknown. For example:
 
 ```solidity
 contract Owned {
@@ -203,7 +200,7 @@ contract Owned {
 
 Can be tested as follows:
 ```javascript
-const { shouldFail } = require('openzeppelin-test-helpers');
+const { expectRevert } = require('openzeppelin-test-helpers');
 
 const Owned = artifacts.require('Owned');
 
@@ -214,19 +211,20 @@ contract('Owned', ([owner, other]) => {
 
   describe('doOwnerOperation', function() {
     it('Fails when called by a non-owner account', async function () {
-      await shouldFail.reverting.withMessage(this.owned.doOwnerOperation({ from: other }), "Unauthorized");
+      await expectRevert(this.owned.doOwnerOperation({ from: other }), "Unauthorized");
     });
   });
   ...
 ```
 
-Use this helper to specify the expected error message, when you're testing a function that can revert for multiple reasons.
+#### async expectRevert.unspecified (promise)
+This helper asserts that `promise` was rejected due to a reverted transaction caused by a `require` or `revert` statement.
 
-#### async shouldFail.throwing (promise)
-Only accepts failures due to a failed `assert` (which executes an invalid opcode).
+#### async expectRevert.assertion (promise)
+This helper asserts that `promise` was rejected due to a reverted transaction caused by an `assert` statement or an invalid opcode.
 
-#### async shouldFail.outOfGas (promise)
-Only accepts failures due to the transaction running out of gas.
+#### async expectRevert.outOfGas (promise)
+This helper asserts that `promise` was rejected due to a transaction running out of gas.
 
 ---
 

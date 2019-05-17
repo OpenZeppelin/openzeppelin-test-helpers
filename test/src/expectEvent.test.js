@@ -1,7 +1,7 @@
 const { BN } = require('../../src/setup');
 const { expect } = require('chai');
+const assertFailure = require('../helpers/assertFailure');
 const expectEvent = require('../../src/expectEvent');
-const shouldFail = require('../../src/shouldFail');
 
 const EventEmitter = artifacts.require('EventEmitter');
 const IndirectEventEmitter = artifacts.require('IndirectEventEmitter');
@@ -30,13 +30,13 @@ describe('expectEvent', function () {
       });
 
       it('throws if a correct JavaScript number is passed', async function () {
-        await shouldFail(
+        await assertFailure(
           expectEvent.inConstruction(this.emitter, 'ShortUint', { value: this.constructionValues.uint })
         );
       });
 
       it('throws if an incorrect value is passed', async function () {
-        await shouldFail(expectEvent.inConstruction(this.emitter, 'ShortUint', { value: 23 }));
+        await assertFailure(expectEvent.inConstruction(this.emitter, 'ShortUint', { value: 23 }));
       });
     });
 
@@ -46,7 +46,7 @@ describe('expectEvent', function () {
       });
 
       it('throws if an incorrect value is passed', async function () {
-        await shouldFail(expectEvent.inConstruction(this.emitter, 'Boolean',
+        await assertFailure(expectEvent.inConstruction(this.emitter, 'Boolean',
           { value: !this.constructionValues.boolean }
         ));
       });
@@ -58,12 +58,12 @@ describe('expectEvent', function () {
       });
 
       it('throws if an incorrect string is passed', async function () {
-        await shouldFail(expectEvent.inConstruction(this.emitter, 'String', { value: 'ClosedZeppelin' }));
+        await assertFailure(expectEvent.inConstruction(this.emitter, 'String', { value: 'ClosedZeppelin' }));
       });
     });
 
     it('throws if an unemitted event is requested', async function () {
-      await shouldFail(expectEvent.inConstruction(this.emitter, 'UnemittedEvent'));
+      await assertFailure(expectEvent.inConstruction(this.emitter, 'UnemittedEvent'));
     });
   });
 
@@ -386,25 +386,25 @@ describe('expectEvent', function () {
           });
 
           it('throws if an unemitted event is requested', async function () {
-            await shouldFail(expectEvent.inTransaction(this.txHash, EventEmitter, 'UnemittedEvent',
+            await assertFailure(expectEvent.inTransaction(this.txHash, EventEmitter, 'UnemittedEvent',
               { value: this.value }
             ));
           });
 
           it('throws if an incorrect string is passed', async function () {
-            await shouldFail(expectEvent.inTransaction(this.txHash, EventEmitter, 'String',
+            await assertFailure(expectEvent.inTransaction(this.txHash, EventEmitter, 'String',
               { value: 'ClosedZeppelin' }
             ));
           });
 
           it('throws if an event emitted from other contract is passed', async function () {
-            await shouldFail(expectEvent.inTransaction(this.txHash, EventEmitter, 'IndirectString',
+            await assertFailure(expectEvent.inTransaction(this.txHash, EventEmitter, 'IndirectString',
               { value: this.value }
             ));
           });
 
           it('throws if an incorrect emitter is passed', async function () {
-            await shouldFail(expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'String',
+            await assertFailure(expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'String',
               { value: this.value }
             ));
           });
@@ -418,25 +418,25 @@ describe('expectEvent', function () {
           });
 
           it('throws if an unemitted event is requested', async function () {
-            await shouldFail(expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'UnemittedEvent',
+            await assertFailure(expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'UnemittedEvent',
               { value: this.value }
             ));
           });
 
           it('throws if an incorrect string is passed', async function () {
-            await shouldFail(expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'IndirectString',
+            await assertFailure(expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'IndirectString',
               { value: 'ClosedZeppelin' }
             ));
           });
 
           it('throws if an event emitted from other contract is passed', async function () {
-            await shouldFail(expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'String',
+            await assertFailure(expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'String',
               { value: this.value }
             ));
           });
 
           it('throws if an incorrect emitter is passed', async function () {
-            await shouldFail(expectEvent.inTransaction(this.txHash, EventEmitter, 'IndirectString',
+            await assertFailure(expectEvent.inTransaction(this.txHash, EventEmitter, 'IndirectString',
               { value: this.value }
             ));
           });

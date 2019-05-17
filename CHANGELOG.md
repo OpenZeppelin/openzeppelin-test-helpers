@@ -6,10 +6,18 @@
  * `shouldFail.reverting.withMessage` fails if no error string is provided. ([#28](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/28)
  * Rename `makeInterfaceId` to `makeInterfaceId.ERC165`, and add `makeInterfaceId.ERC1820`. ([#21](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/21)
  * Add possibility to configure a custom web3 instance. ([#38](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/38))
- 
+ * Replace `shouldFail` with `expectRevert`, with an improved API. ([#39](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/39))
+
 #### How to upgrade from 0.3
 - Change all occurences of `makeInterfaceId` to `makeInterfaceId.ERC165`.
-- Some uses of `shouldFail.reverting.withMessage` may fail now. This means it was being used incorrectly and an error string to match against should be added. Alternatively, if the error message is unknown, use `shouldFail.reverting` instead.
+- The `shouldFail` module has been renamed to `expectRevert`, and `reverting.withMessage` is now the main module export.
+
+| 0.3                                | 0.4                          |
+| ---------------------------------- | ---------------------------- |
+| `shouldFail.reverting.withMessage` | `expectRevert`               |
+| `shouldFail.reverting`             | `expectRevert.unspecified`   |
+| `shouldFail.throwing`              | `expectRevert.invalidOpcode` |
+| `shouldFail.outOfGas`              | `expectRevert.outOfGas`      |
 
 ## 0.3.2 (2019-04-10)
  * Update ERC1820Registry address. ([#26](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/26))

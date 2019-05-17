@@ -1,10 +1,10 @@
-const { shouldFail } = require('openzeppelin-test-helpers');
+const { expectRevert } = require('openzeppelin-test-helpers');
 const { expect } = require('chai');
 
 const Tested = artifacts.require('Tested');
 
 contract('Tested', function (accounts) {
-  context('shouldFail.reverting.withMessage', async function () {
+  context('expectRevert', async function () {
     beforeEach(async function () {
       this.contract = await Tested.new();
     })
@@ -25,7 +25,7 @@ contract('Tested', function (accounts) {
         }
         // With that said, following revert should be accepted without regard to the specified
         // reason message.
-        await shouldFail.reverting.withMessage(this.contract.failWithRevertReason(), expectedMessage);
+        await expectRevert(this.contract.failWithRevertReason(), expectedMessage);
       })
     })
   })

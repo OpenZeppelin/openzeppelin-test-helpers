@@ -1,4 +1,4 @@
-const { BN, constants, expectEvent, shouldFail } = require('openzeppelin-test-helpers');
+const { BN, constants, expectEvent, expectRevert } = require('openzeppelin-test-helpers');
 
 const Tested = artifacts.require('Tested');
 
@@ -13,7 +13,7 @@ contract('Tested', function (accounts) {
     })
 
     it('detect reverts', async function () {
-      await shouldFail.reverting(this.contract.reverts());
+      await expectRevert.unspecified(this.contract.reverts());
     });
 
     it('accepts calls with non-zero address', async function () {
@@ -22,7 +22,7 @@ contract('Tested', function (accounts) {
     });
 
     it('reverts with calls with non-zero address', async function () {
-      await shouldFail.reverting(this.contract.nonZeroAddress(constants.ZERO_ADDRESS));
+      await expectRevert.unspecified(this.contract.nonZeroAddress(constants.ZERO_ADDRESS));
     });
   });
 });
