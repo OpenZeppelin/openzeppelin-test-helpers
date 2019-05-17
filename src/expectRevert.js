@@ -1,6 +1,5 @@
 const { web3 } = require('./setup');
 
-const { expect } = require('chai');
 const colors = require('ansi-colors');
 const semver = require('semver');
 
@@ -8,7 +7,9 @@ async function expectException (promise, expectedError) {
   try {
     await promise;
   } catch (error) {
-    expect(error.message).to.include(expectedError, `Wrong failure type, expected '${expectedError}'`);
+    if (error.message.indexOf(expectedError) === -1) {
+      throw Error(`Wrong failure type, expected '${expectedError}' and got '${error.message}'`);
+    }
     return;
   }
 
