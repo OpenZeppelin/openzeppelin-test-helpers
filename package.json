@@ -10,8 +10,10 @@
   ],
   "scripts": {
     "lint": "eslint .",
+    "release": "scripts/release/release.sh",
     "test": "./scripts/test.sh --network ganache",
-    "test-integration": "./test-integration/run-all.sh"
+    "test-integration": "./test-integration/run-all.sh",
+    "version": "scripts/release/update-changelog-release-date.js"
   },
   "repository": {
     "type": "git",
