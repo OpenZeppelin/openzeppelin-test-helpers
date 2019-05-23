@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.4.0 (unreleased)
+## 0.4.0 (2019-05-23)
  * Fix `shouldFail.reverting.withMessage` on non-Ganache chains. ([#25](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/25)
  * Fix `send.transaction` not working on contracts with a fallback function. ([#26](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/26)
  * `shouldFail.reverting.withMessage` fails if no error string is provided. ([#28](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/28)
