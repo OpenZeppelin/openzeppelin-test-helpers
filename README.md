@@ -29,8 +29,10 @@ contract('ERC20', ([sender, receiver]) => {
   });
 
   it('reverts when transferring tokens to the zero address', async function () {
-    // Edge cases that trigger a require statement can be tested for, optionally checking the revert reason as well
-    await expectRevert.unspecified(this.erc20.transfer(constants.ZERO_ADDRESS, this.value, { from: sender }));
+    // Edge cases that trigger a require statement can be tested for
+    await expectRevert(
+      this.erc20.transfer(constants.ZERO_ADDRESS, this.value, { from: sender }), 'ERC20: transfer to the zero address'
+    );
   });
 
   it('emits a Transfer event on successful transfers', async function () {
@@ -153,30 +155,6 @@ Same as `inLogs`, but for events emitted in an arbitrary transaction (of hash `t
 
 ---
 
-
-### makeInterfaceId
-#### ERC165 (interfaces = [])
-Calculates the [ERC165](https://eips.ethereum.org/EIPS/eip-165) interface ID of a contract, given a series of function signatures.
-
-#### ERC1820 (name)
-Calculates the [ERC1820](https://eips.ethereum.org/EIPS/eip-1820) interface hash of a contract, given its name.
-
----
-
-### send
-#### async send.ether (from, to, value)
-Sends `value` Ether from `from` to `to`.
-
-#### async function send.transaction (target, name, argsTypes, argsValues, opts = {})
-Sends a transaction to contract `target`, calling method `name` with `argValues`, which are of type `argTypes` (as per the method's signature).
-
----
-
-### should
-A chai [should](https://www.chaijs.com/api/bdd/) instance, containing the `bignumber` property (via [chai-bn](https://github.com/ZeppelinSolutions/chai-bn)).
-
----
-
 ### expectRevert
 Collection of assertions for transaction errors (similar to [chai's `throw`](https://www.chaijs.com/api/bdd/#method_throw)).
 
@@ -225,6 +203,29 @@ This helper asserts that `promise` was rejected due to a reverted transaction ca
 
 #### async expectRevert.outOfGas (promise)
 This helper asserts that `promise` was rejected due to a transaction running out of gas.
+
+---
+
+### makeInterfaceId
+#### ERC165 (interfaces = [])
+Calculates the [ERC165](https://eips.ethereum.org/EIPS/eip-165) interface ID of a contract, given a series of function signatures.
+
+#### ERC1820 (name)
+Calculates the [ERC1820](https://eips.ethereum.org/EIPS/eip-1820) interface hash of a contract, given its name.
+
+---
+
+### send
+#### async send.ether (from, to, value)
+Sends `value` Ether from `from` to `to`.
+
+#### async function send.transaction (target, name, argsTypes, argsValues, opts = {})
+Sends a transaction to contract `target`, calling method `name` with `argValues`, which are of type `argTypes` (as per the method's signature).
+
+---
+
+### should
+A chai [should](https://www.chaijs.com/api/bdd/) instance, containing the `bignumber` property (via [chai-bn](https://github.com/ZeppelinSolutions/chai-bn)).
 
 ---
 
