@@ -1,10 +1,10 @@
 # Changelog
 
 ## 0.4.0 (unreleased)
- * Fixed `shouldFail.reverting.withMessage` on non-Ganache chains. ([#25](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/25)
- * Fixed `send.transaction` not working on contracts with a fallback function. ([#26](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/26)
- * Made `shouldFail.reverting.withMessage` fail if no error string was provided. ([#28](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/28)
- * Rename `makeInterfaceId` to `makeInterfaceId.ERC165`, and add `makeInterfaceId.ERC1820`. ([#21](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/21)
+ * Fixed `shouldFail.reverting.withMessage` on non-Ganache chains. ([#25](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/25))
+ * Fixed `send.transaction` not working on contracts with a fallback function. ([#26](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/26))
+ * Made `shouldFail.reverting.withMessage` fail if no error string was provided. ([#28](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/28))
+ * Rename `makeInterfaceId` to `makeInterfaceId.ERC165`, and add `makeInterfaceId.ERC1820`. ([#21](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/21))
  * Add possibility to configure a custom web3 instance. ([#38](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/38))
  * Replace `shouldFail` with `expectRevert`, with an improved API. ([#39](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/39))
  * Fixed detection of Ganache pre-releases (such as those used by Ganache GUI v2.0.1). ([#46](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/46))
