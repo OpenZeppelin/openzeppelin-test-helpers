@@ -246,12 +246,12 @@ Returns the timestamp of the latest mined block. Should be coupled with `advance
 Returns the latest mined block number.
 
 #### async time.increase (duration)
-Increases the time of the blockchain by `duration` (in seconds), and mines a new block with that timestamp.
+Increases the time of the blockchain by [`duration`](#timeduration) (in seconds), and mines a new block with that timestamp.
 
 #### async time.increaseTo (target)
 Same as `increase`, but a target time is specified instead of a duration.
 
-#### async time.duration
+#### time.duration
 Helpers to convert different time units to seconds. Available helpers are: `seconds`, `minutes`, `hours`, `days`, `weeks` and `years`.
 
 ```javascript
