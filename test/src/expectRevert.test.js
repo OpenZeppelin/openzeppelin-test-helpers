@@ -45,10 +45,6 @@ describe('expectRevert', function () {
       await expectRevert(this.reverter.revertFromRequireWithReason(), 'Failed requirement');
     });
 
-    it('rejects a throw', async function () {
-      await assertFailure(expectRevert(this.reverter.revertFromThrow()));
-    });
-
     it('rejects a failed assertion', async function () {
       await assertFailure(expectRevert(this.reverter.revertFromAssert()));
     });
@@ -77,10 +73,6 @@ describe('expectRevert', function () {
 
     it('accepts a failed requirement with reason', async function () {
       await expectRevert.unspecified(this.reverter.revertFromRequireWithReason());
-    });
-
-    it('accepts a throw', async function () {
-      await expectRevert.unspecified(this.reverter.revertFromThrow());
     });
 
     it('rejects a failed assertion', async function () {
@@ -113,10 +105,6 @@ describe('expectRevert', function () {
       await assertFailure(expectRevert.assertion(this.reverter.revertFromRequireWithReason()));
     });
 
-    it('rejects a throw', async function () {
-      await assertFailure(expectRevert.assertion(this.reverter.revertFromThrow()));
-    });
-
     it('accepts a failed assertion', async function () {
       await expectRevert.assertion(this.reverter.revertFromAssert());
     });
@@ -145,10 +133,6 @@ describe('expectRevert', function () {
 
     it('rejects a failed requirement with reason', async function () {
       await assertFailure(expectRevert.outOfGas(this.reverter.revertFromRequireWithReason()));
-    });
-
-    it('rejects a throw', async function () {
-      await assertFailure(expectRevert.outOfGas(this.reverter.revertFromThrow()));
     });
 
     it('accepts a failed assertion', async function () {

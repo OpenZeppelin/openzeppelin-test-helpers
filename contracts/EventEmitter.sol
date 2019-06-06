@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.0;
 
 import "./IndirectEventEmitter.sol";
 
@@ -14,7 +14,7 @@ contract EventEmitter {
     event LongUintBooleanString(uint256 uintValue, bool booleanValue, string stringValue);
     event Bytes(bytes value);
 
-    constructor (uint8 uintValue, bool booleanValue, string stringValue) public {
+    constructor (uint8 uintValue, bool booleanValue, string memory stringValue) public {
         emit ShortUint(uintValue);
         emit Boolean(booleanValue);
         emit String(stringValue);
@@ -48,7 +48,7 @@ contract EventEmitter {
         emit Boolean(value);
     }
 
-    function emitString(string value) public {
+    function emitString(string memory value) public {
         emit String(value);
     }
 
@@ -56,7 +56,7 @@ contract EventEmitter {
         emit Bytes(value);
     }
 
-    function emitLongUintBooleanString(uint256 uintValue, bool booleanValue, string stringValue) public {
+    function emitLongUintBooleanString(uint256 uintValue, bool booleanValue, string memory stringValue) public {
         emit LongUintBooleanString(uintValue, booleanValue, stringValue);
     }
 
@@ -65,7 +65,7 @@ contract EventEmitter {
         emit Boolean(boolValue);
     }
 
-    function emitStringAndEmitIndirectly(string value, IndirectEventEmitter emitter) public {
+    function emitStringAndEmitIndirectly(string memory value, IndirectEventEmitter emitter) public {
         emit String(value);
         emitter.emitStringIndirectly(value);
     }
