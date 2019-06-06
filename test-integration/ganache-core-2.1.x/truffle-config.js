@@ -6,4 +6,10 @@ module.exports = {
       network_id: '*', // eslint-disable-line camelcase
     },
   },
+
+  compilers: {
+    solc: {
+      version: '0.5.4',
+    },
+  },
 };
