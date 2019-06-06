@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.0;
 
 contract Reverter {
     uint256[] private array;
@@ -20,10 +20,6 @@ contract Reverter {
 
     function revertFromRequireWithReason() public pure {
         require(false, "Failed requirement");
-    }
-
-    function revertFromThrow() public pure {
-        throw;
     }
 
     function revertFromAssert() public pure {
