@@ -2,7 +2,7 @@ const { web3 } = require('./setup');
 
 const colors = require('ansi-colors');
 const semver = require('semver');
-const assert = require('assert');
+const AssertionError = require('assert').AssertionError;
 
 async function expectException (promise, expectedError) {
   try {
@@ -10,7 +10,11 @@ async function expectException (promise, expectedError) {
   } catch (error) {
     if (error.message.indexOf(expectedError) === -1) {
       const actualError = error.message.replace('Returned error: VM Exception while processing transaction: ', '');
-      assert.fail(`Wrong failure type, expected '${expectedError}' and got '${actualError}'`);
+      throw new AssertionError({
+        message: 'Wrong failure type',
+        expected: expectedError,
+        actual: actualError,
+      });
     }
     return;
   }
