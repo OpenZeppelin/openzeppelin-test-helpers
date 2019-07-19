@@ -36,7 +36,7 @@ async function inTransaction (txHash, emitter, eventName, eventArgs = {}) {
 }
 
 function contains (args, key, value) {
-  expect(key in args).to.equal(true, `Unknown event argument '${key}'`);
+  expect(key in args).to.equal(true, `Event argument '${key}' not found`);
 
   if (value === null) {
     expect(args[key]).to.equal(null);
