@@ -3,7 +3,7 @@ const { expect } = require('chai');
 
 function inLogs (logs, eventName, eventArgs = {}) {
   const events = logs.filter(e => e.event === eventName);
-  expect(events.length > 0).to.equal(true, `There is no '${eventName}'`);
+  expect(events.length > 0).to.equal(true, `No '${eventName}' events found`);
 
   const exception = [];
   const event = events.find(function (e) {
