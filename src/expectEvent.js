@@ -3,7 +3,7 @@ const { expect } = require('chai');
 
 function inLogs (logs, eventName, eventArgs = {}) {
   const events = logs.filter(e => e.event === eventName);
-  expect(events.length > 0).to.equal(true, `There is no '${eventName}'`);
+  expect(events.length > 0).to.equal(true, `No '${eventName}' events found`);
 
   const exception = [];
   const event = events.find(function (e) {
@@ -36,7 +36,7 @@ async function inTransaction (txHash, emitter, eventName, eventArgs = {}) {
 }
 
 function contains (args, key, value) {
-  expect(key in args).to.equal(true, `Unknown event argument '${key}'`);
+  expect(key in args).to.equal(true, `Event argument '${key}' not found`);
 
   if (value === null) {
     expect(args[key]).to.equal(null);
