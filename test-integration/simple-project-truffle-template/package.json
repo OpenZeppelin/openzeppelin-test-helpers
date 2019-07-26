@@ -1,5 +1,5 @@
 {
-  "name": "simple-project-truffle-5.x",
+  "name": "simple-project-truffle-5.0",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,6 +10,6 @@
   "license": "ISC",
   "devDependencies": {
     "chai": "^4.2.0",
-    "truffle": "^5.0.1"
+    "truffle": "5.0.1"
   }
 }

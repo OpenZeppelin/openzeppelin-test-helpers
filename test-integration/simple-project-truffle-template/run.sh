@@ -5,7 +5,7 @@ set -o errexit
 cd "$(dirname $0)"
 
 # Get a package like a user would install
-pkg="$(npm pack ../../ 2> /dev/null)"
+pkg="$(npm pack ../../../ 2> /dev/null)"
 
 # Clean it up afterwards
 trap "rm -f $pkg" EXIT
