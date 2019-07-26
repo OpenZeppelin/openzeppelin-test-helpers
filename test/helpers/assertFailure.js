@@ -1,5 +1,4 @@
 const { expect } = require('chai');
-const AssertionError = require('assert').AssertionError;
 
 async function assertFailure (promise) {
   try {

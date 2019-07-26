@@ -3,7 +3,6 @@ const { expect } = require('chai');
 
 const colors = require('ansi-colors');
 const semver = require('semver');
-const AssertionError = require('assert').AssertionError;
 
 async function expectException (promise, expectedError) {
   try {
