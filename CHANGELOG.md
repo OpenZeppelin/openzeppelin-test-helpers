@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.4.1 (unreleased)
+## 0.4.1 (2019-07-26)
  * Added support for web3 ^1.2.0 (included by truffle v5.0.29). ([#63](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/63))
 
 ## 0.4.0 (2019-05-23)
