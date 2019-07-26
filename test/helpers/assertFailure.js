@@ -4,7 +4,7 @@ async function assertFailure (promise) {
   try {
     await promise;
   } catch (error) {
-    return;
+    return error;
   }
   expect.fail();
 }

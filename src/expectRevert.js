@@ -1,4 +1,5 @@
 const { web3 } = require('./setup');
+const { expect } = require('chai');
 
 const colors = require('ansi-colors');
 const semver = require('semver');
@@ -8,12 +9,13 @@ async function expectException (promise, expectedError) {
     await promise;
   } catch (error) {
     if (error.message.indexOf(expectedError) === -1) {
-      throw Error(`Wrong failure type, expected '${expectedError}' and got '${error.message}'`);
+      const actualError = error.message.replace('Returned error: VM Exception while processing transaction: ', '');
+      expect.fail(actualError, expectedError, 'Wrong kind of exception received');
     }
     return;
   }
 
-  throw Error('Expected failure not received');
+  expect.fail('Expected an exception but none was received');
 }
 
 const expectRevert = async function (promise, expectedError) {
