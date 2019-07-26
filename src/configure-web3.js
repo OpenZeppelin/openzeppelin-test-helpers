@@ -12,7 +12,7 @@ function setWeb3 (web3) {
   }
 
   // this could be taken from package.dependencies in the future
-  const requiredVersion = '1.0.0-beta.37';
+  const requiredVersion = '1.0.0-beta.37 || ^1.2.0';
 
   if (!semver.satisfies(web3.version, requiredVersion)) {
     throw new Error(`web3@${web3.version} detected, incompatible with requirement of web3@${requiredVersion}`);
