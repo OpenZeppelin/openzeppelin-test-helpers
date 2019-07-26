@@ -1,3 +1,5 @@
+const { expect } = require('chai');
+
 const assertFailure = require('../helpers/assertFailure');
 const expectRevert = require('../../src/expectRevert');
 
@@ -10,7 +12,10 @@ describe('expectRevert', function () {
 
   describe('expectRevert', function () {
     it('rejects if no revert occurs', async function () {
-      await assertFailure(expectRevert(this.reverter.dontRevert()));
+      const assertion =
+        await assertFailure(expectRevert(this.reverter.dontRevert(), 'reason'));
+
+      expect(assertion.message).to.equal('Expected an exception but none was received');
     });
 
     it('rejects a revert', async function () {
@@ -22,7 +27,10 @@ describe('expectRevert', function () {
     });
 
     it('rejects a revert with incorrect expected reason', async function () {
-      await assertFailure(expectRevert(this.reverter.revertFromRevertWithReason(), 'Wrong reason'));
+      const assertion =
+        await assertFailure(expectRevert(this.reverter.revertFromRevertWithReason(), 'Wrong reason'));
+
+      expect(assertion.message).to.equal('Wrong kind of exception received');
     });
 
     it('accepts a revert with correct expected reason', async function () {

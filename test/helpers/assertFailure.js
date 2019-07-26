@@ -5,10 +5,7 @@ async function assertFailure (promise) {
   try {
     await promise;
   } catch (error) {
-    if (error instanceof AssertionError) {
-      expect(error.message).to.equal('Wrong failure type');
-    }
-    return;
+    return error;
   }
   expect.fail();
 }
