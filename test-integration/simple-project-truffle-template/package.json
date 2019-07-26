@@ -10,6 +10,6 @@
   "license": "ISC",
   "devDependencies": {
     "chai": "^4.2.0",
-    "truffle": "5.0.0"
+    "truffle": "5.0.1"
   }
 }

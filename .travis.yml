@@ -21,8 +21,8 @@ jobs:
       script: npm run test
 
     - stage: Integration tests
-      name: "Truffle 5.0"
-      script: ./test-integration/simple-project-truffle-5.0/run.sh
+      name: "Truffle 5.0.1"
+      script: ./test-integration/simple-project-truffle-5.0.1/run.sh
 
     - stage: Integration tests
       name: "Ganache Core 2.1.x"
