@@ -26,6 +26,23 @@ assert_current_branch() {
   fi
 }
 
+start_release() {
+  log "Creating new $1 pre-release"
+
+  assert_current_branch master
+
+  # Create temporary release branch
+  git checkout -b release-temp
+
+  # This bumps $1 and adds rc suffix, commits the changes, and tags the commit
+  npm version "pre$1" --preid=rc
+
+  # Rename the release branch
+  git branch --move "$(current_release_branch)"
+
+  push_and_publish next
+}
+
 push_release_branch_and_tag() {
   git push upstream "$(current_release_branch)" "$(current_version)"
 }
@@ -66,21 +83,8 @@ environment_check() {
 
 environment_check
 
-if [[ "$*" == "start minor" ]]; then
-  log "Creating new minor pre-release"
-
-  assert_current_branch master
-
-  # Create temporary release branch
-  git checkout -b release-temp
-
-  # This bumps minor and adds rc suffix, commits the changes, and tags the commit
-  npm version preminor --preid=rc
-
-  # Rename the release branch
-  git branch --move "$(current_release_branch)"
-
-  push_and_publish next
+if [[ "$*" == "start patch" ]] || [[ "$*" == "start minor" ]]; then
+  start_release $2
 
 elif [[ "$*" == "rc" ]]; then
   log "Bumping pre-release"
