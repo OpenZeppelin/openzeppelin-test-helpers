@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.4.2 (unreleased)
+## 0.4.2 (2019-07-31)
  * Upgrade web3-utils and truffle-contract dependencies to use the stable web3 release. ([#65](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/65))
 
 ## 0.4.1 (2019-07-26)
