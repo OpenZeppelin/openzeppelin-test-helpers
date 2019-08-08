@@ -30,7 +30,9 @@ describe('expectRevert', function () {
       const assertion =
         await assertFailure(expectRevert(this.reverter.revertFromRevertWithReason(), 'Wrong reason'));
 
-      expect(assertion.message).to.equal('Wrong kind of exception received');
+      expect(assertion.message).to.include('Wrong kind of exception received');
+      expect(assertion.actual).to.equal('Call to revert');
+      expect(assertion.expected).to.equal('Wrong reason');
     });
 
     it('accepts a revert with correct expected reason', async function () {

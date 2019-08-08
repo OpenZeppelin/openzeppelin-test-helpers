@@ -9,8 +9,8 @@ async function expectException (promise, expectedError) {
     await promise;
   } catch (error) {
     if (error.message.indexOf(expectedError) === -1) {
-      const actualError = error.message.replace('Returned error: VM Exception while processing transaction: ', '');
-      expect.fail(actualError, expectedError, 'Wrong kind of exception received');
+      const actualError = error.message.replace(/Returned error: VM Exception while processing transaction: (revert )?/, '');
+      expect(actualError).to.equal(expectedError, `Wrong kind of exception received`);
     }
     return;
   }
