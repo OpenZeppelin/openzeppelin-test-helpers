@@ -4,7 +4,7 @@ module.exports = function(deployer) {
   deployer.deploy(Migrations);
 
   try {
-    require('openzeppelin-test-helpers/configure')({ web3 });
+    require('openzeppelin-test-helpers/configure')({ provider: web3.currentProvider });
 
     console.error('Successfully configured Web3 instance');
   } catch (e) {

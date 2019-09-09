@@ -1,6 +1,8 @@
-/* global web3 */
-
 const { setWeb3 } = require('./src/configure-web3');
+
+const Web3 = require('web3');
+
+const DEFAULT_PROVIDER_URL = 'http://localhost:7545';
 
 let loadedConfig;
 
@@ -20,7 +22,7 @@ function configure (config) {
 
 A configuration has been loaded by default. Make sure to do custom configuration before importing the library.
 
-    require('openzeppelin-test-helpers/configure')({ web3: ... });
+    require('openzeppelin-test-helpers/configure')({ provider: ... });
     const { expectEvent } = require('openzeppelin-test-helpers');
 
 `;
@@ -35,21 +37,12 @@ A configuration has been loaded by default. Make sure to do custom configuration
 };
 
 function defaultConfigure () {
-  if (typeof web3 === 'undefined') {
-    throw new Error(`Cannot find a global Web3 instance. Please configure one manually:
-
-    require('openzeppelin-test-helpers/configure')({ web3: ... });
-
-`
-    );
-  }
-
-  // use global web3
-  setWeb3(web3);
+  setWeb3(new Web3(DEFAULT_PROVIDER_URL));
 }
 
 function customConfigure (config) {
-  setWeb3(config.web3);
+  // The provider may be either an URL to an HTTP endpoint, or a complete provider object
+  setWeb3(new Web3(config.provider));
 }
 
 module.exports = configure;
