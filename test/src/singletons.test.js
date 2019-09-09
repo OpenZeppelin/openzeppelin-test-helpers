@@ -8,21 +8,21 @@ contract('singletons', function ([funder]) {
       this.registry = await singletons.ERC1820Registry(funder);
     });
 
-    it('returns a truffle-contract instance', function () {
-      expect(this.registry.constructor.name).to.equal('TruffleContract');
+    it('returns a web3 contract instance', function () {
+      expect(this.registry.constructor.name).to.equal('Contract');
     });
 
     it('the registry is stored at the correct address', function () {
-      expect(this.registry.address).to.equal('0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24');
+      expect(this.registry.options.address).to.equal('0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24');
     });
 
     it('stores the correct code at the registry address', async function () {
-      expect((await web3.eth.getCode(this.registry.address))).to.equal(ERC1820_REGISTRY_BYTECODE);
+      expect((await web3.eth.getCode(this.registry.options.address))).to.equal(ERC1820_REGISTRY_BYTECODE);
     });
 
     it('returns the same truffle-contract when attempting to deploy a second registry', async function () {
       const newRegistry = await singletons.ERC1820Registry(funder);
-      expect(newRegistry.address).to.equal('0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24');
+      expect(newRegistry.options.address).to.equal('0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24');
     });
   });
 });
