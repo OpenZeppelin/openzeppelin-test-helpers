@@ -4,7 +4,7 @@ const { expect } = require('chai');
 const colors = require('ansi-colors');
 const semver = require('semver');
 
-let nodeInfo;
+let nodeInfo; // We cache the result for performance
 
 async function expectException (promise, expectedError) {
   try {
