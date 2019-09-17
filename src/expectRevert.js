@@ -4,6 +4,8 @@ const { expect } = require('chai');
 const colors = require('ansi-colors');
 const semver = require('semver');
 
+let nodeInfo; // We cache the result for performance
+
 async function expectException (promise, expectedError) {
   try {
     await promise;
@@ -32,7 +34,9 @@ if your \'require\' statement doesn\'t have one.');
 
   // Find out if current version of ganache-core supports revert reason i.e >= 2.2.0.
   // https://github.com/trufflesuite/ganache-core/releases/tag/v2.2.0
-  const nodeInfo = await web3.eth.getNodeInfo();
+  if (nodeInfo === undefined) {
+    nodeInfo = await web3.eth.getNodeInfo();
+  }
   const matches = /TestRPC\/v([\w.-]+)\/ethereum-js/.exec(nodeInfo);
 
   const warn = function (msg) {
