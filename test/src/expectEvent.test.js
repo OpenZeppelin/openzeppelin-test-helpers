@@ -1,10 +1,9 @@
-const { BN } = require('../../src/setup');
+const { BN, load } = require('../../src/setup');
 const { expect } = require('chai');
 const assertFailure = require('../helpers/assertFailure');
 const expectEvent = require('../../src/expectEvent');
 
-
-describe('expectEvent', function () {
+contract('expectEvent', function ([deployer]) {
   beforeEach(async function () {
     this.constructionValues = {
       uint: 42,
@@ -14,6 +13,30 @@ describe('expectEvent', function () {
   });
 
   context('with web3 contracts', function () {
+    const EventEmitter = load('EventEmitter');
+    const IndirectEventEmitter = load('IndirectEventEmitter');
+
+    beforeEach(async function () {
+      this.emitter = await EventEmitter.deploy({ arguments: [
+        this.constructionValues.uint,
+        this.constructionValues.boolean,
+        this.constructionValues.string
+      ] }).send({ from: deployer, gas: 2e6 });
+    });
+
+    describe('inWeb3', function () {
+      beforeEach(async function () {
+        this.tx = await this.emitter.methods.emitArgumentless().send({ from: deployer, gas: 2e6 });
+      });
+
+      it('accepts emitted events', function () {
+        expectEvent.inWeb3(this.tx, 'Argumentless');
+      });
+
+      it('throws if an unemitted event is requested', function () {
+        expect(() => expectEvent.inWeb3(this.tx, 'UnemittedEvent')).to.throw();
+      });
+    });
   });
 
   context('with truffle contracts', function () {

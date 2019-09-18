@@ -51,8 +51,14 @@ function isBN (object) {
   return BN.isBN(object) || object instanceof BN;
 }
 
+function inWeb3(tx, eventName, eventArgs = {}) {
+  expect(tx).to.have.property('events');
+  expect(tx.events).to.have.property(eventName);
+}
+
 module.exports = {
   inLogs,
   inConstruction,
   inTransaction,
+  inWeb3,
 };

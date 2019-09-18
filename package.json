@@ -43,6 +43,7 @@
     "web3-utils": "^1.2.1"
   },
   "devDependencies": {
+    "@openzeppelin/contract-loader": "^0.1.0",
     "chai": "^4.2.0",
     "eslint": "^5.9.0",
     "eslint-config-standard": "^12.0.0",
