@@ -13,7 +13,7 @@ cleanup() {
   fi
 }
 
-ganache_port=8545
+ganache_port=7545
 
 ganache_running() {
   nc -z localhost "$ganache_port"
