@@ -6,7 +6,7 @@ const expectEvent = require('../../src/expectEvent');
 const EventEmitter = load('EventEmitter');
 const IndirectEventEmitter = load('IndirectEventEmitter');
 
-contract.only('expectEvent (web3 contracts) ', function ([deployer]) {
+contract('expectEvent (web3 contracts) ', function ([deployer]) {
   beforeEach(async function () {
     this.constructionValues = {
       uint: 42,
