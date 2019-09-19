@@ -25,16 +25,47 @@ contract('expectEvent', function ([deployer]) {
     });
 
     describe('inWeb3', function () {
-      beforeEach(async function () {
-        this.tx = await this.emitter.methods.emitArgumentless().send({ from: deployer, gas: 2e6 });
+      describe('with no arguments', function () {
+        beforeEach(async function () {
+          this.tx = await this.emitter.methods.emitArgumentless().send({ from: deployer, gas: 2e6 });
+        });
+
+        it('accepts emitted events', function () {
+          expectEvent(this.tx, 'Argumentless');
+        });
+
+        it('throws if an unemitted event is requested', function () {
+          expect(() => expectEvent(this.tx, 'UnemittedEvent')).to.throw();
+        });
       });
 
-      it('accepts emitted events', function () {
-        expectEvent.inWeb3(this.tx, 'Argumentless');
-      });
+      describe('with single argument', function () {
+        context('short uint value', function () {
+          beforeEach(async function () {
+            this.value = 42;
+            this.tx = await this.emitter.methods.emitShortUint(this.value).send({ from: deployer, gas: 2e6 });
+          });
 
-      it('throws if an unemitted event is requested', function () {
-        expect(() => expectEvent.inWeb3(this.tx, 'UnemittedEvent')).to.throw();
+          it('accepts emitted events with correct BN', function () {
+            expectEvent(this.tx, 'ShortUint', { value: new BN(this.value) });
+          });
+
+          it('throws if an emitted event with correct JavaScript number is requested', function () {
+            expect(() => expectEvent(this.tx, 'ShortUint', { value: this.value })).to.throw();
+          });
+
+          it('throws if an emitted event with correct BN and incorrect name is requested', function () {
+            expect(() => expectEvent(this.tx, 'ShortUint', { number: new BN(this.value) })).to.throw();
+          });
+
+          it('throws if an unemitted event is requested', function () {
+            expect(() => expectEvent(this.tx, 'UnemittedEvent', { value: this.value })).to.throw();
+          });
+
+          it('throws if an incorrect value is passed', function () {
+            expect(() => expectEvent(this.tx, 'ShortUint', { value: 23 })).to.throw();
+          });
+        });
       });
     });
   });
