@@ -11,8 +11,9 @@ function expectEvent(tx, eventName, eventArgs = {}) {
 
     inLogs(logs, eventName, eventArgs);
 
-  } else if (!('logs' in tx)) { // truffle-contract detection
+  } else if ('logs' in tx) { // truffle-contract detection
     inLogs(tx.logs, eventName, eventArgs);
+
   } else {
     throw new Error('Unknown tx object');
   }
