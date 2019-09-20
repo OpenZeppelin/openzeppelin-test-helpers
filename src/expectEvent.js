@@ -71,6 +71,8 @@ async function inTransaction (txHash, emitter, eventName, eventArgs = {}) {
   return inLogs(logs, eventName, eventArgs);
 }
 
+// This decodes longs for a single event type, and returns a decoded object in
+// the same form truffle-contract uses on its receipts
 function decodeLogs(logs, emitter, eventName) {
   let abi;
   if (isWeb3Contract(emitter)) {
@@ -87,9 +89,11 @@ function decodeLogs(logs, emitter, eventName) {
   }
   eventABI = eventABI[0];
 
+  // The first topic will equal the hash of the event signature
   const eventSignature = `${eventName}(${eventABI.inputs.map(input => input.type).join(',')})`;
   const eventTopic = web3.utils.sha3(eventSignature);
 
+  // Only decode events of type 'EventName'
   return logs
     .filter(log => log.topics.length > 0 && log.topics[0] === eventTopic)
     .map(log => web3.eth.abi.decodeLog(eventABI.inputs, log.data, log.topics.slice(1)))
