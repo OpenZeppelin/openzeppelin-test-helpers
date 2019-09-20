@@ -34,15 +34,15 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
   describe('default', function () {
     describe('with no arguments', function () {
       beforeEach(async function () {
-        this.tx = await this.emitter.methods.emitArgumentless().send();
+        this.receipt = await this.emitter.methods.emitArgumentless().send();
       });
 
       it('accepts emitted events', function () {
-        expectEvent(this.tx, 'Argumentless');
+        expectEvent(this.receipt, 'Argumentless');
       });
 
       it('throws if an unemitted event is requested', function () {
-        expect(() => expectEvent(this.tx, 'UnemittedEvent')).to.throw();
+        expect(() => expectEvent(this.receipt, 'UnemittedEvent')).to.throw();
       });
     });
 
@@ -50,108 +50,108 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
       context('short uint value', function () {
         beforeEach(async function () {
           this.value = 42;
-          this.tx = await this.emitter.methods.emitShortUint(this.value).send();
+          this.receipt = await this.emitter.methods.emitShortUint(this.value).send();
         });
 
         it('accepts emitted events with correct BN', function () {
-          expectEvent(this.tx, 'ShortUint', { value: new BN(this.value) });
+          expectEvent(this.receipt, 'ShortUint', { value: new BN(this.value) });
         });
 
         it('throws if an emitted event with correct JavaScript number is requested', function () {
-          expect(() => expectEvent(this.tx, 'ShortUint', { value: this.value })).to.throw();
+          expect(() => expectEvent(this.receipt, 'ShortUint', { value: this.value })).to.throw();
         });
 
         it('throws if an emitted event with correct BN and incorrect name is requested', function () {
-          expect(() => expectEvent(this.tx, 'ShortUint', { number: new BN(this.value) })).to.throw();
+          expect(() => expectEvent(this.receipt, 'ShortUint', { number: new BN(this.value) })).to.throw();
         });
 
         it('throws if an unemitted event is requested', function () {
-          expect(() => expectEvent(this.tx, 'UnemittedEvent', { value: this.value })).to.throw();
+          expect(() => expectEvent(this.receipt, 'UnemittedEvent', { value: this.value })).to.throw();
         });
 
         it('throws if an incorrect value is passed', function () {
-          expect(() => expectEvent(this.tx, 'ShortUint', { value: 23 })).to.throw();
+          expect(() => expectEvent(this.receipt, 'ShortUint', { value: 23 })).to.throw();
         });
       });
 
       context('short int value', function () {
         beforeEach(async function () {
           this.value = -42;
-          this.tx = await this.emitter.methods.emitShortInt(this.value).send();
+          this.receipt = await this.emitter.methods.emitShortInt(this.value).send();
         });
 
         it('accepts emitted events with correct BN', function () {
-          expectEvent(this.tx, 'ShortInt', { value: new BN(this.value) });
+          expectEvent(this.receipt, 'ShortInt', { value: new BN(this.value) });
         });
 
         it('throws if an emitted event with correct JavaScript number is requested', function () {
-          expect(() => expectEvent(this.tx, 'ShortInt', { value: this.value })).to.throw();
+          expect(() => expectEvent(this.receipt, 'ShortInt', { value: this.value })).to.throw();
         });
 
         it('throws if an unemitted event is requested', function () {
-          expect(() => expectEvent(this.tx, 'UnemittedEvent', { value: this.value })).to.throw();
+          expect(() => expectEvent(this.receipt, 'UnemittedEvent', { value: this.value })).to.throw();
         });
 
         it('throws if an incorrect value is passed', function () {
-          expect(() => expectEvent(this.tx, 'ShortInt', { value: -23 })).to.throw();
+          expect(() => expectEvent(this.receipt, 'ShortInt', { value: -23 })).to.throw();
         });
       });
 
       context('long uint value', function () {
         beforeEach(async function () {
           this.bigNumValue = '123456789012345678901234567890';
-          this.tx = await this.emitter.methods.emitLongUint(this.bigNumValue).send();
+          this.receipt = await this.emitter.methods.emitLongUint(this.bigNumValue).send();
         });
 
         it('accepts emitted events with correct BN', function () {
-          expectEvent(this.tx, 'LongUint', { value: this.bigNumValue });
+          expectEvent(this.receipt, 'LongUint', { value: this.bigNumValue });
         });
 
         it('throws if an unemitted event is requested', function () {
-          expect(() => expectEvent(this.tx, 'UnemittedEvent', { value: this.bigNumValue })).to.throw();
+          expect(() => expectEvent(this.receipt, 'UnemittedEvent', { value: this.bigNumValue })).to.throw();
         });
 
         it('throws if an incorrect value is passed', function () {
-          expect(() => expectEvent(this.tx, 'LongUint', { value: 2300 })).to.throw();
+          expect(() => expectEvent(this.receipt, 'LongUint', { value: 2300 })).to.throw();
         });
       });
 
       context('long int value', function () {
         beforeEach(async function () {
           this.bigNumValue = '-123456789012345678901234567890';
-          this.tx = await this.emitter.methods.emitLongInt(this.bigNumValue).send();
+          this.receipt = await this.emitter.methods.emitLongInt(this.bigNumValue).send();
         });
 
         it('accepts emitted events with correct BN', function () {
-          expectEvent(this.tx, 'LongInt', { value: this.bigNumValue });
+          expectEvent(this.receipt, 'LongInt', { value: this.bigNumValue });
         });
 
         it('throws if an unemitted event is requested', function () {
-          expect(() => expectEvent(this.tx, 'UnemittedEvent', { value: this.bigNumValue })).to.throw();
+          expect(() => expectEvent(this.receipt, 'UnemittedEvent', { value: this.bigNumValue })).to.throw();
         });
 
         it('throws if an incorrect value is passed', function () {
-          expect(() => expectEvent(this.tx, 'LongInt', { value: -2300 })).to.throw();
+          expect(() => expectEvent(this.receipt, 'LongInt', { value: -2300 })).to.throw();
         });
       });
 
       context('address value', function () {
         beforeEach(async function () {
           this.value = '0x811412068E9Fbf25dc300a29E5E316f7122b282c';
-          this.tx = await this.emitter.methods.emitAddress(this.value).send();
+          this.receipt = await this.emitter.methods.emitAddress(this.value).send();
         });
 
         it('accepts emitted events with correct address', function () {
-          expectEvent(this.tx, 'Address', { value: this.value });
+          expectEvent(this.receipt, 'Address', { value: this.value });
         });
 
         it('throws if an unemitted event is requested', function () {
-          expect(() => expectEvent(this.tx, 'UnemittedEvent', { value: this.value })).to.throw();
+          expect(() => expectEvent(this.receipt, 'UnemittedEvent', { value: this.value })).to.throw();
         });
 
         it('throws if an incorrect value is passed', function () {
           expect(() =>
-            expectEvent(this.tx, 'Address', { value: '0x21d04e022e0b52b5d5bcf90b7f1aabf406be002d' })
+            expectEvent(this.receipt, 'Address', { value: '0x21d04e022e0b52b5d5bcf90b7f1aabf406be002d' })
           ).to.throw();
         });
       });
@@ -159,38 +159,38 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
       context('boolean value', function () {
         beforeEach(async function () {
           this.value = true;
-          this.tx = await this.emitter.methods.emitBoolean(this.value).send();
+          this.receipt = await this.emitter.methods.emitBoolean(this.value).send();
         });
 
         it('accepts emitted events with correct address', function () {
-          expectEvent(this.tx, 'Boolean', { value: this.value });
+          expectEvent(this.receipt, 'Boolean', { value: this.value });
         });
 
         it('throws if an unemitted event is requested', function () {
-          expect(() => expectEvent(this.tx, 'UnemittedEvent', { value: this.value })).to.throw();
+          expect(() => expectEvent(this.receipt, 'UnemittedEvent', { value: this.value })).to.throw();
         });
 
         it('throws if an incorrect value is passed', function () {
-          expect(() => expectEvent(this.tx, 'Boolean', { value: false })).to.throw();
+          expect(() => expectEvent(this.receipt, 'Boolean', { value: false })).to.throw();
         });
       });
 
       context('string value', function () {
         beforeEach(async function () {
           this.value = 'OpenZeppelin';
-          this.tx = await this.emitter.methods.emitString(this.value).send();
+          this.receipt = await this.emitter.methods.emitString(this.value).send();
         });
 
         it('accepts emitted events with correct string', function () {
-          expectEvent(this.tx, 'String', { value: this.value });
+          expectEvent(this.receipt, 'String', { value: this.value });
         });
 
         it('throws if an unemitted event is requested', function () {
-          expect(() => expectEvent(this.tx, 'UnemittedEvent', { value: this.value })).to.throw();
+          expect(() => expectEvent(this.receipt, 'UnemittedEvent', { value: this.value })).to.throw();
         });
 
         it('throws if an incorrect value is passed', function () {
-          expect(() => expectEvent(this.tx, 'String', { value: 'ClosedZeppelin' })).to.throw();
+          expect(() => expectEvent(this.receipt, 'String', { value: 'ClosedZeppelin' })).to.throw();
         });
       });
 
@@ -198,38 +198,38 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
         context('with non-null value', function () {
           beforeEach(async function () {
             this.value = '0x12345678';
-            this.tx = await this.emitter.methods.emitBytes(this.value).send();
+            this.receipt = await this.emitter.methods.emitBytes(this.value).send();
           });
 
           it('accepts emitted events with correct bytes', function () {
-            expectEvent(this.tx, 'Bytes', { value: this.value });
+            expectEvent(this.receipt, 'Bytes', { value: this.value });
           });
 
           it('throws if an unemitted event is requested', function () {
-            expect(() => expectEvent(this.tx, 'UnemittedEvent', { value: this.value })).to.throw();
+            expect(() => expectEvent(this.receipt, 'UnemittedEvent', { value: this.value })).to.throw();
           });
 
           it('throws if an incorrect value is passed', function () {
-            expect(() => expectEvent(this.tx, 'Bytes', { value: '0x123456' })).to.throw();
+            expect(() => expectEvent(this.receipt, 'Bytes', { value: '0x123456' })).to.throw();
           });
         });
 
         context('with null value', function () {
           beforeEach(async function () {
             this.value = '0x';
-            this.tx = await this.emitter.methods.emitBytes(this.value).send();
+            this.receipt = await this.emitter.methods.emitBytes(this.value).send();
           });
 
           it('accepts emitted events with correct bytes', function () {
-            expectEvent(this.tx, 'Bytes', { value: null });
+            expectEvent(this.receipt, 'Bytes', { value: null });
           });
 
           it('throws if an unemitted event is requested', function () {
-            expect(() => expectEvent(this.tx, 'UnemittedEvent', { value: null })).to.throw();
+            expect(() => expectEvent(this.receipt, 'UnemittedEvent', { value: null })).to.throw();
           });
 
           it('throws if an incorrect value is passed', function () {
-            expect(() => expectEvent(this.tx, 'Bytes', { value: '0x123456' })).to.throw();
+            expect(() => expectEvent(this.receipt, 'Bytes', { value: '0x123456' })).to.throw();
           });
         });
       });
@@ -240,33 +240,33 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
         this.uintValue = '123456789012345678901234567890';
         this.booleanValue = true;
         this.stringValue = 'OpenZeppelin';
-        this.tx = await this.emitter.methods.emitLongUintBooleanString(
+        this.receipt = await this.emitter.methods.emitLongUintBooleanString(
           this.uintValue, this.booleanValue, this.stringValue
         ).send();
       });
 
       it('accepts correct values', function () {
-        expectEvent(this.tx, 'LongUintBooleanString', {
+        expectEvent(this.receipt, 'LongUintBooleanString', {
           uintValue: this.uintValue, booleanValue: this.booleanValue, stringValue: this.stringValue,
         });
       });
 
       it('throws with correct values assigned to wrong arguments', function () {
-        expect(() => expectEvent(this.tx, 'LongUintBooleanString', {
+        expect(() => expectEvent(this.receipt, 'LongUintBooleanString', {
           uintValue: this.booleanValue, booleanValue: this.uintValue, stringValue: this.stringValue,
         })).to.throw();
       });
 
       it('throws when any of the values is incorrect', function () {
-        expect(() => expectEvent(this.tx, 'LongUintBooleanString', {
+        expect(() => expectEvent(this.receipt, 'LongUintBooleanString', {
           uintValue: 23, booleanValue: this.booleanValue, stringValue: this.stringValue,
         })).to.throw();
 
-        expect(() => expectEvent(this.tx, 'LongUintBooleanString', {
+        expect(() => expectEvent(this.receipt, 'LongUintBooleanString', {
           uintValue: this.uintValue, booleanValue: false, stringValue: this.stringValue,
         })).to.throw();
 
-        expect(() => expectEvent(this.tx, 'LongUintBooleanString', {
+        expect(() => expectEvent(this.receipt, 'LongUintBooleanString', {
           uintValue: this.uintValue, booleanValue: this.booleanValue, stringValue: 'ClosedZeppelin',
         })).to.throw();
       });
@@ -276,21 +276,21 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
       beforeEach(async function () {
         this.uintValue = 42;
         this.booleanValue = true;
-        this.tx = await this.emitter.methods.emitLongUintAndBoolean(this.uintValue, this.booleanValue).send();
+        this.receipt = await this.emitter.methods.emitLongUintAndBoolean(this.uintValue, this.booleanValue).send();
       });
 
       it('accepts all emitted events with correct values', function () {
-        expectEvent(this.tx, 'LongUint', { value: new BN(this.uintValue) });
-        expectEvent(this.tx, 'Boolean', { value: this.booleanValue });
+        expectEvent(this.receipt, 'LongUint', { value: new BN(this.uintValue) });
+        expectEvent(this.receipt, 'Boolean', { value: this.booleanValue });
       });
 
       it('throws if an unemitted event is requested', function () {
-        expect(() => expectEvent(this.tx, 'UnemittedEvent', { value: this.uintValue })).to.throw();
+        expect(() => expectEvent(this.receipt, 'UnemittedEvent', { value: this.uintValue })).to.throw();
       });
 
       it('throws if incorrect values are passed', function () {
-        expect(() => expectEvent(this.tx, 'LongUint', { value: 23 })).to.throw();
-        expect(() => expectEvent(this.tx, 'Boolean', { value: false })).to.throw();
+        expect(() => expectEvent(this.receipt, 'LongUint', { value: 23 })).to.throw();
+        expect(() => expectEvent(this.receipt, 'Boolean', { value: false })).to.throw();
       });
     });
 
@@ -298,38 +298,38 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
       beforeEach(async function () {
         this.firstUintValue = 42;
         this.secondUintValue = 24;
-        this.tx = await this.emitter.methods.emitTwoLongUint(this.firstUintValue, this.secondUintValue).send();
+        this.receipt = await this.emitter.methods.emitTwoLongUint(this.firstUintValue, this.secondUintValue).send();
       });
 
       it('accepts all emitted events of the same type', function () {
-        expectEvent(this.tx, 'LongUint', { value: new BN(this.firstUintValue) });
-        expectEvent(this.tx, 'LongUint', { value: new BN(this.secondUintValue) });
+        expectEvent(this.receipt, 'LongUint', { value: new BN(this.firstUintValue) });
+        expectEvent(this.receipt, 'LongUint', { value: new BN(this.secondUintValue) });
       });
 
       it('throws if an unemitted event is requested', function () {
-        expect(() => expectEvent(this.tx, 'UnemittedEvent', { value: this.uintValue })).to.throw();
+        expect(() => expectEvent(this.receipt, 'UnemittedEvent', { value: this.uintValue })).to.throw();
       });
 
       it('throws if incorrect values are passed', function () {
-        expect(() => expectEvent(this.tx, 'LongUint', { value: new BN(41) })).to.throw();
-        expect(() => expectEvent(this.tx, 'LongUint', { value: 24 })).to.throw();
+        expect(() => expectEvent(this.receipt, 'LongUint', { value: new BN(41) })).to.throw();
+        expect(() => expectEvent(this.receipt, 'LongUint', { value: 24 })).to.throw();
       });
     });
 
     describe('with events emitted by an indirectly called contract', function () {
       beforeEach(async function () {
         this.value = 'OpenZeppelin';
-        this.tx = await this.emitter.methods.emitStringAndEmitIndirectly(
+        this.receipt = await this.emitter.methods.emitStringAndEmitIndirectly(
           this.value, this.secondEmitter.options.address
         ).send();
       });
 
       it('accepts events emitted by the directly called contract', function () {
-        expectEvent(this.tx, 'String', { value: this.value });
+        expectEvent(this.receipt, 'String', { value: this.value });
       });
 
       it('throws when passing events emitted by the indirectly called contract', function () {
-        expect(() => expectEvent(this.tx, 'IndirectString', { value: this.value })).to.throw();
+        expect(() => expectEvent(this.receipt, 'IndirectString', { value: this.value })).to.throw();
       });
     });
   });
