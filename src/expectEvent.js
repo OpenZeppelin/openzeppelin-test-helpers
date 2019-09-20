@@ -2,7 +2,7 @@ const { web3, BN } = require('./setup');
 const { expect } = require('chai');
 const flatten = require('lodash.flatten');
 
-function expectEvent(tx, eventName, eventArgs = {}) {
+function expectEvent(receipt, eventName, eventArgs = {}) {
   // truffle contract receipts have a 'logs' object, with an array of objects
   // with 'event' and 'args' properties, containing the event name and actual
   // values.
@@ -13,19 +13,19 @@ function expectEvent(tx, eventName, eventArgs = {}) {
   // The simplest way to handle both of these receipts is to convert the web3
   // event format into the truffle one.
 
-  if ('events' in tx) { // web3 contract detection
-    const logs = flatten(Object.keys(tx.events).map(name => {
-      if (Array.isArray(tx.events[name])) {
-        return tx.events[name].map(event => ({ event: name, args: event.returnValues }));
+  if (isWeb3Receipt(receipt)) {
+    const logs = flatten(Object.keys(receipt.events).map(name => {
+      if (Array.isArray(receipt.events[name])) {
+        return receipt.events[name].map(event => ({ event: name, args: event.returnValues }));
       } else {
-        return ({ event: name, args: tx.events[name].returnValues });
+        return ({ event: name, args: receipt.events[name].returnValues });
       }
     }));
 
     inLogs(logs, eventName, eventArgs);
 
-  } else if ('logs' in tx) { // truffle-contract detection
-    inLogs(tx.logs, eventName, eventArgs);
+  } else if (isTruffleReceipt(receipt)) {
+    inLogs(receipt.logs, eventName, eventArgs);
 
   } else {
     throw new Error('Unknown transaction receipt object');
@@ -62,8 +62,34 @@ async function inConstruction (contract, eventName, eventArgs = {}) {
 
 async function inTransaction (txHash, emitter, eventName, eventArgs = {}) {
   const receipt = await web3.eth.getTransactionReceipt(txHash);
-  const logs = emitter.decodeLogs(receipt.logs);
+
+  const logs = decodeLogs(receipt.logs, emitter, eventName);
   return inLogs(logs, eventName, eventArgs);
+}
+
+function decodeLogs(logs, emitter, eventName) {
+  let abi;
+  if (isWeb3Contract(emitter)) {
+    abi = emitter.options.jsonInterface;
+  } else if (isTruffleContract(emitter)) {
+    abi = emitter.abi;
+  } else {
+    throw new Error('Unknown contract object');
+  }
+
+  let eventABI = abi.filter(x => x.type === 'event' && x.name === eventName);
+  if (eventABI.length !== 1) {
+    throw new Error(`Could not find unique ABI for event ${eventName}`);
+  }
+  eventABI = eventABI[0];
+
+  const eventSignature = `${eventName}(${eventABI.inputs.map(input => input.type).join(',')})`;
+  const eventTopic = web3.utils.sha3(eventSignature);
+
+  return logs
+    .filter(log => log.topics.length > 0 && log.topics[0] === eventTopic)
+    .map(log => web3.eth.abi.decodeLog(eventABI.inputs, log.data, log.topics.slice(1)))
+    .map(decoded => ({ event: eventName, args: decoded }));
 }
 
 function contains (args, key, value) {
@@ -80,6 +106,22 @@ function contains (args, key, value) {
 
 function isBN (object) {
   return BN.isBN(object) || object instanceof BN;
+}
+
+function isWeb3Receipt(receipt) {
+  return 'events' in receipt;
+}
+
+function isTruffleReceipt(receipt) {
+  return 'logs' in receipt;
+}
+
+function isWeb3Contract(contract) {
+  return 'options' in contract;
+}
+
+function isTruffleContract(contract) {
+  return 'abi' in contract;
 }
 
 expectEvent.inLogs = inLogs;

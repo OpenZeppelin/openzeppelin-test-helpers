@@ -321,4 +321,77 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
       });
     });
   });
+
+  describe('inTransaction', function () {
+    describe('when emitting from called contract and indirect calls', function () {
+      context('string value', function () {
+        beforeEach(async function () {
+          this.value = 'OpenZeppelin';
+          ({ transactionHash: this.txHash } = await this.emitter.methods.emitStringAndEmitIndirectly(this.value, this.secondEmitter.options.address).send({ from: deployer, gas: 2e6 }));
+        });
+
+        context('with directly called contract', function () {
+          it('accepts emitted events with correct string', async function () {
+            await expectEvent.inTransaction(this.txHash, EventEmitter, 'String', { value: this.value });
+          });
+
+          it('throws if an unemitted event is requested', async function () {
+            await assertFailure(expectEvent.inTransaction(this.txHash, EventEmitter, 'UnemittedEvent',
+              { value: this.value }
+            ));
+          });
+
+          it('throws if an incorrect string is passed', async function () {
+            await assertFailure(expectEvent.inTransaction(this.txHash, EventEmitter, 'String',
+              { value: 'ClosedZeppelin' }
+            ));
+          });
+
+          it('throws if an event emitted from other contract is passed', async function () {
+            await assertFailure(expectEvent.inTransaction(this.txHash, EventEmitter, 'IndirectString',
+              { value: this.value }
+            ));
+          });
+
+          it('throws if an incorrect emitter is passed', async function () {
+            await assertFailure(expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'String',
+              { value: this.value }
+            ));
+          });
+        });
+
+        context('with indirectly called contract', function () {
+          it('accepts events emitted from other contracts', async function () {
+            await expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'IndirectString',
+              { value: this.value }
+            );
+          });
+
+          it('throws if an unemitted event is requested', async function () {
+            await assertFailure(expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'UnemittedEvent',
+              { value: this.value }
+            ));
+          });
+
+          it('throws if an incorrect string is passed', async function () {
+            await assertFailure(expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'IndirectString',
+              { value: 'ClosedZeppelin' }
+            ));
+          });
+
+          it('throws if an event emitted from other contract is passed', async function () {
+            await assertFailure(expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'String',
+              { value: this.value }
+            ));
+          });
+
+          it('throws if an incorrect emitter is passed', async function () {
+            await assertFailure(expectEvent.inTransaction(this.txHash, EventEmitter, 'IndirectString',
+              { value: this.value }
+            ));
+          });
+        });
+      });
+    });
+  });
 });
