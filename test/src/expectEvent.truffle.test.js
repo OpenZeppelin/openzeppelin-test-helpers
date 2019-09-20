@@ -278,7 +278,9 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
         this.uintValue = new BN('123456789012345678901234567890');
         this.booleanValue = true;
         this.stringValue = 'OpenZeppelin';
-        this.receipt = await this.emitter.emitLongUintBooleanString(this.uintValue, this.booleanValue, this.stringValue);
+        this.receipt = await this.emitter.emitLongUintBooleanString(
+          this.uintValue, this.booleanValue, this.stringValue
+        );
       });
 
       it('accepts correct values', function () {
