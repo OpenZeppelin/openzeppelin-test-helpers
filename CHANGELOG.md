@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.5.0 (unreleased)
+ * Removed hard-dependency on `truffle-contract`: `singletons` now return [`web3 Contract`](https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html) objects, and `expectEvent` supports both web3 and truffle contract types. ([#75](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/75))
+
 ## 0.4.2 (2019-07-31)
  * Upgraded web3-utils and truffle-contract dependencies to use the stable web3 release. ([#65](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/65))
 
