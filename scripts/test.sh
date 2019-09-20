@@ -50,4 +50,5 @@ fi
 
 truffle version
 
-node_modules/.bin/truffle test "$@"
+truffle compile
+truffle test "$@"
