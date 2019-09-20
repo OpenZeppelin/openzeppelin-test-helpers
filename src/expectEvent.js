@@ -2,7 +2,7 @@ const { web3, BN } = require('./setup');
 const { expect } = require('chai');
 const flatten = require('lodash.flatten');
 
-function expectEvent(receipt, eventName, eventArgs = {}) {
+function expectEvent (receipt, eventName, eventArgs = {}) {
   // truffle contract receipts have a 'logs' object, with an array of objects
   // with 'event' and 'args' properties, containing the event name and actual
   // values.
@@ -23,10 +23,8 @@ function expectEvent(receipt, eventName, eventArgs = {}) {
     }));
 
     inLogs(logs, eventName, eventArgs);
-
   } else if (isTruffleReceipt(receipt)) {
     inLogs(receipt.logs, eventName, eventArgs);
-
   } else {
     throw new Error('Unknown transaction receipt object');
   }
@@ -73,7 +71,7 @@ async function inTransaction (txHash, emitter, eventName, eventArgs = {}) {
 
 // This decodes longs for a single event type, and returns a decoded object in
 // the same form truffle-contract uses on its receipts
-function decodeLogs(logs, emitter, eventName) {
+function decodeLogs (logs, emitter, eventName) {
   let abi;
   if (isWeb3Contract(emitter)) {
     abi = emitter.options.jsonInterface;
@@ -116,19 +114,19 @@ function isBN (object) {
   return BN.isBN(object) || object instanceof BN;
 }
 
-function isWeb3Receipt(receipt) {
+function isWeb3Receipt (receipt) {
   return 'events' in receipt;
 }
 
-function isTruffleReceipt(receipt) {
+function isTruffleReceipt (receipt) {
   return 'logs' in receipt;
 }
 
-function isWeb3Contract(contract) {
+function isWeb3Contract (contract) {
   return 'options' in contract;
 }
 
-function isTruffleContract(contract) {
+function isTruffleContract (contract) {
   return 'abi' in contract;
 }
 
@@ -136,5 +134,3 @@ expectEvent.inLogs = inLogs;
 expectEvent.inConstruction = inConstruction;
 expectEvent.inTransaction = inTransaction;
 module.exports = expectEvent;
-
-

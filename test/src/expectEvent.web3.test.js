@@ -7,6 +7,14 @@ const EventEmitter = load('EventEmitter');
 const IndirectEventEmitter = load('IndirectEventEmitter');
 
 contract('expectEvent (web3 contracts) ', function ([deployer]) {
+  before(function () {
+    EventEmitter.options.from = deployer;
+    EventEmitter.options.gas = 2e6;
+
+    IndirectEventEmitter.options.from = deployer;
+    IndirectEventEmitter.options.gas = 2e6;
+  });
+
   beforeEach(async function () {
     this.constructionValues = {
       uint: 42,
@@ -17,16 +25,16 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
     this.emitter = await EventEmitter.deploy({ arguments: [
       this.constructionValues.uint,
       this.constructionValues.boolean,
-      this.constructionValues.string
-    ] }).send({ from: deployer, gas: 2e6 });
+      this.constructionValues.string,
+    ] }).send();
 
-    this.secondEmitter = await IndirectEventEmitter.deploy().send({ from: deployer, gas: 2e6 });
+    this.secondEmitter = await IndirectEventEmitter.deploy().send();
   });
 
   describe('default', function () {
     describe('with no arguments', function () {
       beforeEach(async function () {
-        this.tx = await this.emitter.methods.emitArgumentless().send({ from: deployer, gas: 2e6 });
+        this.tx = await this.emitter.methods.emitArgumentless().send();
       });
 
       it('accepts emitted events', function () {
@@ -42,7 +50,7 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
       context('short uint value', function () {
         beforeEach(async function () {
           this.value = 42;
-          this.tx = await this.emitter.methods.emitShortUint(this.value).send({ from: deployer, gas: 2e6 });
+          this.tx = await this.emitter.methods.emitShortUint(this.value).send();
         });
 
         it('accepts emitted events with correct BN', function () {
@@ -69,7 +77,7 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
       context('short int value', function () {
         beforeEach(async function () {
           this.value = -42;
-          this.tx = await this.emitter.methods.emitShortInt(this.value).send({ from: deployer, gas: 2e6 });
+          this.tx = await this.emitter.methods.emitShortInt(this.value).send();
         });
 
         it('accepts emitted events with correct BN', function () {
@@ -92,7 +100,7 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
       context('long uint value', function () {
         beforeEach(async function () {
           this.bigNumValue = '123456789012345678901234567890';
-          this.tx = await this.emitter.methods.emitLongUint(this.bigNumValue).send({ from: deployer, gas: 2e6 });
+          this.tx = await this.emitter.methods.emitLongUint(this.bigNumValue).send();
         });
 
         it('accepts emitted events with correct BN', function () {
@@ -111,7 +119,7 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
       context('long int value', function () {
         beforeEach(async function () {
           this.bigNumValue = '-123456789012345678901234567890';
-          this.tx = await this.emitter.methods.emitLongInt(this.bigNumValue).send({ from: deployer, gas: 2e6 });
+          this.tx = await this.emitter.methods.emitLongInt(this.bigNumValue).send();
         });
 
         it('accepts emitted events with correct BN', function () {
@@ -130,7 +138,7 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
       context('address value', function () {
         beforeEach(async function () {
           this.value = '0x811412068E9Fbf25dc300a29E5E316f7122b282c';
-          this.tx = await this.emitter.methods.emitAddress(this.value).send({ from: deployer, gas: 2e6 });
+          this.tx = await this.emitter.methods.emitAddress(this.value).send();
         });
 
         it('accepts emitted events with correct address', function () {
@@ -151,7 +159,7 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
       context('boolean value', function () {
         beforeEach(async function () {
           this.value = true;
-          this.tx = await this.emitter.methods.emitBoolean(this.value).send({ from: deployer, gas: 2e6 });
+          this.tx = await this.emitter.methods.emitBoolean(this.value).send();
         });
 
         it('accepts emitted events with correct address', function () {
@@ -170,7 +178,7 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
       context('string value', function () {
         beforeEach(async function () {
           this.value = 'OpenZeppelin';
-          this.tx = await this.emitter.methods.emitString(this.value).send({ from: deployer, gas: 2e6 });
+          this.tx = await this.emitter.methods.emitString(this.value).send();
         });
 
         it('accepts emitted events with correct string', function () {
@@ -190,7 +198,7 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
         context('with non-null value', function () {
           beforeEach(async function () {
             this.value = '0x12345678';
-            this.tx = await this.emitter.methods.emitBytes(this.value).send({ from: deployer, gas: 2e6 });
+            this.tx = await this.emitter.methods.emitBytes(this.value).send();
           });
 
           it('accepts emitted events with correct bytes', function () {
@@ -209,7 +217,7 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
         context('with null value', function () {
           beforeEach(async function () {
             this.value = '0x';
-            this.tx = await this.emitter.methods.emitBytes(this.value).send({ from: deployer, gas: 2e6 });
+            this.tx = await this.emitter.methods.emitBytes(this.value).send();
           });
 
           it('accepts emitted events with correct bytes', function () {
@@ -232,7 +240,9 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
         this.uintValue = '123456789012345678901234567890';
         this.booleanValue = true;
         this.stringValue = 'OpenZeppelin';
-        this.tx = await this.emitter.methods.emitLongUintBooleanString(this.uintValue, this.booleanValue, this.stringValue).send({ from: deployer, gas: 2e6 });
+        this.tx = await this.emitter.methods.emitLongUintBooleanString(
+          this.uintValue, this.booleanValue, this.stringValue
+        ).send();
       });
 
       it('accepts correct values', function () {
@@ -266,7 +276,7 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
       beforeEach(async function () {
         this.uintValue = 42;
         this.booleanValue = true;
-        this.tx = await this.emitter.methods.emitLongUintAndBoolean(this.uintValue, this.booleanValue).send({ from: deployer, gas: 2e6 });
+        this.tx = await this.emitter.methods.emitLongUintAndBoolean(this.uintValue, this.booleanValue).send();
       });
 
       it('accepts all emitted events with correct values', function () {
@@ -288,7 +298,7 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
       beforeEach(async function () {
         this.firstUintValue = 42;
         this.secondUintValue = 24;
-        this.tx = await this.emitter.methods.emitTwoLongUint(this.firstUintValue, this.secondUintValue).send({ from: deployer, gas: 2e6 });
+        this.tx = await this.emitter.methods.emitTwoLongUint(this.firstUintValue, this.secondUintValue).send();
       });
 
       it('accepts all emitted events of the same type', function () {
@@ -309,7 +319,9 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
     describe('with events emitted by an indirectly called contract', function () {
       beforeEach(async function () {
         this.value = 'OpenZeppelin';
-        this.tx = await this.emitter.methods.emitStringAndEmitIndirectly(this.value, this.secondEmitter.options.address).send({ from: deployer, gas: 2e6 });
+        this.tx = await this.emitter.methods.emitStringAndEmitIndirectly(
+          this.value, this.secondEmitter.options.address
+        ).send();
       });
 
       it('accepts events emitted by the directly called contract', function () {
@@ -327,7 +339,9 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
       context('string value', function () {
         beforeEach(async function () {
           this.value = 'OpenZeppelin';
-          ({ transactionHash: this.txHash } = await this.emitter.methods.emitStringAndEmitIndirectly(this.value, this.secondEmitter.options.address).send({ from: deployer, gas: 2e6 }));
+          ({ transactionHash: this.txHash } = await this.emitter.methods.emitStringAndEmitIndirectly(
+            this.value, this.secondEmitter.options.address
+          ).send());
         });
 
         context('with directly called contract', function () {
