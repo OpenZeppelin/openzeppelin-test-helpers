@@ -57,6 +57,10 @@ function inLogs (logs, eventName, eventArgs = {}) {
 }
 
 async function inConstruction (contract, eventName, eventArgs = {}) {
+  if (!isTruffleContract(contract)) {
+    throw new Error('expectEvent.inConstruction is only supported for truffle-contract objects');
+  }
+
   return inTransaction(contract.transactionHash, contract.constructor, eventName, eventArgs);
 }
 

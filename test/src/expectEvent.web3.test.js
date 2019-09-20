@@ -394,4 +394,10 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
       });
     });
   });
+
+  describe('inConstruction', function () {
+    it('is unsupported', async function () {
+      await assertFailure(expectEvent.inConstruction(this.emitter, 'ShortUint'));
+    });
+  });
 });
