@@ -442,5 +442,20 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
         });
       });
     });
+
+    describe('with non-unique event names', function () {
+      it('throws', async function () {
+        const { transactionHash } = await this.emitter.emitRepeated('0x');
+        await assertFailure(expectEvent.inTransaction(transactionHash, EventEmitter, 'Repeated'));
+      });
+    });
+
+    describe('with non-existing event names', function () {
+      it('throws', async function () {
+        // Which function we call is not important for this test
+        const { transactionHash } = await this.emitter.emitArgumentless();
+        await assertFailure(expectEvent.inTransaction(transactionHash, EventEmitter, 'Nonexistant'));
+      });
+    });
   });
 });

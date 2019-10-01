@@ -14,6 +14,9 @@ contract EventEmitter {
     event LongUintBooleanString(uint256 uintValue, bool booleanValue, string stringValue);
     event Bytes(bytes value);
 
+    event Repeated();
+    event Repeated(bytes value);
+
     constructor (uint8 uintValue, bool booleanValue, string memory stringValue) public {
         emit ShortUint(uintValue);
         emit Boolean(booleanValue);
@@ -73,5 +76,10 @@ contract EventEmitter {
     function emitTwoLongUint(uint256 firstValue, uint256 secondValue) public {
         emit LongUint(firstValue);
         emit LongUint(secondValue);
+    }
+
+    function emitRepeated(bytes memory value) public {
+        emit Repeated();
+        emit Repeated(value);
     }
 }

@@ -82,9 +82,12 @@ function decodeLogs (logs, emitter, eventName) {
   }
 
   let eventABI = abi.filter(x => x.type === 'event' && x.name === eventName);
-  if (eventABI.length !== 1) {
-    throw new Error(`Could not find unique ABI for event ${eventName}`);
+  if (eventABI.length === 0) {
+    throw new Error(`No ABI entry for event '${eventName}'`);
+  } else if (eventABI.length > 1) {
+    throw new Error(`Multiple ABI entries for event '${eventName}', only uniquely named events are supported`);
   }
+
   eventABI = eventABI[0];
 
   // The first topic will equal the hash of the event signature
