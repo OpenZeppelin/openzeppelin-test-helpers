@@ -51,7 +51,7 @@ contract('ERC20', ([sender, receiver]) => {
 
 ### Configuration
 
-By default, this library will connect to `http://localhost:7545`, but you can run a manual configuration and supply a custom one.
+By default, this library will connect to `http://localhost:8545`, but you can run a manual configuration and supply a custom one.
 
 ```javascript
 require('openzeppelin-test-helpers/configure')({ provider: ... });
