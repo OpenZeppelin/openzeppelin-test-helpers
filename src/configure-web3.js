@@ -1,6 +1,6 @@
 const Web3 = require('web3');
 
-let internalWeb3 = new Web3();
+const internalWeb3 = new Web3();
 
 function setWeb3Provider (provider) {
   internalWeb3.setProvider(provider);

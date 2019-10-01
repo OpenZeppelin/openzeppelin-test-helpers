@@ -1,3 +1,5 @@
+/* global web3 */
+
 const { setWeb3Provider } = require('./src/configure-web3');
 
 const DEFAULT_PROVIDER_URL = 'http://localhost:8545';
