@@ -129,15 +129,6 @@ Converts a value in Ether to wei.
 
 ---
 
-### expect
-A chai [expect](https://www.chaijs.com/api/bdd/) instance, containing the `bignumber` property (via [chai-bn](https://github.com/ZeppelinSolutions/chai-bn)).
-
-```javascript
-expect(new BN('2')).to.be.bignumber.equal('2');
-```
-
----
-
 ### expectEvent
 #### inLogs (logs, eventName, eventArgs = {})
 Asserts `logs` contains an entry for an event with name `eventName`, for which all entries in `eventArgs` match.
@@ -221,11 +212,6 @@ Sends `value` Ether from `from` to `to`.
 
 #### async function send.transaction (target, name, argsTypes, argsValues, opts = {})
 Sends a transaction to contract `target`, calling method `name` with `argValues`, which are of type `argTypes` (as per the method's signature).
-
----
-
-### should
-A chai [should](https://www.chaijs.com/api/bdd/) instance, containing the `bignumber` property (via [chai-bn](https://github.com/ZeppelinSolutions/chai-bn)).
 
 ---
 
