@@ -51,7 +51,7 @@ contract('ERC20', ([sender, receiver]) => {
 
 ### Configuration
 
-By default, this library will look connect to `http://localhost:7545`, but you can run a manual configuration and supply a custom one.
+By default, this library will connect to `http://localhost:7545`, but you can run a manual configuration and supply a custom one.
 
 ```javascript
 require('openzeppelin-test-helpers/configure')({ provider: ... });
@@ -152,7 +152,7 @@ await expectEvent(truffleReceipt, 'Foo', { value: 'bar' });
 
 
 #### async inTransaction (txHash, emitter, eventName, eventArgs = {})
-Same as `expectEvent`, but for events emitted in an arbitrary transaction (of hash `txHash`), by an arbitrary contract (`emitter`), even if it was indirectly called (i.e. if it was called by another smart contract and not an externally owned account).
+Same as `expectEvent`, but for events emitted in an arbitrary transaction (of hash `txHash`), by an arbitrary contract (`emitter`, the contract instance), even if it was indirectly called (i.e. if it was called by another smart contract and not an externally owned account).
 
 ---
 
