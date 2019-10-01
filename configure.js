@@ -1,5 +1,3 @@
-/* global web3 */
-
 const { setWeb3Provider } = require('./src/configure-web3');
 
 const DEFAULT_PROVIDER_URL = 'http://localhost:8545';
@@ -37,12 +35,7 @@ A configuration has been loaded by default. Make sure to do custom configuration
 };
 
 function defaultConfigure () {
-  // If there is a (truffle-injected) global web3 instance, use that. Otherwise, use the default provider
-  if (typeof web3 !== 'undefined') {
-    setWeb3Provider(web3.currentProvider);
-  } else {
-    setWeb3Provider(DEFAULT_PROVIDER_URL);
-  }
+  setWeb3Provider.default();
 }
 
 function customConfigure (config) {
