@@ -1,35 +1,20 @@
-const semver = require('semver');
+const Web3 = require('web3');
 
-let globalWeb3;
+let internalWeb3 = new Web3();
 
-function setWeb3 (web3) {
-  if (globalWeb3 !== undefined) {
-    if (globalWeb3 === web3) {
-      return;
-    } else {
-      throw new Error('web3 is already configured');
-    }
-  }
-
-  // this could be taken from package.dependencies in the future
-  const requiredVersion = '1.0.0-beta.37 || ^1.2.0';
-
-  if (!semver.satisfies(web3.version, requiredVersion)) {
-    throw new Error(`web3@${web3.version} detected, incompatible with requirement of web3@${requiredVersion}`);
-  }
-
-  globalWeb3 = web3;
+function setWeb3Provider (provider) {
+  internalWeb3.setProvider(provider);
 }
 
 function getWeb3 () {
-  if (globalWeb3 === undefined) {
-    throw new Error('web3 is not configured');
+  if (internalWeb3.currentProvider === null) {
+    throw new Error('web3 provider 0is not configured');
   }
 
-  return globalWeb3;
+  return internalWeb3;
 }
 
 module.exports = {
-  setWeb3,
+  setWeb3Provider,
   getWeb3,
 };
