@@ -129,18 +129,8 @@ Converts a value in Ether to wei.
 
 ---
 
-### expect
-A chai [expect](https://www.chaijs.com/api/bdd/) instance, containing the `bignumber` property (via [chai-bn](https://github.com/ZeppelinSolutions/chai-bn)).
-
-```javascript
-expect(new BN('2')).to.be.bignumber.equal('2');
-```
-
----
-
 ### expectEvent (receipt, eventName, eventArgs = {})
 Asserts the logs in `receipt` contain an entry for an event with name `eventName`, for which all entries in `eventArgs` match. `receipt` is the object returned by either a web3 Contract or a truffle-contract call.
-
 
 ```javascript
 const web3Receipt = await MyWeb3Contract.methods.foo('bar').send();
@@ -149,7 +139,6 @@ expectEvent(web3Receipt, 'Foo', { value: 'bar' });
 const truffleReceipt = await MyTruffleContract.foo('bar');
 expectEvent(truffleReceipt, 'Foo', { value: 'bar' });
 ```
-
 
 #### async inTransaction (txHash, emitter, eventName, eventArgs = {})
 Same as `expectEvent`, but for events emitted in an arbitrary transaction (of hash `txHash`), by an arbitrary contract (`emitter`, the contract instance), even if it was indirectly called (i.e. if it was called by another smart contract and not an externally owned account).
@@ -234,11 +223,6 @@ Sends `value` Ether from `from` to `to`.
 
 #### async function send.transaction (target, name, argsTypes, argsValues, opts = {})
 Sends a transaction to contract `target`, calling method `name` with `argValues`, which are of type `argTypes` (as per the method's signature).
-
----
-
-### should
-A chai [should](https://www.chaijs.com/api/bdd/) instance, containing the `bignumber` property (via [chai-bn](https://github.com/ZeppelinSolutions/chai-bn)).
 
 ---
 
