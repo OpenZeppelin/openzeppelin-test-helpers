@@ -1,6 +1,6 @@
 const { setWeb3Provider } = require('./src/configure-web3');
 
-const DEFAULT_PROVIDER_URL = 'http://localhost:7545';
+const DEFAULT_PROVIDER_URL = 'http://localhost:8545';
 
 let loadedConfig;
 
