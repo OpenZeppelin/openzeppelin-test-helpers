@@ -118,19 +118,19 @@ function isBN (object) {
 }
 
 function isWeb3Receipt (receipt) {
-  return 'events' in receipt;
+  return 'events' in receipt && typeof receipt.events === 'object';
 }
 
 function isTruffleReceipt (receipt) {
-  return 'logs' in receipt;
+  return 'logs' in receipt && typeof receipt.logs === 'object';
 }
 
 function isWeb3Contract (contract) {
-  return 'options' in contract;
+  return 'options' in contract && typeof contract.options === 'object';
 }
 
 function isTruffleContract (contract) {
-  return 'abi' in contract;
+  return 'abi' in contract && typeof contract.abi === 'object';
 }
 
 expectEvent.inLogs = inLogs;
