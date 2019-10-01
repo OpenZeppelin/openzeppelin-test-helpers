@@ -144,15 +144,27 @@ Asserts the logs in `receipt` contain an entry for an event with name `eventName
 
 ```javascript
 const web3Receipt = await MyWeb3Contract.methods.foo('bar').send();
-await expectEvent(web3Receipt, 'Foo', { value: 'bar' });
+expectEvent(web3Receipt, 'Foo', { value: 'bar' });
 
 const truffleReceipt = await MyTruffleContract.foo('bar');
-await expectEvent(truffleReceipt, 'Foo', { value: 'bar' });
+expectEvent(truffleReceipt, 'Foo', { value: 'bar' });
 ```
 
 
 #### async inTransaction (txHash, emitter, eventName, eventArgs = {})
 Same as `expectEvent`, but for events emitted in an arbitrary transaction (of hash `txHash`), by an arbitrary contract (`emitter`, the contract instance), even if it was indirectly called (i.e. if it was called by another smart contract and not an externally owned account).
+
+```javascript
+// With web3 contracts
+const contract = await MyContract.deploy().send();
+const { transactionHash } = await contract.methods.foo('bar').send();
+await expectEvent.inTransaction(transactionHash, contract, 'Foo', { value: 'bar' });
+
+// With truffle contracts
+const contract = await MyContract.new();
+const { txHash } = await contract.foo('bar');
+await expectEvent.inTransaction(txHash, contract, 'Foo', { value: 'bar' });
+```
 
 ---
 
