@@ -4,7 +4,7 @@ let environment;
 
 function setEnvironment (env) {
   if (env !== 'truffle' && env !== 'web3') {
-    throw new Error(`Unknown runtime environment '${env}'`)
+    throw new Error(`Unknown runtime environment '${env}'`);
   }
 
   environment = env;

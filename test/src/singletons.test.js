@@ -5,7 +5,7 @@ const { ERC1820_REGISTRY_BYTECODE } = require('../../src/data');
 contract('singletons', function ([funder]) {
   describe('ERC1820Registry', function () {
     context('with truffle environment', function () {
-      beforeEach(async function() {
+      beforeEach(async function () {
         require('../../configure')({ environment: 'truffle' });
         this.registry = await singletons.ERC1820Registry(funder);
       });
@@ -29,7 +29,7 @@ contract('singletons', function ([funder]) {
     });
 
     context('with web3 environment', function () {
-      beforeEach(async function() {
+      beforeEach(async function () {
         require('../../configure')({ environment: 'web3' });
         this.registry = await singletons.ERC1820Registry(funder);
       });
@@ -53,7 +53,7 @@ contract('singletons', function ([funder]) {
     });
   });
 
-  after(function() {
+  after(function () {
     // Restore default configuration
     require('../../configure')();
   });
