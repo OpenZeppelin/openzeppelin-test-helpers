@@ -4,10 +4,10 @@ const Web3 = require('web3');
 
 const DEFAULT_PROVIDER_URL = 'http://localhost:8545';
 
-const internalWeb3 = new Web3();
+const configWeb3 = new Web3();
 
 function setWeb3Provider (provider) {
-  internalWeb3.setProvider(provider);
+  configWeb3.setProvider(provider);
 }
 
 function setDefaultWeb3Provider () {
@@ -20,11 +20,11 @@ function setDefaultWeb3Provider () {
 }
 
 function getWeb3 () {
-  if (internalWeb3.currentProvider === null) {
+  if (configWeb3.currentProvider === null) {
     throw new Error('web3 provider is not configured');
   }
 
-  return internalWeb3;
+  return configWeb3;
 }
 
 setWeb3Provider.default = setDefaultWeb3Provider;

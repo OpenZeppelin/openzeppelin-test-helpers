@@ -1,6 +1,5 @@
 const { setWeb3Provider } = require('./src/configure-web3');
-
-const DEFAULT_PROVIDER_URL = 'http://localhost:8545';
+const { setEnvironment } = require('./src/configure-environment');
 
 let loadedConfig;
 
@@ -36,11 +35,20 @@ A configuration has been loaded by default. Make sure to do custom configuration
 
 function defaultConfigure () {
   setWeb3Provider.default();
+  setEnvironment.default();
 }
 
 function customConfigure (config) {
-  // The provider may be either an URL to an HTTP endpoint, or a complete provider object
-  setWeb3Provider(config.provider);
+  defaultConfigure();
+
+  if ('provider' in config) {
+    // The provider may be either an URL to an HTTP endpoint, or a complete provider object
+    setWeb3Provider(config.provider);
+  }
+
+  if ('environment' in config) {
+    setEnvironment(config.environment);
+  }
 }
 
 module.exports = configure;
