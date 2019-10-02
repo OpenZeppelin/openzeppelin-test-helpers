@@ -133,7 +133,7 @@ function isTruffleContract (contract) {
   return 'abi' in contract && typeof contract.abi === 'object';
 }
 
-expectEvent.inLogs = inLogs;
+expectEvent.inLogs = util.deprecate(inLogs, 'expectEvent.inLogs() is deprecated. Use expectEvent() instead.');
 expectEvent.inConstruction = inConstruction;
 expectEvent.inTransaction = inTransaction;
 module.exports = expectEvent;
