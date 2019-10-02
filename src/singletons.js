@@ -33,7 +33,7 @@ async function ERC1820Registry (funder) {
 }
 
 function getDeployedERC1820Registry () {
-  const environment = require('./configure-environment').getEnviroment();
+  const environment = require('./config/environment').getEnviroment();
 
   if (environment === 'truffle') {
     return truffleERC1820Registry.at(ERC1820_REGISTRY_ADDRESS);

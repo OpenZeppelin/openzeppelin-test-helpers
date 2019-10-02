@@ -1,5 +1,5 @@
-const { setWeb3Provider } = require('./src/configure-web3');
-const { setEnvironment } = require('./src/configure-environment');
+const { setWeb3Provider } = require('./src/config/web3');
+const { setEnvironment } = require('./src/config/environment');
 
 let loadedConfig;
 

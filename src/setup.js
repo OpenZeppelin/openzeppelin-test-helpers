@@ -1,6 +1,6 @@
 require('../configure')();
 
-const web3 = require('./configure-web3').getWeb3();
+const web3 = require('./config/web3').getWeb3();
 require('@openzeppelin/contract-loader/lib/configure').set(web3);
 
 const { load } = require('@openzeppelin/contract-loader');
