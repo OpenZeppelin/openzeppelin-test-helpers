@@ -1,19 +1,13 @@
 const { web3 } = require('./setup');
 const ether = require('./ether');
 const send = require('./send');
-
-const truffleContract = require('truffle-contract');
+const tryRequire = require('try-require');
 
 const {
   ERC1820_REGISTRY_ABI,
   ERC1820_REGISTRY_ADDRESS,
   ERC1820_REGISTRY_DEPLOY_TX,
 } = require('./data');
-
-const web3ERC1820Registry = new web3.eth.Contract(ERC1820_REGISTRY_ABI, ERC1820_REGISTRY_ADDRESS);
-
-const truffleERC1820Registry = truffleContract({ abi: ERC1820_REGISTRY_ABI });
-truffleERC1820Registry.setProvider(web3.currentProvider);
 
 async function ERC1820Registry (funder) {
   // Read https://eips.ethereum.org/EIPS/eip-1820 for more information as to how the ERC1820 registry is deployed to
@@ -32,13 +26,32 @@ async function ERC1820Registry (funder) {
   return getDeployedERC1820Registry();
 }
 
-function getDeployedERC1820Registry () {
+async function getDeployedERC1820Registry () {
   const environment = require('./config/environment').getEnviroment();
 
   if (environment === 'truffle') {
-    return truffleERC1820Registry.at(ERC1820_REGISTRY_ADDRESS);
+    let truffleContract;
+    [ '@truffle/contract', 'truffle-contract' ].forEach(pkg => {
+      if (truffleContract === undefined) {
+        truffleContract = tryRequire(pkg);
+      }
+    });
+
+    if (truffleContract === undefined) {
+      throw new Error(`
+Current environment is 'truffle', but found no truffle contract abstraction package.
+Install it via:
+  npm install @truffle/contract`);
+    }
+
+    const contractAbstraction = truffleContract({ abi: ERC1820_REGISTRY_ABI });
+    contractAbstraction.setProvider(web3.currentProvider);
+
+    return contractAbstraction.at(ERC1820_REGISTRY_ADDRESS);
+
   } else if (environment === 'web3') {
-    return web3ERC1820Registry.clone();
+    return new web3.eth.Contract(ERC1820_REGISTRY_ABI, ERC1820_REGISTRY_ADDRESS);
+
   } else {
     throw new Error(`Unknown runtime environment: '${environment}'`);
   }
