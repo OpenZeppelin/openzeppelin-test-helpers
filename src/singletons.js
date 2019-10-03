@@ -38,10 +38,11 @@ async function getDeployedERC1820Registry () {
     });
 
     if (truffleContract === undefined) {
-      throw new Error(`
+      throw new Error(`\
 Current environment is 'truffle', but found no truffle contract abstraction package.
 Install it via:
-  npm install @truffle/contract`);
+  npm install @truffle/contract
+`);
     }
 
     const contractAbstraction = truffleContract({ abi: ERC1820_REGISTRY_ABI });
@@ -53,7 +54,7 @@ Install it via:
     return new web3.eth.Contract(ERC1820_REGISTRY_ABI, ERC1820_REGISTRY_ADDRESS);
 
   } else {
-    throw new Error(`Unknown runtime environment: '${environment}'`);
+    throw new Error(`Unknown environment: '${environment}'`);
   }
 }
 
