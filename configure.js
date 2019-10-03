@@ -1,18 +1,18 @@
 const { setWeb3Provider } = require('./src/config/web3');
 const { setEnvironment } = require('./src/config/environment');
 
-let isDefaultConfig;
+let configLoaded = false;
 
 function configure (config) {
   if (!config) {
     // If there is a config already loaded keep it
-    if (isDefaultConfig === undefined) {
+    if (!configLoaded) {
       defaultConfigure();
-      isDefaultConfig = true;
+      configLoaded = true;
     }
   } else {
     customConfigure(config);
-    isDefaultConfig = false;
+    configLoaded = true;
   }
 };
 
