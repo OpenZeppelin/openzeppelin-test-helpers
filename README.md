@@ -155,6 +155,9 @@ const { txHash } = await contract.foo('bar');
 await expectEvent.inTransaction(txHash, contract, 'Foo', { value: 'bar' });
 ```
 
+#### async function inConstruction (emitter, eventName, eventArgs = {})
+Same as `inTransaction`, but for events emitted during the construction of `emitter`. Note that this is currently only supported for truffle contracts.
+
 ---
 
 ### expectRevert
