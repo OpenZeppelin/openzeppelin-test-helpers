@@ -51,10 +51,12 @@ contract('ERC20', ([sender, receiver]) => {
 
 ### Configuration
 
-By default, this library will connect to `http://localhost:8545`, but you can run a manual configuration and supply a custom one.
+This library features support for both web3 and truffle contract instances. The default environment is `'web3'`, unless a `'truffle'` environment is automatically detected. In a `'truffle`' environment, the web3 provider will be pulled from truffle's global web3 instance, otherwise, it defaults to `http://localhost:8545`.
+
+While automatic detection should cover most use cases, both the environment and provider can be manually supplied:
 
 ```javascript
-require('openzeppelin-test-helpers/configure')({ provider: ... });
+require('openzeppelin-test-helpers/configure')({ environment: 'web3', provider: 'http://localhost:8080' });
 
 const { expectEvent } = require('openzeppelin-test-helpers');
 ```
