@@ -1,6 +1,7 @@
 const { web3, BN } = require('./setup');
 const { expect } = require('chai');
 const flatten = require('lodash.flatten');
+const util = require('util');
 
 function expectEvent (receipt, eventName, eventArgs = {}) {
   // truffle contract receipts have a 'logs' object, with an array of objects

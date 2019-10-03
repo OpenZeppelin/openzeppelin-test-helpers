@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "@openzeppelin/contract-loader": "^0.1.0",
+    "@truffle/contract": "^4.0.35",
     "chai": "^4.2.0",
     "eslint": "^5.9.0",
     "eslint-config-standard": "^12.0.0",
