@@ -40,6 +40,7 @@
     "no-use-before-define": "off",
     "no-var": "error",
     "object-curly-spacing": ["error", "always"],
+    "padded-blocks": "off",
     "prefer-const": "error",
     "quotes": ["error", "single"],
     "semi": ["error", "always"],

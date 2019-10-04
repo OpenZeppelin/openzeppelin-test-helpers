@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.5.0 (unreleased)
+ * Removed hard-dependency on `truffle-contract` ([#75](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/75)):
+   * An `environment` option was added to `configure`, and can be set to either `web3` or `truffle` (default is `web3`, but there is automatic detection of a `truffle` environment)
+   * `singletons` return [`web3 Contract`](https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html) instances when `environment` is set to `web3`
+   * `expectEvent.inLogs` was deprecated in favor of `expectEvent`, which receives the full receipt object (not just the logs), and supports both web3 and truffle contract receipts
+ * Breaking: `configure`'s `web3` argument was removed and replaced by `provider`, which can be either a web3 provider or a connection string. The default is `http://localhost:8545`, unless a global `web3` instance is found, in which case `web3.currentProvider` is used.
+
+### How to upgrade from 0.4
+
+If you are using `openzeppelin-test-helpers` in a Truffle environment with default detection of the Web3 instance, there is nothing you need to do. If you were manually configuring a `web3` instance, you will need to configure the `provider` instead. The specifics will depend on your setup, but the following should get you started.
+
+```diff
+-require('openzeppelin-test-helpers/configure')({ web3: myWeb3 });
++require('openzeppelin-test-helpers/configure')({ provider: myWeb3.currentProvider });
+```
+
 ## 0.4.2 (2019-07-31)
  * Upgraded web3-utils and truffle-contract dependencies to use the stable web3 release. ([#65](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/65))
 

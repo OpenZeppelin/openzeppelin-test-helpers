@@ -3,7 +3,7 @@
 [![NPM Package](https://img.shields.io/npm/v/openzeppelin-test-helpers.svg)](https://www.npmjs.org/package/openzeppelin-test-helpers)
 [![Build Status](https://travis-ci.com/OpenZeppelin/openzeppelin-test-helpers.svg?branch=master)](https://travis-ci.com/OpenZeppelin/openzeppelin-test-helpers)
 
-**JavaScript testing helpers for Ethereum smart contract development.** These are specially suited for [Truffle 5](https://truffleframework.com/truffle) (using [web3 1.0](https://github.com/ethereum/web3.js/)). [Chai](http://chaijs.com/) [bn.js](https://github.com/indutny/bn.js) assertions using [chai-bn](https://github.com/OpenZeppelin/chai-bn) are also included.
+**JavaScript testing helpers for Ethereum smart contract development.** These use [web3 1.2](https://www.npmjs.com/package/web3) under the hood, and include support for [`truffle-contract`](https://www.npmjs.com/package/@truffle/contract) objects. [Chai](http://chaijs.com/) [bn.js](https://github.com/indutny/bn.js) assertions using [chai-bn](https://github.com/OpenZeppelin/chai-bn) are also included.
 
 ## Installation
 
@@ -36,9 +36,9 @@ contract('ERC20', ([sender, receiver]) => {
   });
 
   it('emits a Transfer event on successful transfers', async function () {
-    const { logs } = this.erc20.transfer(receiver, this.value, { from: sender });
+    const receipt = this.erc20.transfer(receiver, this.value, { from: sender });
     // Log-checking will not only look at the event name, but also the values, which can be addresses, strings, numbers, etc.
-    expectEvent.inLogs(logs, 'Transfer', { from: sender, to: receiver, value: this.value });
+    expectEvent(receipt, 'Transfer', { from: sender, to: receiver, value: this.value });
   });
 
   it('updates balances on successful transfers', async function () {
@@ -51,10 +51,12 @@ contract('ERC20', ([sender, receiver]) => {
 
 ### Configuration
 
-By default, this library will look for a global web3 instance, but you can run a manual configuration and supply a custom one.
+This library features support for both web3 and truffle contract instances. The default environment is `'web3'`, unless a `'truffle'` environment is automatically detected. In a `'truffle`' environment, the web3 provider will be pulled from truffle's global web3 instance, otherwise, it defaults to `http://localhost:8545`.
+
+While automatic detection should cover most use cases, both the environment and provider can be manually supplied:
 
 ```javascript
-require('openzeppelin-test-helpers/configure')({ web3: ... });
+require('openzeppelin-test-helpers/configure')({ environment: 'web3', provider: 'http://localhost:8080' });
 
 const { expectEvent } = require('openzeppelin-test-helpers');
 ```
@@ -129,20 +131,34 @@ Converts a value in Ether to wei.
 
 ---
 
-### expectEvent
-#### inLogs (logs, eventName, eventArgs = {})
-Asserts `logs` contains an entry for an event with name `eventName`, for which all entries in `eventArgs` match.
-
-#### async function inConstruction (contract, eventName, eventArgs = {})
-Same as `inLogs`, but for events emitted during the construction of `contract`.
+### expectEvent (receipt, eventName, eventArgs = {})
+Asserts the logs in `receipt` contain an entry for an event with name `eventName`, for which all entries in `eventArgs` match. `receipt` is the object returned by either a web3 Contract or a truffle-contract call.
 
 ```javascript
-const contract = await MyContract.new(5);
-await expectEvent.inConstruction(contract, 'Created', { value: 5 });
+const web3Receipt = await MyWeb3Contract.methods.foo('bar').send();
+expectEvent(web3Receipt, 'Foo', { value: 'bar' });
+
+const truffleReceipt = await MyTruffleContract.foo('bar');
+expectEvent(truffleReceipt, 'Foo', { value: 'bar' });
 ```
 
 #### async inTransaction (txHash, emitter, eventName, eventArgs = {})
-Same as `inLogs`, but for events emitted in an arbitrary transaction (of hash `txHash`), by an arbitrary contract (`emitter`), even if it was indirectly called (i.e. if it was called by another smart contract and not an externally owned account).
+Same as `expectEvent`, but for events emitted in an arbitrary transaction (of hash `txHash`), by an arbitrary contract (`emitter`, the contract instance), even if it was indirectly called (i.e. if it was called by another smart contract and not an externally owned account).
+
+```javascript
+// With web3 contracts
+const contract = await MyContract.deploy().send();
+const { transactionHash } = await contract.methods.foo('bar').send();
+await expectEvent.inTransaction(transactionHash, contract, 'Foo', { value: 'bar' });
+
+// With truffle contracts
+const contract = await MyContract.new();
+const { txHash } = await contract.foo('bar');
+await expectEvent.inTransaction(txHash, contract, 'Foo', { value: 'bar' });
+```
+
+#### async function inConstruction (emitter, eventName, eventArgs = {})
+Same as `inTransaction`, but for events emitted during the construction of `emitter`. Note that this is currently only supported for truffle contracts.
 
 ---
 

@@ -1,55 +1,37 @@
-/* global web3 */
+const { setWeb3Provider } = require('./src/config/web3');
+const { setEnvironment } = require('./src/config/environment');
 
-const { setWeb3 } = require('./src/configure-web3');
-
-let loadedConfig;
+let configLoaded = false;
 
 function configure (config) {
   if (!config) {
-    // if there already is a loaded config keep it
-    if (!loadedConfig) {
+    // If there is a config already loaded keep it
+    if (!configLoaded) {
       defaultConfigure();
-      loadedConfig = 'default';
+      configLoaded = true;
     }
   } else {
-    if (loadedConfig) {
-      let errorMessage = 'Cannot configure openzeppelin-test-helpers a second time.';
-
-      if (loadedConfig === 'default') {
-        errorMessage += `
-
-A configuration has been loaded by default. Make sure to do custom configuration before importing the library.
-
-    require('openzeppelin-test-helpers/configure')({ web3: ... });
-    const { expectEvent } = require('openzeppelin-test-helpers');
-
-`;
-      }
-
-      throw new Error(errorMessage);
-    }
-
     customConfigure(config);
-    loadedConfig = 'custom';
+    configLoaded = true;
   }
 };
 
 function defaultConfigure () {
-  if (typeof web3 === 'undefined') {
-    throw new Error(`Cannot find a global Web3 instance. Please configure one manually:
-
-    require('openzeppelin-test-helpers/configure')({ web3: ... });
-
-`
-    );
-  }
-
-  // use global web3
-  setWeb3(web3);
+  setWeb3Provider.default();
+  setEnvironment.default();
 }
 
 function customConfigure (config) {
-  setWeb3(config.web3);
+  defaultConfigure();
+
+  if ('provider' in config) {
+    // The provider may be either an URL to an HTTP endpoint, or a complete provider object
+    setWeb3Provider(config.provider);
+  }
+
+  if ('environment' in config) {
+    setEnvironment(config.environment);
+  }
 }
 
 module.exports = configure;
