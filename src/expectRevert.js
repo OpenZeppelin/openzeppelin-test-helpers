@@ -40,7 +40,7 @@ if your \'require\' statement doesn\'t have one.');
   const matches = /TestRPC\/v([\w.-]+)\/ethereum-js/.exec(nodeInfo);
 
   const warn = function (msg) {
-    console.log(`${colors.white.bgBlack('openzeppelin-test-helpers')} ${colors.black.bgYellow('WARN')} \
+    console.log(`${colors.white.bgBlack('@openzeppelin/test-helpers')} ${colors.black.bgYellow('WARN')} \
       expectRevert: ` + msg);
   };
 
