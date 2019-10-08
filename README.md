@@ -70,37 +70,51 @@ All returned numbers are of type [BN](https://github.com/indutny/bn.js).
 ---
 
 ### balance
-Helper to keep track of ether balances of a specific account
+Helper to keep track of Ether balances of a specific account.
+
+All of these functions return `BN` instances, with balances in 'wei' by default.
 
 #### balance current
-##### async balance.current(account)
-Returns the current balance of an account
+##### async balance.current(account, units='wei')
+Returns the current balance of an account.
 ```javascript
 const balance = await balance.current(account)
+// same as new BN(web3.eth.getBalance(account))
+
+const balanceEth = await balance.current(account, 'ether')
+// same as new BN(web3.utils.fromWei(await web3.eth.getBalance(account), 'ether'))
 ```
 
 #### balance tracker
 ##### async balance.get
-Returns the current Ether balance of an account.
+Returns the current balance of an account.
 ```javascript
-const balanceTracker = await balance.tracker(account) //instantiation
-const accounBalance = await balanceTracker.get() //returns the current balance of account
+const tracker = await balance.tracker(account) // instantiation
+const balance = await tracker.get() // returns the current balance of account
 ```
 ##### async balance.delta
-Returns the change in the Ether since the last check(either `get()` or `delta()`)
+Returns the change in the balance since the last check (either `get()` or `delta()`)
 
 ```javascript
-const balanceTracker = await balance.tracker(receiver)
+const tracker = await balance.tracker(receiver)
 send.ether(sender, receiver, ether('10'))
-(await balanceTracker.delta()).should.be.bignumber.equal('10');
-(await balanceTracker.delta()).should.be.bignumber.equal('0');
+(await tracker.delta()).should.be.bignumber.equal('10');
+(await tracker.delta()).should.be.bignumber.equal('0');
 ```
 Or using `get()`:
 ```javascript
-const balanceTracker = await balance.tracker(account) //instantiation
-const accounBalance = await balanceTracker.get() //returns the current balance of account
-(await balanceTracker.delta()).should.be.bignumber.equal('0');
+const tracker = await balance.tracker(account) // instantiation
+const balance = await tracker.get() // returns the current balance of account
+(await tracker.delta()).should.be.bignumber.equal('0');
 ```
+
+A tracker can also return all balances and deltas in a specific unit:
+
+```javascript
+const tracker = await balance.tracker(account, 'gwei');
+const balanceGwei = tracker.get(); // in gigawei
+const balanceEther = tracker.get('ether'); // in ether
+````
 
 ---
 
