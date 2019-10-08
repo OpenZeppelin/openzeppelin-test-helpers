@@ -82,7 +82,9 @@ contract('balance', function ([sender, receiver]) {
         const override = 'nanoether';
 
         it('returns current balance in overridden units', async function () {
-          expect(await this.tracker.get(override)).to.be.bignumber.equal(fromWei(await web3.eth.getBalance(sender), override));
+          expect(await this.tracker.get(override)).to.be.bignumber.equal(
+            fromWei(await web3.eth.getBalance(sender), override)
+          );
         });
 
         it('returns deltas in overridden units', async function () {
