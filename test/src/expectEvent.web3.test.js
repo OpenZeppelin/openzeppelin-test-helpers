@@ -1,7 +1,10 @@
-const { BN, load } = require('../../src/setup');
+const { BN, web3 } = require('../../src/setup');
 const { expect } = require('chai');
 const assertFailure = require('../helpers/assertFailure');
 const expectEvent = require('../../src/expectEvent');
+
+require('@openzeppelin/contract-loader/lib/configure').set(web3);
+const { load } = require('@openzeppelin/contract-loader');
 
 const EventEmitter = load('EventEmitter');
 const IndirectEventEmitter = load('IndirectEventEmitter');
