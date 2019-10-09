@@ -5,6 +5,7 @@
    * An `environment` option was added to `configure`, and can be set to either `web3` or `truffle` (default is `web3`, but there is automatic detection of a `truffle` environment)
    * `singletons` return [`web3 Contract`](https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html) instances when `environment` is set to `web3`
    * `expectEvent.inLogs` was deprecated in favor of `expectEvent`, which receives the full receipt object (not just the logs), and supports both web3 and truffle contract receipts
+ * Improved how revert reason checks (`expectRevert`) are handled on unsupported environments. ([#80](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/80))
  * Breaking: `configure`'s `web3` argument was removed and replaced by `provider`, which can be either a web3 provider or a connection string. The default is `http://localhost:8545`, unless a global `web3` instance is found, in which case `web3.currentProvider` is used.
 
 ### How to upgrade from 0.4
