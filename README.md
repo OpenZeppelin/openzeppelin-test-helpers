@@ -3,7 +3,7 @@
 [![NPM Package](https://img.shields.io/npm/v/openzeppelin-test-helpers.svg)](https://www.npmjs.org/package/openzeppelin-test-helpers)
 [![Build Status](https://travis-ci.com/OpenZeppelin/openzeppelin-test-helpers.svg?branch=master)](https://travis-ci.com/OpenZeppelin/openzeppelin-test-helpers)
 
-**JavaScript testing helpers for Ethereum smart contract development.** These use [web3 1.2](https://www.npmjs.com/package/web3) under the hood, and include support for [`truffle-contract`](https://www.npmjs.com/package/@truffle/contract) objects. [Chai](http://chaijs.com/) [bn.js](https://github.com/indutny/bn.js) assertions using [chai-bn](https://github.com/OpenZeppelin/chai-bn) are also included.
+**JavaScript testing helpers for Ethereum smart contract development.** These use [web3 1.2](https://www.npmjs.com/package/web3) under the hood, but include support for [`truffle-contract`](https://www.npmjs.com/package/@truffle/contract) objects. [Chai](http://chaijs.com/) [bn.js](https://github.com/indutny/bn.js) assertions using [chai-bn](https://github.com/OpenZeppelin/chai-bn) are also included.
 
 ## Installation
 
