@@ -6,7 +6,7 @@
    * `singletons` return [`web3 Contract`](https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html) instances when `environment` is set to `web3`
    * `expectEvent.inLogs` was deprecated in favor of `expectEvent`, which receives the full receipt object (not just the logs), and supports both web3 and truffle contract receipts
  * Breaking: `configure`'s `web3` argument was removed and replaced by `provider`, which can be either a web3 provider or a connection string. The default is `http://localhost:8545`, unless a global `web3` instance is found, in which case `web3.currentProvider` is used.
- * Add optional `units` argument to `balance` functions. ([#79](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/79))
+ * Add optional `unit` argument to `balance` functions. ([#79](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/79))
 
 ### How to upgrade from 0.4
 
