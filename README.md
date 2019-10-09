@@ -76,7 +76,7 @@ Helpers to inspect Ether balances of a specific account.
 All of these functions return `BN` instances, with balances in 'wei' by default.
 
 #### balance current
-##### async balance.current(account, units = 'wei')
+##### async balance.current(account, unit = 'wei')
 Returns the current balance of an account.
 ```javascript
 const balance = await balance.current(account)
@@ -89,21 +89,21 @@ const balanceEth = await balance.current(account, 'ether')
 #### balance tracker
 Allows you to keep track of the changes in an account's Ether balance.
 
-##### async balance.tracker(account, units = 'wei')
+##### async balance.tracker(account, unit = 'wei')
 Creates an instance of a balance tracker.
 
 ```javascript
 const tracker = await balance.tracker(account)
 ```
 
-##### async tracker.get(units = tracker.units)
+##### async tracker.get(unit = tracker.unit)
 Returns the current balance of an account.
 
 ```javascript
 const tracker = await balance.tracker(account) // instantiation
 const currentBalance = await tracker.get() // returns the current balance of account
 ```
-##### async tracker.delta(units = tracker.units)
+##### async tracker.delta(unit = tracker.unit)
 Returns the change in the balance since the last time it was checked (with either `get()` or `delta()`).
 
 ```javascript
