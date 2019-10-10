@@ -1,4 +1,4 @@
-const { BN, constants, expectEvent, expectRevert, singletons } = require('openzeppelin-test-helpers');
+const { BN, constants, expectEvent, expectRevert, singletons } = require('@openzeppelin/test-helpers');
 
 const Tested = artifacts.require('Tested');
 

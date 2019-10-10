@@ -1,4 +1,4 @@
-const { balance, BN, ether, send } = require('openzeppelin-test-helpers');
+const { balance, BN, ether, send } = require('@openzeppelin/test-helpers');
 const { expect } = require('chai');
 
 contract('accounts', function (accounts) {

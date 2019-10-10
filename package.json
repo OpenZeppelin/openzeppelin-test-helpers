@@ -1,5 +1,5 @@
 {
-  "name": "openzeppelin-test-helpers",
+  "name": "@openzeppelin/test-helpers",
   "version": "0.5.1",
   "description": "JavaScript testing helpers for Ethereum smart contract development.",
   "main": "index.js",

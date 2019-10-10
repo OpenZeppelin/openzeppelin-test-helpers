@@ -1,6 +1,6 @@
 # OpenZeppelin Test Helpers
 
-[![NPM Package](https://img.shields.io/npm/v/openzeppelin-test-helpers.svg)](https://www.npmjs.org/package/openzeppelin-test-helpers)
+[![NPM Package](https://img.shields.io/npm/v/@openzeppelin/test-helpers.svg)](https://www.npmjs.org/package/@openzeppelin/test-helpers)
 [![Build Status](https://travis-ci.com/OpenZeppelin/openzeppelin-test-helpers.svg?branch=master)](https://travis-ci.com/OpenZeppelin/openzeppelin-test-helpers)
 
 **JavaScript testing helpers for Ethereum smart contract development.** These use [web3 1.2](https://www.npmjs.com/package/web3) under the hood, but include support for [`truffle-contract`](https://www.npmjs.com/package/@truffle/contract) objects. [Chai](http://chaijs.com/) [bn.js](https://github.com/indutny/bn.js) assertions using [chai-bn](https://github.com/OpenZeppelin/chai-bn) are also included.
@@ -8,14 +8,14 @@
 ## Installation
 
 ```bash
-npm install --save-dev openzeppelin-test-helpers chai
+npm install --save-dev @openzeppelin/test-helpers chai
 ```
 
 ## Usage
 
 ```javascript
-// Import all required modules from openzeppelin-test-helpers
-const { BN, constants, expectEvent, expectRevert } = require('openzeppelin-test-helpers');
+// Import all required modules from @openzeppelin/test-helpers
+const { BN, constants, expectEvent, expectRevert } = require('@openzeppelin/test-helpers');
 
 // Import preferred chai flavor: both expect and should are supported
 const { expect } = require('chai');
@@ -56,7 +56,7 @@ This library features support for both web3 and truffle contract instances. The 
 While automatic detection should cover most use cases, both the environment and provider can be manually supplied:
 
 ```javascript
-require('openzeppelin-test-helpers/configure')({ environment: 'web3', provider: 'http://localhost:8080' });
+require('@openzeppelin/test-helpers/configure')({ environment: 'web3', provider: 'http://localhost:8080' });
 
 const { expectEvent } = require('openzeppelin-test-helpers');
 ```
@@ -218,7 +218,7 @@ contract Owned {
 
 Can be tested as follows:
 ```javascript
-const { expectRevert } = require('openzeppelin-test-helpers');
+const { expectRevert } = require('@openzeppelin/test-helpers');
 
 const Owned = artifacts.require('Owned');
 

@@ -4,6 +4,7 @@
  * Removed check for truffle environments on configure due to issues with truffle migrations.
 
 ## 0.5.0 (2019-10-10)
+ * Renamed the package to `@openzeppelin/test-helpers`. ([#78](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/78))
  * Removed hard-dependency on `truffle-contract` ([#75](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/75)):
    * An `environment` option was added to `configure`, and can be set to either `web3` or `truffle` (default is `web3`, but there is automatic detection of a `truffle` environment)
    * `singletons` return [`web3 Contract`](https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html) instances when `environment` is set to `web3`
