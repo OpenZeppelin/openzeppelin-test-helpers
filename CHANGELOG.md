@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.5.1 (unreleased)
+ * Removed check for truffle environments on configure due to issues with truffle migrations.
+
 ## 0.5.0 (2019-10-10)
  * Removed hard-dependency on `truffle-contract` ([#75](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/75)):
    * An `environment` option was added to `configure`, and can be set to either `web3` or `truffle` (default is `web3`, but there is automatic detection of a `truffle` environment)
