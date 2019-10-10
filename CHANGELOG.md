@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.5.1 (2019-10-10)
+ * Removed check for truffle environments on configure due to issues with truffle migrations.
+
 ## 0.5.0 (2019-10-10)
  * Renamed the package to `@openzeppelin/test-helpers`. ([#78](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/78))
  * Removed hard-dependency on `truffle-contract` ([#75](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/75)):

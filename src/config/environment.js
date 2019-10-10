@@ -7,14 +7,6 @@ function setEnvironment (env) {
     throw new Error(`Unknown runtime environment '${env}'`);
   }
 
-  if (env === 'truffle' && !isTruffleEnvironment()) {
-    throw new Error(`\
-Attempt to configure runtime environment to 'truffle', but truffle detection failed.
-
-Are you running 'truffle test' or 'truffle exec'?`
-    );
-  }
-
   environment = env;
 }
 
