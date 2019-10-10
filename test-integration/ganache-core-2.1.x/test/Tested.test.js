@@ -7,26 +7,25 @@ contract('Tested', function (accounts) {
   context('expectRevert', async function () {
     beforeEach(async function () {
       this.contract = await Tested.new();
-    })
+    });
 
     context('with ganache-core < 2.2.0', async function () {
-      it('accepts reverts without regard to the specified reason', async function () {
-        // This is the revert reason at Tested.sol:5
-        const expectedMessage = 'lorem ipsum';
+      it('throws when specifying a revert reason', async function () {
         // Asserting that locally installed ganache-core is v2.1.0.
         const nodeInfo = await web3.eth.getNodeInfo();
         expect(nodeInfo).to.include('2.1.0');
+
         try {
-          await this.contract.failWithRevertReason();
+          await expectRevert(this.contract.failWithRevertReason(), 'lorem ipsum');
+          expect.fail('expectRevert did not throw');
+        } catch (e) {
+          expect(e.message).to.include(`doesn't return revert reasons`);
         }
-        catch (error) {
-          // Asserting that older ganache does NOT return reason message.
-          expect(error.message).to.not.include(expectedMessage);
-        }
-        // With that said, following revert should be accepted without regard to the specified
-        // reason message.
-        await expectRevert(this.contract.failWithRevertReason(), expectedMessage);
-      })
-    })
-  })
+      });
+
+      it('works when using expectRevert.unspecified', async function () {
+        await expectRevert.unspecified(this.contract.failWithRevertReason());
+      });
+    });
+  });
 });

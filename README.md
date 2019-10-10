@@ -3,7 +3,7 @@
 [![NPM Package](https://img.shields.io/npm/v/@openzeppelin/test-helpers.svg)](https://www.npmjs.org/package/@openzeppelin/test-helpers)
 [![Build Status](https://travis-ci.com/OpenZeppelin/openzeppelin-test-helpers.svg?branch=master)](https://travis-ci.com/OpenZeppelin/openzeppelin-test-helpers)
 
-**JavaScript testing helpers for Ethereum smart contract development.** These use [web3 1.2](https://www.npmjs.com/package/web3) under the hood, and include support for [`truffle-contract`](https://www.npmjs.com/package/@truffle/contract) objects. [Chai](http://chaijs.com/) [bn.js](https://github.com/indutny/bn.js) assertions using [chai-bn](https://github.com/OpenZeppelin/chai-bn) are also included.
+**JavaScript testing helpers for Ethereum smart contract development.** These use [web3 1.2](https://www.npmjs.com/package/web3) under the hood, but include support for [`truffle-contract`](https://www.npmjs.com/package/@truffle/contract) objects. [Chai](http://chaijs.com/) [bn.js](https://github.com/indutny/bn.js) assertions using [chai-bn](https://github.com/OpenZeppelin/chai-bn) are also included.
 
 ## Installation
 
@@ -61,6 +61,14 @@ require('@openzeppelin/test-helpers/configure')({ environment: 'web3', provider:
 const { expectEvent } = require('openzeppelin-test-helpers');
 ```
 
+#### truffle migrations
+
+Automatic environment detection does not work inside truffle migrations, so the helpers must be manually configured.
+
+```javascript
+require('openzeppelin-test-helpers/configure')({ environment: 'truffle', provider: web3.currentProvider });
+```
+
 ## Reference
 
 This documentation is a work in progress: if in doubt, head over to the [tests directory](https://github.com/OpenZeppelin/openzeppelin-test-helpers/tree/master/test/src) to see examples of how each helper can be used.
@@ -70,37 +78,62 @@ All returned numbers are of type [BN](https://github.com/indutny/bn.js).
 ---
 
 ### balance
-Helper to keep track of ether balances of a specific account
+
+Helpers to inspect Ether balances of a specific account.
+
+All of these functions return `BN` instances, with balances in 'wei' by default.
 
 #### balance current
-##### async balance.current(account)
-Returns the current balance of an account
+##### async balance.current(account, unit = 'wei')
+Returns the current balance of an account.
 ```javascript
 const balance = await balance.current(account)
+// same as new BN(web3.eth.getBalance(account))
+
+const balanceEth = await balance.current(account, 'ether')
+// same as new BN(web3.utils.fromWei(await web3.eth.getBalance(account), 'ether'))
 ```
 
 #### balance tracker
-##### async balance.get
-Returns the current Ether balance of an account.
-```javascript
-const balanceTracker = await balance.tracker(account) //instantiation
-const accounBalance = await balanceTracker.get() //returns the current balance of account
-```
-##### async balance.delta
-Returns the change in the Ether since the last check(either `get()` or `delta()`)
+Allows you to keep track of the changes in an account's Ether balance.
+
+##### async balance.tracker(account, unit = 'wei')
+Creates an instance of a balance tracker.
 
 ```javascript
-const balanceTracker = await balance.tracker(receiver)
+const tracker = await balance.tracker(account)
+```
+
+##### async tracker.get(unit = tracker.unit)
+Returns the current balance of an account.
+
+```javascript
+const tracker = await balance.tracker(account) // instantiation
+const currentBalance = await tracker.get() // returns the current balance of account
+```
+##### async tracker.delta(unit = tracker.unit)
+Returns the change in the balance since the last time it was checked (with either `get()` or `delta()`).
+
+```javascript
+const tracker = await balance.tracker(receiver, 'ether')
 send.ether(sender, receiver, ether('10'))
-(await balanceTracker.delta()).should.be.bignumber.equal('10');
-(await balanceTracker.delta()).should.be.bignumber.equal('0');
+(await tracker.delta()).should.be.bignumber.equal('10');
+(await tracker.delta()).should.be.bignumber.equal('0');
 ```
 Or using `get()`:
 ```javascript
-const balanceTracker = await balance.tracker(account) //instantiation
-const accounBalance = await balanceTracker.get() //returns the current balance of account
-(await balanceTracker.delta()).should.be.bignumber.equal('0');
+const tracker = await balance.tracker(account) // instantiation
+const currentBalance = await tracker.get() // returns the current balance of account
+(await tracker.delta()).should.be.bignumber.equal('0');
 ```
+
+A tracker can also return all balances and deltas in a specific unit:
+
+```javascript
+const tracker = await balance.tracker(account, 'gwei');
+const balanceGwei = tracker.get(); // in gigawei
+const balanceEther = tracker.get('ether'); // in ether
+````
 
 ---
 
