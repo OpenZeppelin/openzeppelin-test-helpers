@@ -59,8 +59,3 @@ typings/
 
 # truffle artifacts
 build/*
-
-# keep required truffle artifacts (see https://stackoverflow.com/a/16318111)
-!build/contracts
-build/contracts/*
-!build/contracts/ERC1820Registry.json
