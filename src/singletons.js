@@ -1,7 +1,6 @@
 const { web3 } = require('./setup');
 const ether = require('./ether');
 const send = require('./send');
-const tryRequire = require('try-require');
 
 const {
   ERC1820_REGISTRY_ABI,
@@ -30,21 +29,7 @@ async function getDeployedERC1820Registry () {
   const environment = require('./config/environment').getEnviroment();
 
   if (environment === 'truffle') {
-    let truffleContract;
-    [ '@truffle/contract', 'truffle-contract' ].forEach(pkg => {
-      if (truffleContract === undefined) {
-        truffleContract = tryRequire(pkg);
-      }
-    });
-
-    if (truffleContract === undefined) {
-      throw new Error(`\
-Current environment is 'truffle', but found no truffle contract abstraction package.
-Install it via:
-  npm install @truffle/contract
-`);
-    }
-
+    const truffleContract = require('@truffle/contract');
     const contractAbstraction = truffleContract({ abi: ERC1820_REGISTRY_ABI });
     contractAbstraction.setProvider(web3.currentProvider);
 
