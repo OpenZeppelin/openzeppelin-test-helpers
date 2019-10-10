@@ -11,11 +11,16 @@
 
 ### How to upgrade from 0.4
 
-If you are using `openzeppelin-test-helpers` in a Truffle environment with default detection of the Web3 instance, there is nothing you need to do. If you were manually configuring a `web3` instance, you will need to configure the `provider` instead. The specifics will depend on your setup, but the following should get you started.
+If you are using `openzeppelin-test-helpers` in a truffle environment with automatic configuration, there is nothing you need to do. If you were manually configuring a `web3` instance, you will need to configure the `provider` instead. The specifics will depend on your setup, but the following should get you started.
 
 ```diff
 -require('openzeppelin-test-helpers/configure')({ web3: myWeb3 });
 +require('openzeppelin-test-helpers/configure')({ provider: myWeb3.currentProvider });
+```
+
+Additionally, truffle migrations require explicit environment configuration, since automatic detection does not work.
+```javascript
+require('openzeppelin-test-helpers/configure')({ provider: web3.currentProvider, environment: 'truffle' });
 ```
 
 ## 0.4.2 (2019-07-31)

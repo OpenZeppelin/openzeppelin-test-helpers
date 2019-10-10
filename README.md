@@ -61,6 +61,14 @@ require('openzeppelin-test-helpers/configure')({ environment: 'web3', provider: 
 const { expectEvent } = require('openzeppelin-test-helpers');
 ```
 
+#### truffle migrations
+
+Automatic environment detection does not work inside truffle migrations, so the helpers must be manually configured.
+
+```javascript
+require('openzeppelin-test-helpers/configure')({ environment: 'truffle', provider: web3.currentProvider });
+```
+
 ## Reference
 
 This documentation is a work in progress: if in doubt, head over to the [tests directory](https://github.com/OpenZeppelin/openzeppelin-test-helpers/tree/master/test/src) to see examples of how each helper can be used.
