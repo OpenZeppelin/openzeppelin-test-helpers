@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.5.1 (unreleased)
+## 0.5.1 (2019-10-10)
  * Removed check for truffle environments on configure due to issues with truffle migrations.
 
 ## 0.5.0 (2019-10-10)
