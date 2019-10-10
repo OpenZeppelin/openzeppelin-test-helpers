@@ -1,6 +1,6 @@
 {
   "name": "openzeppelin-test-helpers",
-  "version": "0.5.0-rc.3",
+  "version": "0.5.0",
   "description": "JavaScript testing helpers for Ethereum smart contract development.",
   "main": "index.js",
   "files": [
