@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.5.2 (unreleased)
+## 0.5.2 (2019-10-15)
  * Removed the requirement to install `chai` when using the library. ([#84](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/84))
 
 ## 0.5.1 (2019-10-10)
