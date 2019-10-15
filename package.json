@@ -12,7 +12,7 @@
     "lint": "eslint .",
     "release": "scripts/release/release.sh",
     "test": "./scripts/test.sh --network ganache",
-    "test-integration": "./test-integration/run-all.sh",
+    "test-integration": "bash -x test-integration/run-all.sh",
     "version": "scripts/release/update-changelog-release-date.js"
   },
   "repository": {
@@ -37,6 +37,7 @@
   "dependencies": {
     "@truffle/contract": "^4.0.35",
     "ansi-colors": "^3.2.3",
+    "chai": "^4.2.0",
     "chai-bn": "^0.2.0",
     "ethjs-abi": "^0.2.1",
     "lodash.flatten": "^4.4.0",
@@ -46,7 +47,6 @@
   },
   "devDependencies": {
     "@openzeppelin/contract-loader": "^0.1.0",
-    "chai": "^4.2.0",
     "eslint": "^5.9.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
@@ -56,8 +56,5 @@
     "eslint-plugin-standard": "^4.0.0",
     "ganache-cli": "^6.5.0",
     "truffle": "^5.0.29"
-  },
-  "peerDependencies": {
-    "chai": "^4.2.0"
   }
 }

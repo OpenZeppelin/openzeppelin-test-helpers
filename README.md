@@ -3,48 +3,55 @@
 [![NPM Package](https://img.shields.io/npm/v/@openzeppelin/test-helpers.svg)](https://www.npmjs.org/package/@openzeppelin/test-helpers)
 [![Build Status](https://travis-ci.com/OpenZeppelin/openzeppelin-test-helpers.svg?branch=master)](https://travis-ci.com/OpenZeppelin/openzeppelin-test-helpers)
 
-**JavaScript testing helpers for Ethereum smart contract development.** These use [web3 1.2](https://www.npmjs.com/package/web3) under the hood, but include support for [`truffle-contract`](https://www.npmjs.com/package/@truffle/contract) objects. [Chai](http://chaijs.com/) [bn.js](https://github.com/indutny/bn.js) assertions using [chai-bn](https://github.com/OpenZeppelin/chai-bn) are also included.
+**JavaScript testing helpers for Ethereum smart contract development.** With support for Truffle and plain web3.js workflows.
 
 ## Installation
 
 ```bash
-npm install --save-dev @openzeppelin/test-helpers chai
+npm install --save-dev @openzeppelin/test-helpers
 ```
 
 ## Usage
 
 ```javascript
-// Import all required modules from @openzeppelin/test-helpers
-const { BN, constants, expectEvent, expectRevert } = require('@openzeppelin/test-helpers');
+// Import the modules you want from @openzeppelin/test-helpers
+const { BN, constants, balance, expectEvent, expectRevert } = require('@openzeppelin/test-helpers');
 
-// Import preferred chai flavor: both expect and should are supported
+// Optionally import Chai to write your assertions (must be installed separately)
 const { expect } = require('chai');
 
 const ERC20 = artifacts.require('ERC20');
 
-contract('ERC20', ([sender, receiver]) => {
+contract('ERC20', function ([sender, receiver]) {
   beforeEach(async function () {
     this.erc20 = await ERC20.new();
     this.value = new BN(1); // The bundled BN library is the same one truffle and web3 use under the hood
   });
 
   it('reverts when transferring tokens to the zero address', async function () {
-    // Edge cases that trigger a require statement can be tested for
+    // Conditions that trigger a require statement can be precisely tested
     await expectRevert(
-      this.erc20.transfer(constants.ZERO_ADDRESS, this.value, { from: sender }), 'ERC20: transfer to the zero address'
+      this.erc20.transfer(constants.ZERO_ADDRESS, this.value, { from: sender }),
+      'ERC20: transfer to the zero address',
     );
   });
 
   it('emits a Transfer event on successful transfers', async function () {
-    const receipt = this.erc20.transfer(receiver, this.value, { from: sender });
-    // Log-checking will not only look at the event name, but also the values, which can be addresses, strings, numbers, etc.
-    expectEvent(receipt, 'Transfer', { from: sender, to: receiver, value: this.value });
+    const receipt = await this.erc20.transfer(receiver, this.value, { from: sender });
+
+    // Event assertions can verify that the arguments are the expected ones
+    expectEvent(receipt, 'Transfer', {
+      from: sender,
+      to: receiver,
+      value: this.value,
+    });
   });
 
   it('updates balances on successful transfers', async function () {
     this.erc20.transfer(receiver, this.value, { from: sender });
-    // chai-bn is installed, which means BN values can be tested and compared using the bignumber property in chai
-    expect(await this.token.balanceOf(receiver)).to.be.bignumber.equal(this.value);
+
+    // If Chai is installed, big number assertions are automatically available thanks to chai-bn
+    assert(await balance(receiver)).to.be.bignumber.equal(this.value);
   });
 });
 ```

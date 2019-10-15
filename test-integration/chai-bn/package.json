@@ -1,0 +1,14 @@
+{
+  "name": "chai-bn",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "node test.js"
+  },
+  "author": "Francisco Giordano <frangio.1@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "chai": "^3.5.0",
+    "semver": "^6.3.0"
+  }
+}
