@@ -13,9 +13,13 @@ require('chai').use(chaiBN);
 // has in their own tests. This can happen if the version ranges required don't
 // intersect, or if the package manager doesn't dedupe the modules for any
 // other reason. We do our best to install chai-bn for the user.
-function useChaiBN (chai) { if (chai) chai.use(chaiBN); }
-useChaiBN(require.main.require('chai'));
-useChaiBN(module.parent.require('chai'));
+for (const mod of [require.main, module.parent]) {
+  try {
+    mod.require('chai').use(chaiBN);
+  } catch (e) {
+    // Ignore errors
+  }
+}
 
 module.exports = {
   web3,
