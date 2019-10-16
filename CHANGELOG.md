@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.5.3 (unreleased)
+## 0.5.3 (2019-10-16)
  * Fixed a bug in the `chai-bn` setup. ([#85](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/85))
 
 ## 0.5.2 (2019-10-15)
