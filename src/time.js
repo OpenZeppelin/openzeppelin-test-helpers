@@ -5,7 +5,7 @@ function advanceBlock () {
   return promisify(web3.currentProvider.send.bind(web3.currentProvider))({
     jsonrpc: '2.0',
     method: 'evm_mine',
-    id: new Date().getTime()
+    id: new Date().getTime(),
   });
 }
 
@@ -32,7 +32,7 @@ async function increase (duration) {
     jsonrpc: '2.0',
     method: 'evm_increaseTime',
     params: [duration.toNumber()],
-    id: new Date().getTime()
+    id: new Date().getTime(),
   });
 
   await advanceBlock();
