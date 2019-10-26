@@ -9,6 +9,21 @@ function advanceBlock () {
   });
 }
 
+// Advance the block to the passed height
+async function advanceBlockTo (target) {
+  if (!BN.isBN(target)) {
+    target = new BN(target);
+  }
+
+  let now = (await latestBlock());
+  if (target.lt(now)) throw Error(`Cannot advance current block (${now}) to a moment in the past (${target})`);
+  
+  for (;target.gte(now);) {
+    await advanceBlock();
+    now = (await latestBlock());
+  }
+}
+
 // Returns the time of the last mined block in seconds
 async function latest () {
   const block = await web3.eth.getBlock('latest');
@@ -68,6 +83,7 @@ const duration = {
 
 module.exports = {
   advanceBlock,
+  advanceBlockTo,
   latest,
   latestBlock,
   increase,
