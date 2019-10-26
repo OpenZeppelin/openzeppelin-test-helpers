@@ -45,6 +45,15 @@ describe('time', function () {
       expect(await time.latestBlock()).to.be.bignumber.equal(startingBlock.add(new BN(1)));
     });
   });
+  
+  describe('advanceBlockTo', function () {
+    it('increases the block number to target', async function () {
+      const startingBlock = await time.latestBlock();
+      const endBlock = startingBlock.addn(10);
+      await time.advanceBlockTo(endBlock);
+      expect(await time.latestBlock()).to.be.bignumber.equal(endBlock.add(new BN(1)));
+    });
+  });
 
   describe('latest', function () {
     it('returns a BN', async function () {
