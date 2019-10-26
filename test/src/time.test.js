@@ -45,7 +45,7 @@ describe('time', function () {
       expect(await time.latestBlock()).to.be.bignumber.equal(startingBlock.add(new BN(1)));
     });
   });
-  
+
   describe('advanceBlockTo', function () {
     it('increases the block number to target', async function () {
       const startingBlock = await time.latestBlock();
