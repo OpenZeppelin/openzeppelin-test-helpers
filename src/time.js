@@ -17,7 +17,6 @@ async function advanceBlockTo (target) {
 
   let now = (await latestBlock());
   if (target.lt(now)) throw Error(`Cannot advance current block (${now}) to a moment in the past (${target})`);
-  
   for (;target.gte(now);) {
     await advanceBlock();
     now = (await latestBlock());
