@@ -51,7 +51,7 @@ describe('time', function () {
       const startingBlock = await time.latestBlock();
       const endBlock = startingBlock.addn(10);
       await time.advanceBlockTo(endBlock);
-      expect(await time.latestBlock()).to.be.bignumber.equal(endBlock.add(new BN(1)));
+      expect(await time.latestBlock()).to.be.bignumber.equal(endBlock));
     });
   });
 
