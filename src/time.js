@@ -15,7 +15,7 @@ async function advanceBlockTo (target) {
     target = new BN(target);
   }
 
-  let currentBlock = (await latestBlock());
+  const currentBlock = (await latestBlock());
   if (target.lt(currentBlock)) throw Error(`Target block #(${target}) is lower than current block #(${currentBlock})`);
   while ((await latestBlock()).lt(target)) {
     await advanceBlock();
