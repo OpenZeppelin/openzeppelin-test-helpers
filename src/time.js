@@ -15,11 +15,10 @@ async function advanceBlockTo (target) {
     target = new BN(target);
   }
 
-  let now = (await latestBlock());
-  if (target.lt(now)) throw Error(`Cannot advance current block (${now}) to a moment in the past (${target})`);
-  for (;target.gte(now);) {
+  let currentBlock = (await latestBlock());
+  if (target.lt(currentBlock)) throw Error(`Target block #(${target}) is lower than current block #(${currentBlock})`);
+  while ((await latestBlock()).lt(target)) {
     await advanceBlock();
-    now = (await latestBlock());
   }
 }
 
