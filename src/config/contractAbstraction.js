@@ -1,4 +1,4 @@
-const { setEnvironment, getEnvironment } = require('./src/config/environment');
+const { setEnvironment, getEnvironment } = require('./environment');
 
 module.exports = {
   setContractAbstraction: setEnvironment,

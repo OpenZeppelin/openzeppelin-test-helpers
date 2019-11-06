@@ -1,5 +1,7 @@
 const { setWeb3Provider } = require('./src/config/web3');
-const { setEnvironment } = require('./src/config/environment');
+const { setContractAbstraction } = require('./src/config/contractAbstraction');
+
+const { deprecate } = require('util');
 
 let configLoaded = false;
 
@@ -18,7 +20,7 @@ function configure (config) {
 
 function defaultConfigure () {
   setWeb3Provider.default();
-  setEnvironment.default();
+  setContractAbstraction.default();
 }
 
 function customConfigure (config) {
@@ -29,8 +31,14 @@ function customConfigure (config) {
     setWeb3Provider(config.provider);
   }
 
-  if ('environment' in config) {
-    setEnvironment(config.environment);
+  if ('contractAbstraction' in config) {
+    setContractAbstraction(config.contractAbstraction);
+
+  } else if ('environment' in config) {
+    deprecate(
+      () => setContractAbstraction(config.environment),
+      'The \'environment\' configuration option is deprecated, use \'contractAbstraction\' instead.'
+    )();
   }
 }
 
