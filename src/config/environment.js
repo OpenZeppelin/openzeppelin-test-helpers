@@ -18,7 +18,7 @@ function setDefaultEnvironment () {
   }
 }
 
-function getEnviroment () {
+function getEnvironment () {
   if (environment === null) {
     throw new Error('Runtime environment is not configured');
   }
@@ -35,5 +35,5 @@ setEnvironment.default = setDefaultEnvironment;
 
 module.exports = {
   setEnvironment,
-  getEnviroment,
+  getEnvironment,
 };

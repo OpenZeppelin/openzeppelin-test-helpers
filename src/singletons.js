@@ -26,7 +26,7 @@ async function ERC1820Registry (funder) {
 }
 
 async function getDeployedERC1820Registry () {
-  const environment = require('./config/environment').getEnviroment();
+  const environment = require('./config/environment').getEnvironment();
 
   if (environment === 'truffle') {
     const truffleContract = require('@truffle/contract');
