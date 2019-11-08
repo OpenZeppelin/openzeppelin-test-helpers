@@ -58,12 +58,16 @@ contract('ERC20', function ([sender, receiver]) {
 
 ### Configuration
 
-This library features support for both web3 and truffle contract instances. The default environment is `'web3'`, unless a `'truffle'` environment is automatically detected. In a `'truffle`' environment, the web3 provider will be pulled from truffle's global web3 instance, otherwise, it defaults to `http://localhost:8545`.
+This library features support for both web3 and truffle contract instances: functions like `expectEvent` can receive receipts from either type of contract abstraction.
 
-While automatic detection should cover most use cases, both the environment and provider can be manually supplied:
+In a `truffle` environment, the web3 provider will be pulled from truffle's global web3 instance, otherwise, it defaults to `http://localhost:8545`.
+
+The contract abstraction type `singletons` returns depends on the `contractAbstraction` configuration value. The default one is `'web3'`, unless a `truffle` environment is automatically detected.
+
+While automatic detection should cover most use cases, both provider and contract abstraction can be manually supplied:
 
 ```javascript
-require('@openzeppelin/test-helpers/configure')({ environment: 'web3', provider: 'http://localhost:8080' });
+require('@openzeppelin/test-helpers/configure')({ contractAbstraction: 'web3', provider: 'http://localhost:8080' });
 
 const { expectEvent } = require('openzeppelin-test-helpers');
 ```
@@ -73,7 +77,7 @@ const { expectEvent } = require('openzeppelin-test-helpers');
 Automatic environment detection does not work inside truffle migrations, so the helpers must be manually configured.
 
 ```javascript
-require('@openzeppelin/test-helpers/configure')({ environment: 'truffle', provider: web3.currentProvider });
+require('@openzeppelin/test-helpers/configure')({ contractAbstraction: 'truffle', provider: web3.currentProvider });
 ```
 
 ## Reference
