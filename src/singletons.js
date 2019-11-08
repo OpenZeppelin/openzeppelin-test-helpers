@@ -4,6 +4,8 @@ const send = require('./send');
 
 const { getContractAbstraction } = require('./config/contractAbstraction');
 
+const { setupLoader } = require('@openzeppelin/contract-loader');
+
 const {
   ERC1820_REGISTRY_ABI,
   ERC1820_REGISTRY_ADDRESS,
@@ -28,17 +30,18 @@ async function ERC1820Registry (funder) {
 }
 
 async function getDeployedERC1820Registry () {
+  const loader = setupLoader({ provider: web3.currentProvider });
+
   const contractAbstraction = getContractAbstraction();
-
   if (contractAbstraction === 'truffle') {
-    const truffleContract = require('@truffle/contract');
-
-    const registryAbstraction = truffleContract({ abi: ERC1820_REGISTRY_ABI });
-    registryAbstraction.setProvider(web3.currentProvider);
-
-    return registryAbstraction.at(ERC1820_REGISTRY_ADDRESS);
+    const registry = loader.truffle.fromABI(ERC1820_REGISTRY_ABI);
+    return registry.at(ERC1820_REGISTRY_ADDRESS);
 
   } else if (contractAbstraction === 'web3') {
+    const registry = loader.web3.fromABI(ERC1820_REGISTRY_ABI);
+    registry.options.address = ERC1820_REGISTRY_ADDRESS;
+
+
     return new web3.eth.Contract(ERC1820_REGISTRY_ABI, ERC1820_REGISTRY_ADDRESS);
 
   } else {
