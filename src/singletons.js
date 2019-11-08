@@ -3,6 +3,7 @@ const ether = require('./ether');
 const send = require('./send');
 
 const { getContractAbstraction } = require('./config/contractAbstraction');
+const { getSingletonsConfig } = require('./config/singletons');
 
 const { setupLoader } = require('@openzeppelin/contract-loader');
 
@@ -30,7 +31,12 @@ async function ERC1820Registry (funder) {
 }
 
 async function getDeployedERC1820Registry () {
-  const loader = setupLoader({ provider: web3.currentProvider });
+  const config = getSingletonsConfig();
+  const loader = setupLoader({
+    provider: web3.currentProvider,
+    defaultGas: config.defaultGas,
+    defaultSender: config.defaultSender,
+  });
 
   const contractAbstraction = getContractAbstraction();
   if (contractAbstraction === 'truffle') {
@@ -40,7 +46,6 @@ async function getDeployedERC1820Registry () {
   } else if (contractAbstraction === 'web3') {
     const registry = loader.web3.fromABI(ERC1820_REGISTRY_ABI);
     registry.options.address = ERC1820_REGISTRY_ADDRESS;
-
 
     return new web3.eth.Contract(ERC1820_REGISTRY_ABI, ERC1820_REGISTRY_ADDRESS);
 
