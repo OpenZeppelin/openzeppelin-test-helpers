@@ -4,6 +4,10 @@ const { setSingletonsConfig } = require('./src/config/singletons');
 
 const { deprecate } = require('util');
 
+const setEnvironment = deprecate((environment) => setContractAbstraction(environment),
+  'The \'environment\' configuration option is deprecated, use \'contractAbstraction\' instead.'
+);
+
 let configLoaded = false;
 
 function configure (config) {
@@ -37,10 +41,7 @@ function customConfigure (config) {
     setContractAbstraction(config.contractAbstraction);
 
   } else if ('environment' in config) {
-    deprecate(
-      () => setContractAbstraction(config.environment),
-      'The \'environment\' configuration option is deprecated, use \'contractAbstraction\' instead.'
-    )();
+    setEnvironment(config.environment);
   }
 
   if ('singletons' in config) {
