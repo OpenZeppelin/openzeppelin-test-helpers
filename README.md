@@ -60,7 +60,7 @@ contract('ERC20', function ([sender, receiver]) {
 
 This library supports both web3 and truffle contract instances. Where possible, helpers will automatically detect what you're using and work with both. For details about each helper see their documentation entries below.
 
-#### provider
+#### `provider`
 
 In a truffle environment, the web3 provider will be pulled from truffle's global web3 instance. Otherwise, it defaults to `http://localhost:8545`. You can override this behavior and configure your own via the `provider` key:
 
@@ -68,7 +68,7 @@ In a truffle environment, the web3 provider will be pulled from truffle's global
 require('@openzeppelin/test-helpers/configure')({ provider: 'http://localhost:8080' });
 ````
 
-#### singletons
+#### `singletons`
 
 The `singletons` helper returns contract objects, which have multiple values that can be configured:
  * `abstraction`: the underlying contract abstraction type, `'web3'` for `web3-eth-contract` and `'truffle'` for `@truffle/contract` instances. Defaults to `'web3'` unless a truffle environment is detected.
