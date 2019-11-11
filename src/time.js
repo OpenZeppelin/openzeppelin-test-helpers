@@ -17,15 +17,15 @@ async function advanceBlockTo (target) {
   }
 
   const currentBlock = (await latestBlock());
-  const beforeTime = new Date().getTime();
+  const start = Date.now();
   let notified;
   if (target.lt(currentBlock)) throw Error(`Target block #(${target}) is lower than current block #(${currentBlock})`);
   while ((await latestBlock()).lt(target)) {
-    if (!notified && new Date().getTime() - beforeTime >= 5) {
+    if (!notified && Date.now() - start >= 5) {
       notified = true;
       console.log(`\
-${colors.white.bgBlack('@openzeppelin/test-helpers')} ${colors.black.bgYellow('WARN')} advanceBlockTo: Advancing too `+
-        `many blocks is causing this test to be slow.`);
+${colors.white.bgBlack('@openzeppelin/test-helpers')} ${colors.black.bgYellow('WARN')} advanceBlockTo: Advancing too ` +
+      'many blocks is causing this test to be slow.');
     }
     await advanceBlock();
   }
