@@ -2,7 +2,6 @@ const { web3 } = require('./setup');
 const ether = require('./ether');
 const send = require('./send');
 
-const { getContractAbstraction } = require('./config/contractAbstraction');
 const { getSingletonsConfig } = require('./config/singletons');
 
 const { setupLoader } = require('@openzeppelin/contract-loader');
@@ -38,19 +37,18 @@ async function getDeployedERC1820Registry () {
     defaultSender: config.defaultSender,
   });
 
-  const contractAbstraction = getContractAbstraction();
-  if (contractAbstraction === 'truffle') {
+  if (config.abstraction === 'truffle') {
     const registry = loader.truffle.fromABI(ERC1820_REGISTRY_ABI);
     return registry.at(ERC1820_REGISTRY_ADDRESS);
 
-  } else if (contractAbstraction === 'web3') {
+  } else if (config.abstraction === 'web3') {
     const registry = loader.web3.fromABI(ERC1820_REGISTRY_ABI);
     registry.options.address = ERC1820_REGISTRY_ADDRESS;
 
     return new web3.eth.Contract(ERC1820_REGISTRY_ABI, ERC1820_REGISTRY_ADDRESS);
 
   } else {
-    throw new Error(`Unknown contract abstraction: '${contractAbstraction}'`);
+    throw new Error(`Unknown contract abstraction: '${config.abstraction}'`);
   }
 }
 

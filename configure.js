@@ -1,11 +1,10 @@
 const { setWeb3Provider } = require('./src/config/web3');
-const { setContractAbstraction } = require('./src/config/contractAbstraction');
 const { setSingletonsConfig } = require('./src/config/singletons');
 
 const { deprecate } = require('util');
 
-const setEnvironment = deprecate((environment) => setContractAbstraction(environment),
-  'The \'environment\' configuration option is deprecated, use \'contractAbstraction\' instead.'
+const setEnvironment = deprecate((environment) => setSingletonsConfig({ abstraction: environment }),
+  'The \'environment\' configuration option is deprecated, use \'singletons.abstraction\' instead.'
 );
 
 let configLoaded = false;
@@ -25,7 +24,6 @@ function configure (config) {
 
 function defaultConfigure () {
   setWeb3Provider.default();
-  setContractAbstraction.default();
   setSingletonsConfig.default();
 }
 
@@ -37,15 +35,10 @@ function customConfigure (config) {
     setWeb3Provider(config.provider);
   }
 
-  if ('contractAbstraction' in config) {
-    setContractAbstraction(config.contractAbstraction);
-
-  } else if ('environment' in config) {
-    setEnvironment(config.environment);
-  }
-
   if ('singletons' in config) {
     setSingletonsConfig(config.singletons);
+  } else if ('environment' in config) {
+    setEnvironment(config.environment);
   }
 }
 

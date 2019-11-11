@@ -1,18 +1,26 @@
-let singletonsConfig;
+/* global web3 */
 
-const defaultGas = 6e6;
-const defaultSender = '';
+let singletonsConfig;
 
 function setSingletonsConfig (config) {
   singletonsConfig = config;
 }
 
 function setDefaultSingletonsConfig () {
-  setSingletonsConfig({ defaultGas, defaultSender });
+  setSingletonsConfig({
+    abstraction: isTruffleEnvironment() ? 'truffle' : 'web3',
+    defaultGas: 8e6,
+    defaultSender: '',
+  });
 }
 
 function getSingletonsConfig () {
   return singletonsConfig;
+}
+
+function isTruffleEnvironment () {
+  // Truffle environments are detected by the presence of (truffle-injected) global web3 and artifacts variables
+  return (typeof web3 !== 'undefined' && typeof artifacts !== 'undefined');
 }
 
 setSingletonsConfig.default = setDefaultSingletonsConfig;
