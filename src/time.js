@@ -21,7 +21,7 @@ async function advanceBlockTo (target) {
   let notified;
   if (target.lt(currentBlock)) throw Error(`Target block #(${target}) is lower than current block #(${currentBlock})`);
   while ((await latestBlock()).lt(target)) {
-    if (!notified && Date.now() - start >= 5) {
+    if (!notified && Date.now() - start >= 5000) {
       notified = true;
       console.log(`\
 ${colors.white.bgBlack('@openzeppelin/test-helpers')} ${colors.black.bgYellow('WARN')} advanceBlockTo: Advancing too ` +
