@@ -24,7 +24,8 @@ async function advanceBlockTo (target) {
     if (!notified && new Date().getTime() - beforeTime >= 5) {
       notified = true;
       console.log(`\
-${colors.white.bgBlack('@openzeppelin/test-helpers')} ${colors.black.bgYellow('WARN')} advanceBlockTo: Advancing too many blocks is causing this test to be slow.`);
+${colors.white.bgBlack('@openzeppelin/test-helpers')} ${colors.black.bgYellow('WARN')} advanceBlockTo: Advancing too `+
+        `many blocks is causing this test to be slow.`);
     }
     await advanceBlock();
   }
