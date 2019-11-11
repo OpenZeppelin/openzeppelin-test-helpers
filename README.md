@@ -58,7 +58,7 @@ contract('ERC20', function ([sender, receiver]) {
 
 ### Configuration
 
-This library features support for both web3 and truffle contract instances: functions like `expectEvent` can receive receipts from either type of contract abstraction.
+This library supports both web3 and truffle contract instances. Where possible, helpers will automatically detect what you're using and work with both. For details about each helper see the documentation below.
 
 In a `truffle` environment, the web3 provider will be pulled from truffle's global web3 instance, otherwise, it defaults to `http://localhost:8545`.
 
