@@ -60,7 +60,7 @@ contract('ERC20', function ([sender, receiver]) {
 
 This library supports both web3 and truffle contract instances. Where possible, helpers will automatically detect what you're using and work with both. For details about each helper see the documentation below.
 
-In a `truffle` environment, the web3 provider will be pulled from truffle's global web3 instance, otherwise, it defaults to `http://localhost:8545`.
+In a truffle environment, the web3 provider will be pulled from truffle's global web3 instance. Otherwise, it defaults to `http://localhost:8545`.
 
 The contract abstraction type `singletons` returns depends on the `contractAbstraction` configuration value. The default one is `'web3'`, unless a `truffle` environment is automatically detected.
 
