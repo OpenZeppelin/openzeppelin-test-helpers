@@ -3,19 +3,17 @@ const { expect } = require('chai');
 const assertFailure = require('../helpers/assertFailure');
 const expectEvent = require('../../src/expectEvent');
 
-require('@openzeppelin/contract-loader/lib/configure').set(web3);
-const { load } = require('@openzeppelin/contract-loader');
+const { setupLoader } = require('@openzeppelin/contract-loader');
 
-const EventEmitter = load('EventEmitter');
-const IndirectEventEmitter = load('IndirectEventEmitter');
+const web3Loader = setupLoader({ provider: web3.eth.currentProvider }).web3;
+
+const EventEmitter = web3Loader.fromArtifacts('EventEmitter');
+const IndirectEventEmitter = web3Loader.fromArtifacts('IndirectEventEmitter');
 
 contract('expectEvent (web3 contracts) ', function ([deployer]) {
   before(function () {
     EventEmitter.options.from = deployer;
-    EventEmitter.options.gas = 2e6;
-
     IndirectEventEmitter.options.from = deployer;
-    IndirectEventEmitter.options.gas = 2e6;
   });
 
   beforeEach(async function () {

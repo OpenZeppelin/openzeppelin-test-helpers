@@ -58,22 +58,35 @@ contract('ERC20', function ([sender, receiver]) {
 
 ### Configuration
 
-This library features support for both web3 and truffle contract instances. The default environment is `'web3'`, unless a `'truffle'` environment is automatically detected. In a `'truffle`' environment, the web3 provider will be pulled from truffle's global web3 instance, otherwise, it defaults to `http://localhost:8545`.
+This library supports both web3 and truffle contract instances. Where possible, helpers will automatically detect what you're using and work with both. For details about each helper see their documentation entries below.
 
-While automatic detection should cover most use cases, both the environment and provider can be manually supplied:
+#### `provider`
+
+In a truffle environment, the web3 provider will be pulled from truffle's global web3 instance. Otherwise, it defaults to `http://localhost:8545`. You can override this behavior and configure your own via the `provider` key:
 
 ```javascript
-require('@openzeppelin/test-helpers/configure')({ environment: 'web3', provider: 'http://localhost:8080' });
+require('@openzeppelin/test-helpers/configure')({ provider: 'http://localhost:8080' });
+````
 
-const { expectEvent } = require('openzeppelin-test-helpers');
+#### `singletons`
+
+The `singletons` helper returns contract objects, which have multiple values that can be configured:
+ * `abstraction`: the underlying contract abstraction type, `'web3'` for `web3-eth-contract` and `'truffle'` for `@truffle/contract` instances. Defaults to `'web3'` unless a truffle environment is detected.
+ * `defaultGas`: how much gas to allocate when a transaction's `gas` field is not specified. Defaults to 200k.
+ * `defaultSender`: the sender address to use when a transaction's `from` field is not specified. No default.
+
+While automatic detection and defaults should cover most use cases, all values can be manually supplied:
+
+```javascript
+require('@openzeppelin/test-helpers/configure')({ singletons: { abstraction: 'web3', defaultGas: 6e6, defaultSender: '0x5a0b5...' } });
 ```
 
-#### truffle migrations
+#### About truffle migrations
 
-Automatic environment detection does not work inside truffle migrations, so the helpers must be manually configured.
+Automatic truffle environment detection does not work inside truffle migrations, so the helpers must be manually configured.
 
 ```javascript
-require('@openzeppelin/test-helpers/configure')({ environment: 'truffle', provider: web3.currentProvider });
+require('@openzeppelin/test-helpers/configure')({ provider: web3.currentProvider, singletons: { abstraction: 'truffle' } });
 ```
 
 ## Reference

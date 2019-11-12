@@ -2,6 +2,10 @@ const { web3 } = require('./setup');
 const ether = require('./ether');
 const send = require('./send');
 
+const { getSingletonsConfig } = require('./config/singletons');
+
+const { setupLoader } = require('@openzeppelin/contract-loader');
+
 const {
   ERC1820_REGISTRY_ABI,
   ERC1820_REGISTRY_ADDRESS,
@@ -26,20 +30,25 @@ async function ERC1820Registry (funder) {
 }
 
 async function getDeployedERC1820Registry () {
-  const environment = require('./config/environment').getEnviroment();
+  const config = getSingletonsConfig();
+  const loader = setupLoader({
+    provider: web3.currentProvider,
+    defaultGas: config.defaultGas,
+    defaultSender: config.defaultSender,
+  });
 
-  if (environment === 'truffle') {
-    const truffleContract = require('@truffle/contract');
-    const contractAbstraction = truffleContract({ abi: ERC1820_REGISTRY_ABI });
-    contractAbstraction.setProvider(web3.currentProvider);
+  if (config.abstraction === 'truffle') {
+    const registry = loader.truffle.fromABI(ERC1820_REGISTRY_ABI);
+    return registry.at(ERC1820_REGISTRY_ADDRESS);
 
-    return contractAbstraction.at(ERC1820_REGISTRY_ADDRESS);
+  } else if (config.abstraction === 'web3') {
+    const registry = loader.web3.fromABI(ERC1820_REGISTRY_ABI);
+    registry.options.address = ERC1820_REGISTRY_ADDRESS;
 
-  } else if (environment === 'web3') {
     return new web3.eth.Contract(ERC1820_REGISTRY_ABI, ERC1820_REGISTRY_ADDRESS);
 
   } else {
-    throw new Error(`Unknown environment: '${environment}'`);
+    throw new Error(`Unknown contract abstraction: '${config.abstraction}'`);
   }
 }
 
