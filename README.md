@@ -72,7 +72,7 @@ require('@openzeppelin/test-helpers/configure')({ provider: 'http://localhost:80
 
 The `singletons` helper returns contract objects, which have multiple values that can be configured:
  * `abstraction`: the underlying contract abstraction type, `'web3'` for `web3-eth-contract` and `'truffle'` for `@truffle/contract` instances. Defaults to `'web3'` unless a truffle environment is detected.
- * `defaultGas`: how much gas to allocate when a transaction's `gas` field is not specified. Defaults to 8 million.
+ * `defaultGas`: how much gas to allocate when a transaction's `gas` field is not specified. Defaults to 200k.
  * `defaultSender`: the sender address to use when a transaction's `from` field is not specified. No default.
 
 While automatic detection and defaults should cover most use cases, all values can be manually supplied:

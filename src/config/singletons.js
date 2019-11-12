@@ -9,7 +9,7 @@ function setSingletonsConfig (config) {
 function setDefaultSingletonsConfig () {
   setSingletonsConfig({
     abstraction: isTruffleEnvironment() ? 'truffle' : 'web3',
-    defaultGas: 8e6,
+    defaultGas: 200e3,
     defaultSender: '',
   });
 }
