@@ -22,7 +22,7 @@ contract('singletons', function ([funder]) {
         expect((await web3.eth.getCode(this.registry.address))).to.equal(ERC1820_REGISTRY_BYTECODE);
       });
 
-      it('returns the same truffle-contract when attempting to deploy a second registry', async function () {
+      it('returns the same contract when attempting to deploy a second registry', async function () {
         const newRegistry = await singletons.ERC1820Registry(funder);
         expect(newRegistry.address).to.equal('0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24');
       });
@@ -46,7 +46,7 @@ contract('singletons', function ([funder]) {
         expect((await web3.eth.getCode(this.registry.options.address))).to.equal(ERC1820_REGISTRY_BYTECODE);
       });
 
-      it('returns the same truffle-contract when attempting to deploy a second registry', async function () {
+      it('returns the same contract when attempting to deploy a second registry', async function () {
         const newRegistry = await singletons.ERC1820Registry(funder);
         expect(newRegistry.options.address).to.equal('0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24');
       });

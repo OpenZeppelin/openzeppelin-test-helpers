@@ -1,7 +1,8 @@
 const { web3, BN } = require('./setup');
 const { expect } = require('chai');
 const flatten = require('lodash.flatten');
-const util = require('util');
+
+const { deprecate } = require('util');
 
 function expectEvent (receipt, eventName, eventArgs = {}) {
   // truffle contract receipts have a 'logs' object, with an array of objects
@@ -134,7 +135,7 @@ function isTruffleContract (contract) {
   return 'abi' in contract && typeof contract.abi === 'object';
 }
 
-expectEvent.inLogs = util.deprecate(inLogs, 'expectEvent.inLogs() is deprecated. Use expectEvent() instead.');
+expectEvent.inLogs = deprecate(inLogs, 'expectEvent.inLogs() is deprecated. Use expectEvent() instead.');
 expectEvent.inConstruction = inConstruction;
 expectEvent.inTransaction = inTransaction;
 module.exports = expectEvent;
