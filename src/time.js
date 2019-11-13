@@ -1,5 +1,6 @@
 const { web3, BN } = require('./setup');
 const { promisify } = require('util');
+const colors = require('ansi-colors');
 
 function advanceBlock () {
   return promisify(web3.currentProvider.send.bind(web3.currentProvider))({
@@ -7,6 +8,27 @@ function advanceBlock () {
     method: 'evm_mine',
     id: new Date().getTime(),
   });
+}
+
+// Advance the block to the passed height
+async function advanceBlockTo (target) {
+  if (!BN.isBN(target)) {
+    target = new BN(target);
+  }
+
+  const currentBlock = (await latestBlock());
+  const start = Date.now();
+  let notified;
+  if (target.lt(currentBlock)) throw Error(`Target block #(${target}) is lower than current block #(${currentBlock})`);
+  while ((await latestBlock()).lt(target)) {
+    if (!notified && Date.now() - start >= 5000) {
+      notified = true;
+      console.log(`\
+${colors.white.bgBlack('@openzeppelin/test-helpers')} ${colors.black.bgYellow('WARN')} advanceBlockTo: Advancing too ` +
+      'many blocks is causing this test to be slow.');
+    }
+    await advanceBlock();
+  }
 }
 
 // Returns the time of the last mined block in seconds
@@ -68,6 +90,7 @@ const duration = {
 
 module.exports = {
   advanceBlock,
+  advanceBlockTo,
   latest,
   latestBlock,
   increase,

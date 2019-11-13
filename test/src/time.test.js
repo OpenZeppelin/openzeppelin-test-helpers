@@ -46,6 +46,15 @@ describe('time', function () {
     });
   });
 
+  describe('advanceBlockTo', function () {
+    it('increases the block number to target', async function () {
+      const startingBlock = await time.latestBlock();
+      const endBlock = startingBlock.addn(10);
+      await time.advanceBlockTo(endBlock);
+      expect(await time.latestBlock()).to.be.bignumber.equal(endBlock);
+    });
+  });
+
   describe('latest', function () {
     it('returns a BN', async function () {
       expect(await time.latest()).to.be.bignumber.equal(await time.latest()); // Hacky, but this triggers BN type check

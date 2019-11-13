@@ -294,6 +294,11 @@ Returns an instance of an [ERC1820Registry](https://eips.ethereum.org/EIPS/eip-1
 #### async time.advanceBlock ()
 Forces a block to be mined, incrementing the block height.
 
+#### async time.advanceBlockTo (target)
+Forces blocks to be mined until the the target block height is reached.
+
+Note: Using this function to advance too many blocks can really slow down your tests. Keep its use to a minimum.
+
 #### async time.latest ()
 Returns the timestamp of the latest mined block. Should be coupled with `advanceBlock` to retrieve the current blockchain time.
 
