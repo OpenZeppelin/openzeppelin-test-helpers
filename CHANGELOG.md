@@ -1,8 +1,10 @@
 # Changelog
 
+## 0.5.5 (unreleased)
+ * Added function `advanceBlockTo`. ([#94](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/94))
+
 ## 0.5.4 (2019-11-13)
  * Fixed some RPC calls not having an `id` field. ([#92](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/92))
- * Add function `advanceBlockTo`. ([#94](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/94))
  * Added `singletons` configuration and renamed the `environment` option to `singletons.abstraction`. ([#96](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/96))
 
 ## 0.5.3 (2019-10-16)
