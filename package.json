@@ -36,7 +36,6 @@
   "homepage": "https://github.com/OpenZeppelin/openzeppelin-test-helpers#readme",
   "dependencies": {
     "@openzeppelin/contract-loader": "^0.4.0",
-    "@truffle/contract": "^4.0.35",
     "ansi-colors": "^3.2.3",
     "chai": "^4.2.0",
     "chai-bn": "^0.2.0",
