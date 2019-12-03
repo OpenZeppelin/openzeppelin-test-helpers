@@ -9,6 +9,8 @@
     "configure.js"
   ],
   "scripts": {
+    "docs": "oz-docs",
+    "docs:watch": "npm run docs watch",
     "lint": "eslint .",
     "release": "scripts/release/release.sh",
     "test": "./scripts/test.sh --network ganache",
@@ -55,6 +57,7 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
     "ganache-cli": "^6.5.0",
+    "openzeppelin-docs-utils": "github:OpenZeppelin/docs-utils",
     "truffle": "^5.0.29"
   }
 }

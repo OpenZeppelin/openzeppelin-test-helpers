@@ -1,19 +1,18 @@
-# OpenZeppelin Test Helpers
+== OpenZeppelin Test Helpers
 
-[![NPM Package](https://img.shields.io/npm/v/@openzeppelin/test-helpers.svg)](https://www.npmjs.org/package/@openzeppelin/test-helpers)
-[![Build Status](https://travis-ci.com/OpenZeppelin/openzeppelin-test-helpers.svg?branch=master)](https://travis-ci.com/OpenZeppelin/openzeppelin-test-helpers)
+*JavaScript testing helpers for Ethereum smart contract development.* With support for Truffle and plain web3.js workflows.
 
-**JavaScript testing helpers for Ethereum smart contract development.** With support for Truffle and plain web3.js workflows.
+=== Installation
 
-## Installation
-
-```bash
+[source,bash]
+----
 npm install --save-dev @openzeppelin/test-helpers
-```
+----
 
-## Usage
+=== Usage
 
-```javascript
+[source,javascript]
+----
 // Import the modules you want from @openzeppelin/test-helpers
 const { BN, constants, balance, expectEvent, expectRevert } = require('@openzeppelin/test-helpers');
 
@@ -54,13 +53,4 @@ contract('ERC20', function ([sender, receiver]) {
     assert(await balance(receiver)).to.be.bignumber.equal(this.value);
   });
 });
-```
-
-## Documentation 
-
-- [Configuration](docs/modules/ROOT/pages/configuration.adoc)
-- [API Reference](docs/modules/ROOT/pages/api.adoc)
-
-## License
-
-[MIT](LICENSE)
+----
