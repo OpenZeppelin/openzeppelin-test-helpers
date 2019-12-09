@@ -185,7 +185,9 @@ Converts a value in Ether to wei.
 ---
 
 ### expectEvent (receipt, eventName, eventArgs = {})
-Asserts the logs in `receipt` contain an entry for an event with name `eventName`, for which all entries in `eventArgs` match. `receipt` is the object returned by either a web3 Contract or a truffle-contract call.
+Asserts that the logs in `receipt` contain an event with name `eventName` and arguments that match those specified in `eventArgs`. `receipt` should be an object returned by either a web3 Contract or a truffle-contract call.
+
+Note that it's possible to leave some or all event arguments unspecified, or even leave out the entire `eventArgs` argument. The function will only check the arguments that are specified, and ignore the rest.
 
 ```javascript
 const web3Receipt = await MyWeb3Contract.methods.foo('bar').send();
