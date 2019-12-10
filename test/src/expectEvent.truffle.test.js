@@ -458,4 +458,27 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
       });
     });
   });
+
+  describe('not', function () {
+    // default = inLogs, default TBD.
+    describe('default', function () {
+      context('with no arguments', function () {
+        beforeEach(async function () {
+          this.receipt = await this.emitter.emitArgumentless();
+        });
+        it('accepts not emitted events', function () {
+          expectEvent.not(this.receipt, 'Nonexistant');
+        });
+        it('throws when event its emitted', function () {
+          expect(() => expectEvent.not(this.receipt, 'Argumentless')).to.throw();
+        });
+      });
+    });
+    describe('inConstruction', function () {
+      it('tests');
+    });
+    describe('inTransaction', function () {
+      it('tests');
+    });
+  });
 });
