@@ -271,6 +271,30 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
           });
         });
       });
+
+      context('with short uint array value', function () {
+        it('tests');
+      });
+
+      context('with short int array value', function () {
+        it('tests');
+      });
+
+      context('with long uint array value', function () {
+        it('tests');
+      });
+
+      context('with long int array value', function () {
+        it('tests');
+      });
+
+      context('with address array value', function () {
+        it('tests');
+      });
+
+      context('with boolean array value', function () {
+        it('tests');
+      });
     });
 
     describe('with multiple arguments', function () {
