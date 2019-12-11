@@ -105,11 +105,23 @@ function decodeLogs (logs, emitter, eventName) {
 
 function contains (args, key, value) {
   expect(key in args).to.equal(true, `Event argument '${key}' not found`);
-
   if (value === null) {
     expect(args[key]).to.equal(null);
   } else if (isBN(args[key]) || isBN(value)) {
     expect(args[key]).to.be.bignumber.equal(value);
+  } else if (Array.isArray(args[key])) {
+    console.log('value', value);
+    console.log('is array');
+    for (let i = 0; i < args[key].length; i++) {
+      console.log('value in array', args[key][i]);
+      if (isBN(args[key][i]) || isBN(value[i])) {
+        console.log('is bn');
+        expect(args[key][i]).to.be.bignumber.equal(value[i]);
+      } else {
+        console.log('is not bn');
+        expect(args[key][i]).to.be.equal(value[i]);
+      }
+    }
   } else {
     expect(args[key]).to.be.equal(value);
   }

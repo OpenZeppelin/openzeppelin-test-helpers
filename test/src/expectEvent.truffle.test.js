@@ -272,8 +272,30 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
         });
       });
 
-      context('with short uint array value', function () {
-        it('tests');
+      context.only('with short uint array value', function () {
+        beforeEach(async function () {
+          this.values = [4, 8, 15, 16, 23, 42];
+          this.receipt = await this.emitter.emitShortUintArray(this.values);
+        });
+        it('accepts emitted events with correct BN', function () {
+          expectEvent(this.receipt, 'ShortUintArray', { values: this.values.map(value => new BN(value)) });
+        });
+
+        // it('throws if an emitted event with correct JavaScript number is requested', function () {
+        //   expect(() => expectEvent(this.receipt, 'ShortUint', { value: this.value })).to.throw();
+        // });
+
+        // it('throws if an emitted event with correct BN and incorrect name is requested', function () {
+        //   expect(() => expectEvent(this.receipt, 'ShortUint', { number: new BN(this.value) })).to.throw();
+        // });
+
+        // it('throws if an unemitted event is requested', function () {
+        //   expect(() => expectEvent(this.receipt, 'UnemittedEvent', { value: this.value })).to.throw();
+        // });
+
+        // it('throws if an incorrect value is passed', function () {
+        //   expect(() => expectEvent(this.receipt, 'ShortUint', { value: 23 })).to.throw();
+        // });
       });
 
       context('with short int array value', function () {
