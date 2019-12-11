@@ -110,18 +110,8 @@ function contains (args, key, value) {
   } else if (isBN(args[key]) || isBN(value)) {
     expect(args[key]).to.be.bignumber.equal(value);
   } else if (Array.isArray(args[key])) {
-    console.log('value', value);
-    console.log('is array');
-    for (let i = 0; i < args[key].length; i++) {
-      console.log('value in array', args[key][i]);
-      if (isBN(args[key][i]) || isBN(value[i])) {
-        console.log('is bn');
-        expect(args[key][i]).to.be.bignumber.equal(value[i]);
-      } else {
-        console.log('is not bn');
-        expect(args[key][i]).to.be.equal(value[i]);
-      }
-    }
+    expect(args[key].length).to.equal(value.length, `Array at argument ${key} has different length`);
+    for (const i in Object.entries(args[key])) contains(args[key], i, value[i]);
   } else {
     expect(args[key]).to.be.equal(value);
   }

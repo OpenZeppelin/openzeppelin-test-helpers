@@ -272,30 +272,54 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
         });
       });
 
-      context.only('with short uint array value', function () {
+      context('with short uint array value', function () {
         beforeEach(async function () {
           this.values = [4, 8, 15, 16, 23, 42];
+          this.mixedTypesValues = [new BN(4), 8, new BN(15), 16, 23, 42];
+          this.shorterValues = [4, 8, 15, 16, 23];
+          this.incorrectValues = [...this.shorterValues, 999];
+          this.longerValues = [...this.values, 999];
           this.receipt = await this.emitter.emitShortUintArray(this.values);
         });
-        it('accepts emitted events with correct BN', function () {
+
+        it('accepts emitted events with correct BNs', function () {
           expectEvent(this.receipt, 'ShortUintArray', { values: this.values.map(value => new BN(value)) });
         });
 
-        // it('throws if an emitted event with correct JavaScript number is requested', function () {
-        //   expect(() => expectEvent(this.receipt, 'ShortUint', { value: this.value })).to.throw();
-        // });
+        it('throws if an emitted event with a mix of correct BNs and JavaScript numbers', function () {
+          expect(
+            () => expectEvent(this.receipt, 'ShortUintArray', { values: this.mixedTypesValues })
+          ).to.throw();
+        });
 
-        // it('throws if an emitted event with correct BN and incorrect name is requested', function () {
-        //   expect(() => expectEvent(this.receipt, 'ShortUint', { number: new BN(this.value) })).to.throw();
-        // });
+        it('throws if an emitted event with correct JavaScript numbers is requested', function () {
+          expect(() => expectEvent(this.receipt, 'ShortUintArray', { values: this.values })).to.throw();
+        });
 
-        // it('throws if an unemitted event is requested', function () {
-        //   expect(() => expectEvent(this.receipt, 'UnemittedEvent', { value: this.value })).to.throw();
-        // });
+        it('throws if an emitted event with correct BNs and incorrect name is requested', function () {
+          expect(
+            () => expectEvent(this.receipt, 'ShortUintArray', { numbers: this.values.map(value => new BN(value)) })
+          ).to.throw();
+        });
 
-        // it('throws if an incorrect value is passed', function () {
-        //   expect(() => expectEvent(this.receipt, 'ShortUint', { value: 23 })).to.throw();
-        // });
+        it('throws if an unemitted event is requested', function () {
+          expect(() => expectEvent(this.receipt, 'UnemittedEvent', { values: this.values })).to.throw();
+        });
+
+        it('throws if an array with incorrect values is passed', function () {
+          expect(
+            () => expectEvent(this.receipt, 'ShortUintArray', { values: this.incorrectValues.map(value => new BN(value)) })
+          ).to.throw();
+        });
+
+        it('throws if an array with diferent length is passed', function () {
+          expect(
+            () => expectEvent(this.receipt, 'ShortUintArray', { values: this.longerValues.map(value => new BN(value)) })
+          ).to.throw();
+          expect(
+            () => expectEvent(this.receipt, 'ShortUintArray', { values: this.shorterValues.map(value => new BN(value)) })
+          ).to.throw();
+        });
       });
 
       context('with short int array value', function () {
@@ -320,39 +344,47 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
     });
 
     describe('with multiple arguments', function () {
-      beforeEach(async function () {
-        this.uintValue = new BN('123456789012345678901234567890');
-        this.booleanValue = true;
-        this.stringValue = 'OpenZeppelin';
-        this.receipt = await this.emitter.emitLongUintBooleanString(
-          this.uintValue, this.booleanValue, this.stringValue
-        );
-      });
+      context('and none of them are arrays', function () {
+        beforeEach(async function () {
+          this.uintValue = new BN('123456789012345678901234567890');
+          this.booleanValue = true;
+          this.stringValue = 'OpenZeppelin';
+          this.receipt = await this.emitter.emitLongUintBooleanString(
+            this.uintValue, this.booleanValue, this.stringValue
+          );
+        });
 
-      it('accepts correct values', function () {
-        expectEvent(this.receipt, 'LongUintBooleanString', {
-          uintValue: this.uintValue, booleanValue: this.booleanValue, stringValue: this.stringValue,
+        it('accepts correct values', function () {
+          expectEvent(this.receipt, 'LongUintBooleanString', {
+            uintValue: this.uintValue, booleanValue: this.booleanValue, stringValue: this.stringValue,
+          });
+        });
+
+        it('throws with correct values assigned to wrong arguments', function () {
+          expect(() => expectEvent(this.receipt, 'LongUintBooleanString', {
+            uintValue: this.booleanValue, booleanValue: this.uintValue, stringValue: this.stringValue,
+          })).to.throw();
+        });
+
+        it('throws when any of the values is incorrect', function () {
+          expect(() => expectEvent(this.receipt, 'LongUintBooleanString', {
+            uintValue: 23, booleanValue: this.booleanValue, stringValue: this.stringValue,
+          })).to.throw();
+
+          expect(() => expectEvent(this.receipt, 'LongUintBooleanString', {
+            uintValue: this.uintValue, booleanValue: false, stringValue: this.stringValue,
+          })).to.throw();
+
+          expect(() => expectEvent(this.receipt, 'LongUintBooleanString', {
+            uintValue: this.uintValue, booleanValue: this.booleanValue, stringValue: 'ClosedZeppelin',
+          })).to.throw();
         });
       });
-
-      it('throws with correct values assigned to wrong arguments', function () {
-        expect(() => expectEvent(this.receipt, 'LongUintBooleanString', {
-          uintValue: this.booleanValue, booleanValue: this.uintValue, stringValue: this.stringValue,
-        })).to.throw();
+      context('and all of them are arrays', function () {
+        it('tests');
       });
-
-      it('throws when any of the values is incorrect', function () {
-        expect(() => expectEvent(this.receipt, 'LongUintBooleanString', {
-          uintValue: 23, booleanValue: this.booleanValue, stringValue: this.stringValue,
-        })).to.throw();
-
-        expect(() => expectEvent(this.receipt, 'LongUintBooleanString', {
-          uintValue: this.uintValue, booleanValue: false, stringValue: this.stringValue,
-        })).to.throw();
-
-        expect(() => expectEvent(this.receipt, 'LongUintBooleanString', {
-          uintValue: this.uintValue, booleanValue: this.booleanValue, stringValue: 'ClosedZeppelin',
-        })).to.throw();
+      context('and some of them are arrays', function () {
+        it('tests');
       });
     });
 

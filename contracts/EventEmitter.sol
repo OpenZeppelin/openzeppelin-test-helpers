@@ -20,7 +20,9 @@ contract EventEmitter {
     event LongIntArray(int256[] values);
     event AddressArray(address[] values);
     event BooleanArray(bool[] values);
-    event LongUintBooleanAddressArray(uint256[] uintValues, bool[] booleanValues, address[] addressValues);
+    event LongUintBooleanAddressArrays(uint256[] uintValues, bool[] booleanValues, address[] addressValues);
+
+    event LongUintBooleanArray(uint256 uintValues, bool[] booleanValues);
 
     event Repeated();
     event Repeated(bytes value);
@@ -108,6 +110,14 @@ contract EventEmitter {
 
     function emitBooleanArray(bool[] memory values) public {
         emit BooleanArray(values);
+    }
+
+    function emitLongUintBooleanAddressArrays(uint256[] memory uintValues, bool[] memory booleanValues, address[] memory addressValues) public {
+        emit LongUintBooleanAddressArrays(uintValues, booleanValues, addressValues);
+    }
+
+    function emitLongUintBooleanArray(uint256 uintValue, bool[] memory booleanValues) public {
+        emit LongUintBooleanArray(uintValue, booleanValues);
     }
 
     function emitRepeated(bytes memory value) public {
