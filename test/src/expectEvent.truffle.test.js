@@ -308,7 +308,11 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
 
         it('throws if an array with incorrect values is passed', function () {
           expect(
-            () => expectEvent(this.receipt, 'ShortUintArray', { values: this.incorrectValues.map(value => new BN(value)) })
+            () => expectEvent(
+              this.receipt, 
+              'ShortUintArray', 
+              { values: this.incorrectValues.map(value => new BN(value)) },
+            )
           ).to.throw();
         });
 
@@ -317,7 +321,11 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
             () => expectEvent(this.receipt, 'ShortUintArray', { values: this.longerValues.map(value => new BN(value)) })
           ).to.throw();
           expect(
-            () => expectEvent(this.receipt, 'ShortUintArray', { values: this.shorterValues.map(value => new BN(value)) })
+            () => expectEvent(
+              this.receipt, 
+              'ShortUintArray', 
+              { values: this.shorterValues.map(value => new BN(value)) },
+            )
           ).to.throw();
         });
       });
