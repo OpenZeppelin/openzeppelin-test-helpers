@@ -1,30 +1,47 @@
-== OpenZeppelin Test Helpers
+= Test Helpers
 
-*JavaScript testing helpers for Ethereum smart contract development.* With support for Truffle and plain web3.js workflows.
+*Assertion library for Ethereum smart contract testing.* Make sure your contracts behave as expected!
+
+ * Check that xref:api.adoc#expect-revert[transactions revert] for the correct reason
+ * Verify xref:api.adoc#expect-event[events] where emitted with the right values
+ * Track xref:api.adoc#balance[balance changes] elegantly
+ * Handle very xref:api.adoc#bn[large numbers]
+ * Simulate the xref:api.adoc#time[passing of time]
+
+Test Helpers integrates seamlessly with https://github.com/OpenZeppelin/openzeppelin-test-environment[OpenZeppelin Test Environment], but it also supports both Truffle tests and regular web3 workflows.
+
+== Overview
 
 === Installation
 
-[source,bash]
-----
+```bash
 npm install --save-dev @openzeppelin/test-helpers
-----
+```
 
 === Usage
 
-[source,javascript]
-----
-// Import the modules you want from @openzeppelin/test-helpers
-const { BN, constants, balance, expectEvent, expectRevert } = require('@openzeppelin/test-helpers');
+Import `@openzeppelin/test-helpers` in your test files to access the different assertions and utilities.
 
-// Optionally import Chai to write your assertions (must be installed separately)
-const { expect } = require('chai');
+```javascript
+const { accounts, contract } = require('@openzeppelin/test-environment');
 
-const ERC20 = artifacts.require('ERC20');
+const {
+  BN,           // Big Number support
+  constants,    // Common constants, like the zero address and largest integers
+  expectEvent,  // Assertions for emitted events
+  expectRevert, // Assertions for transactions that should fail
+} = require('@openzeppelin/test-helpers');
 
-contract('ERC20', function ([sender, receiver]) {
+const ERC20 = contract.fromArtifacts('ERC20');
+
+describe('ERC20', function () {
+  const [sender, receiver] =  accounts;
+
   beforeEach(async function () {
+    // The bundled BN library is the same one web3 uses under the hood
+    this.value = new BN(1);
+
     this.erc20 = await ERC20.new();
-    this.value = new BN(1); // The bundled BN library is the same one truffle and web3 use under the hood
   });
 
   it('reverts when transferring tokens to the zero address', async function () {
@@ -36,7 +53,9 @@ contract('ERC20', function ([sender, receiver]) {
   });
 
   it('emits a Transfer event on successful transfers', async function () {
-    const receipt = await this.erc20.transfer(receiver, this.value, { from: sender });
+    const receipt = await this.erc20.transfer(
+      receiver, this.value, { from: sender }
+    );
 
     // Event assertions can verify that the arguments are the expected ones
     expectEvent(receipt, 'Transfer', {
@@ -49,8 +68,14 @@ contract('ERC20', function ([sender, receiver]) {
   it('updates balances on successful transfers', async function () {
     this.erc20.transfer(receiver, this.value, { from: sender });
 
-    // If Chai is installed, big number assertions are automatically available thanks to chai-bn
-    assert(await balance(receiver)).to.be.bignumber.equal(this.value);
+    // BN assertions are automatically available via chai-bn (if using Chai)
+    expect(await this.erc20.balanceOf(receiver))
+      .to.be.bignumber.equal(this.value);
   });
 });
-----
+```
+
+== Learn More
+
+* Head to xref:configuration.adoc[Configuration] for advanced settings.
+* For detailed usage information, take a look at the xref:api.adoc[API Reference].
