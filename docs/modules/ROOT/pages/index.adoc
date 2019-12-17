@@ -5,7 +5,7 @@
  * Check that xref:api.adoc#expect-revert[transactions revert] for the correct reason
  * Verify xref:api.adoc#expect-event[events] where emitted with the right values
  * Track xref:api.adoc#balance[balance changes] elegantly
- * Handle very xref:api.adoc#bn[large numbers]
+ * Handle xref:api.adoc#bn[very large numbers]
  * Simulate the xref:api.adoc#time[passing of time]
 
 Test Helpers integrates seamlessly with https://github.com/OpenZeppelin/openzeppelin-test-environment[OpenZeppelin Test Environment], but it also supports both Truffle tests and regular web3 workflows.

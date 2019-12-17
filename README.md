@@ -3,29 +3,48 @@
 [![NPM Package](https://img.shields.io/npm/v/@openzeppelin/test-helpers.svg)](https://www.npmjs.org/package/@openzeppelin/test-helpers)
 [![Build Status](https://travis-ci.com/OpenZeppelin/openzeppelin-test-helpers.svg?branch=master)](https://travis-ci.com/OpenZeppelin/openzeppelin-test-helpers)
 
-**JavaScript testing helpers for Ethereum smart contract development.** With support for Truffle and plain web3.js workflows.
+*Assertion library for Ethereum smart contract testing.* Make sure your contracts behave as expected!
 
-## Installation
+ * Check that [transactions revert](docs/modules/ROOT/pages/api.adoc#expect-revert) for the correct reason
+ * Verify [events](docs/modules/ROOT/pages/api.adoc#expect-event) where emitted with the right values
+ * Track [balance changes](docs/modules/ROOT/pages/api.adoc#balance) elegantly
+ * Handle [very large numbers](docs/modules/ROOT/pages/api.adoc#bn)
+ * Simulate the [passing of time](docs/modules/ROOT/pages/api.adoc#time)
+
+Test Helpers integrates seamlessly with [OpenZeppelin Test Environment](https://github.com/OpenZeppelin/openzeppelin-test-environment), but it also supports both Truffle tests and regular web3 workflows.
+
+## Overview
+
+### Installation
 
 ```bash
 npm install --save-dev @openzeppelin/test-helpers
 ```
 
-## Usage
+### Usage
+
+Import `@openzeppelin/test-helpers` in your test files to access the different assertions and utilities.
 
 ```javascript
-// Import the modules you want from @openzeppelin/test-helpers
-const { BN, constants, balance, expectEvent, expectRevert } = require('@openzeppelin/test-helpers');
+const { accounts, contract } = require('@openzeppelin/test-environment');
 
-// Optionally import Chai to write your assertions (must be installed separately)
-const { expect } = require('chai');
+const {
+  BN,           // Big Number support
+  constants,    // Common constants, like the zero address and largest integers
+  expectEvent,  // Assertions for emitted events
+  expectRevert, // Assertions for transactions that should fail
+} = require('@openzeppelin/test-helpers');
 
-const ERC20 = artifacts.require('ERC20');
+const ERC20 = contract.fromArtifacts('ERC20');
 
-contract('ERC20', function ([sender, receiver]) {
+describe('ERC20', function () {
+  const [sender, receiver] =  accounts;
+
   beforeEach(async function () {
+    // The bundled BN library is the same one web3 uses under the hood
+    this.value = new BN(1);
+
     this.erc20 = await ERC20.new();
-    this.value = new BN(1); // The bundled BN library is the same one truffle and web3 use under the hood
   });
 
   it('reverts when transferring tokens to the zero address', async function () {
@@ -37,7 +56,9 @@ contract('ERC20', function ([sender, receiver]) {
   });
 
   it('emits a Transfer event on successful transfers', async function () {
-    const receipt = await this.erc20.transfer(receiver, this.value, { from: sender });
+    const receipt = await this.erc20.transfer(
+      receiver, this.value, { from: sender }
+    );
 
     // Event assertions can verify that the arguments are the expected ones
     expectEvent(receipt, 'Transfer', {
@@ -50,16 +71,18 @@ contract('ERC20', function ([sender, receiver]) {
   it('updates balances on successful transfers', async function () {
     this.erc20.transfer(receiver, this.value, { from: sender });
 
-    // If Chai is installed, big number assertions are automatically available thanks to chai-bn
-    assert(await balance(receiver)).to.be.bignumber.equal(this.value);
+    // BN assertions are automatically available via chai-bn (if using Chai)
+    expect(await this.erc20.balanceOf(receiver))
+      .to.be.bignumber.equal(this.value);
   });
 });
 ```
 
-## Documentation 
+## Learn More
 
-- [Configuration](docs/modules/ROOT/pages/configuration.adoc)
-- [API Reference](docs/modules/ROOT/pages/api.adoc)
+* Head to [Configuration](docs/modules/ROOT/pages/configuration.adoc) for advanced settings.
+* For detailed usage information, take a look at the [API Reference](docs/modules/ROOT/pages/api.adoc).
+
 
 ## License
 
