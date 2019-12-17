@@ -3,7 +3,7 @@
 [![NPM Package](https://img.shields.io/npm/v/@openzeppelin/test-helpers.svg)](https://www.npmjs.org/package/@openzeppelin/test-helpers)
 [![Build Status](https://travis-ci.com/OpenZeppelin/openzeppelin-test-helpers.svg?branch=master)](https://travis-ci.com/OpenZeppelin/openzeppelin-test-helpers)
 
-*Assertion library for Ethereum smart contract testing.* Make sure your contracts behave as expected!
+**Assertion library for Ethereum smart contract testing.** Make sure your contracts behave as expected!
 
  * Check that [transactions revert](docs/modules/ROOT/pages/api.adoc#expect-revert) for the correct reason
  * Verify [events](docs/modules/ROOT/pages/api.adoc#expect-event) where emitted with the right values
