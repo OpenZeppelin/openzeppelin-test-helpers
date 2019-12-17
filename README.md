@@ -3,15 +3,15 @@
 [![NPM Package](https://img.shields.io/npm/v/@openzeppelin/test-helpers.svg)](https://www.npmjs.org/package/@openzeppelin/test-helpers)
 [![Build Status](https://travis-ci.com/OpenZeppelin/openzeppelin-test-helpers.svg?branch=master)](https://travis-ci.com/OpenZeppelin/openzeppelin-test-helpers)
 
-**Assertion library for Ethereum smart contract testing.** Make sure your contracts behave as expected!
+**Assertion library for Ethereum smart contract testing.** Make sure your contracts behave as expected.
 
  * Check that [transactions revert](docs/modules/ROOT/pages/api.adoc#expect-revert) for the correct reason
- * Verify [events](docs/modules/ROOT/pages/api.adoc#expect-event) where emitted with the right values
+ * Verify that [events](docs/modules/ROOT/pages/api.adoc#expect-event) were emitted with the right values
  * Track [balance changes](docs/modules/ROOT/pages/api.adoc#balance) elegantly
  * Handle [very large numbers](docs/modules/ROOT/pages/api.adoc#bn)
  * Simulate the [passing of time](docs/modules/ROOT/pages/api.adoc#time)
 
-Test Helpers integrates seamlessly with [OpenZeppelin Test Environment](https://github.com/OpenZeppelin/openzeppelin-test-environment), but it also supports both Truffle tests and regular web3 workflows.
+Test Helpers integrates seamlessly with [OpenZeppelin Test Environment](https://github.com/OpenZeppelin/openzeppelin-test-environment), but it also supports Truffle tests and regular web3 workflows.
 
 ## Overview
 
@@ -24,6 +24,8 @@ npm install --save-dev @openzeppelin/test-helpers
 ### Usage
 
 Import `@openzeppelin/test-helpers` in your test files to access the different assertions and utilities.
+
+_Note: The following snippet uses [OpenZeppelin Test Environment](https://github.com/OpenZeppelin/openzeppelin-test-environment): a Truffle-based setup would work the same way._
 
 ```javascript
 const { accounts, contract } = require('@openzeppelin/test-environment');
