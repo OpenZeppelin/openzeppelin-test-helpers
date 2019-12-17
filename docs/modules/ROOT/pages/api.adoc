@@ -1,0 +1,263 @@
+= API Reference
+
+This documentation is a work in progress: if in doubt, head over to the https://github.com/OpenZeppelin/openzeppelin-test-helpers/tree/master/test/src[tests directory] to see examples of how each helper can be used.
+
+All returned numbers are of type https://github.com/indutny/bn.js[`BN`].
+
+[[balance]]
+== balance
+
+Helpers to inspect Ether balances of a specific account.
+
+All of these functions return `BN` instances, with balances in 'wei' by default.
+
+=== balance current
+
+==== async balance.current(account, unit = 'wei')
+
+Returns the current balance of an account.
+
+```javascript
+const balance = await balance.current(account)
+// same as new BN(web3.eth.getBalance(account))
+
+const balanceEth = await balance.current(account, 'ether')
+// same as new BN(web3.utils.fromWei(await web3.eth.getBalance(account), 'ether'))
+```
+
+=== balance tracker
+
+Allows you to keep track of the changes in an account's Ether balance.
+
+==== async balance.tracker(account, unit = 'wei')
+
+Creates an instance of a balance tracker.
+
+```javascript
+const tracker = await balance.tracker(account)
+```
+
+==== async tracker.get(unit = tracker.unit)
+
+Returns the current balance of an account.
+
+```javascript
+const tracker = await balance.tracker(account) // instantiation
+const currentBalance = await tracker.get() // returns the current balance of account
+```
+
+==== async tracker.delta(unit = tracker.unit)
+
+Returns the change in the balance since the last time it was checked (with either `get()` or `delta()`).
+
+```javascript
+const tracker = await balance.tracker(receiver, 'ether')
+send.ether(sender, receiver, ether('10'))
+(await tracker.delta()).should.be.bignumber.equal('10');
+(await tracker.delta()).should.be.bignumber.equal('0');
+```
+
+Or using `get()`:
+
+```javascript
+const tracker = await balance.tracker(account) // instantiation
+const currentBalance = await tracker.get() // returns the current balance of account
+(await tracker.delta()).should.be.bignumber.equal('0');
+```
+
+A tracker can also return all balances and deltas in a specific unit:
+
+```javascript
+const tracker = await balance.tracker(account, 'gwei');
+const balanceGwei = tracker.get(); // in gigawei
+const balanceEther = tracker.get('ether'); // in ether
+```
+
+[[bn]]
+== BN
+
+A https://github.com/indutny/bn.js[bn.js] object. Use `new BN(number)` to create `BN` instances.
+
+[[constants]]
+== constants
+
+A collection of useful link:src/constants.js[constants].
+
+=== constants.ZERO_ADDRESS
+
+The initial value of a type `address` variable, i.e., `address(0)` in Solidity.
+
+=== constants.MAX_UINT256
+
+The maximum unsigned integer `2\^256 - 1` represented in `BN`.
+
+=== constants.MAX_INT256
+
+The maximum signed integer `2\^255 - 1` represented in `BN`.
+
+=== constants.MIN_INT256
+
+The minimum signed integer `-2\^255` represented in `BN`.
+
+[[ether]]
+== ether
+
+Converts a value in Ether to wei.
+
+[[expect-event]]
+== expectEvent (receipt, eventName, eventArgs = {})
+
+Asserts that the logs in `receipt` contain an event with name `eventName` and arguments that match those specified in `eventArgs`. `receipt` should be an object returned by either a web3 Contract or a truffle-contract call.
+
+Note that it's possible to leave some or all event arguments unspecified, or even leave out the entire `eventArgs` argument. The function will only check the arguments that are specified, and ignore the rest.
+
+```javascript
+const web3Receipt = await MyWeb3Contract.methods.foo('bar').send();
+expectEvent(web3Receipt, 'Foo', { value: 'bar' });
+
+const truffleReceipt = await MyTruffleContract.foo('bar');
+expectEvent(truffleReceipt, 'Foo', { value: 'bar' });
+```
+
+=== async inTransaction (txHash, emitter, eventName, eventArgs = {})
+
+Same as `expectEvent`, but for events emitted in an arbitrary transaction (of hash `txHash`), by an arbitrary contract (`emitter`, the contract instance), even if it was indirectly called (i.e. if it was called by another smart contract and not an externally owned account).
+
+```javascript
+// With web3 contracts
+const contract = await MyContract.deploy().send();
+const { transactionHash } = await contract.methods.foo('bar').send();
+await expectEvent.inTransaction(transactionHash, contract, 'Foo', { value: 'bar' });
+
+// With truffle contracts
+const contract = await MyContract.new();
+const { txHash } = await contract.foo('bar');
+await expectEvent.inTransaction(txHash, contract, 'Foo', { value: 'bar' });
+```
+
+=== async function inConstruction (emitter, eventName, eventArgs = {})
+
+Same as `inTransaction`, but for events emitted during the construction of `emitter`. Note that this is currently only supported for truffle contracts.
+
+[[expect-revert]]
+== expectRevert
+
+Collection of assertions for transaction errors (similar to https://www.chaijs.com/api/bdd/#method_throw[chai's `throw`]).
+
+=== async expectRevert (promise, message)
+
+This helper asserts that `promise` was rejected due to a reverted transaction, and it will check that the revert reason includes `message`. Use `expectRevert.unspecified` when the revert reason is unknown. For example:
+
+[source,solidity]
+```
+contract Owned {
+    address private _owner;
+
+    constructor () {
+        _owner = msg.sender;
+    }
+
+    function doOwnerOperation() public view {
+        require(msg.sender == _owner, "Unauthorized");
+        ....
+    }
+}
+```
+
+Can be tested as follows:
+
+```javascript
+const { expectRevert } = require('@openzeppelin/test-helpers');
+
+const Owned = artifacts.require('Owned');
+
+contract('Owned', ([owner, other]) => {
+  beforeEach(async function () {
+    this.owned = Owned.new();
+  });
+
+  describe('doOwnerOperation', function() {
+    it('Fails when called by a non-owner account', async function () {
+      await expectRevert(this.owned.doOwnerOperation({ from: other }), "Unauthorized");
+    });
+  });
+  ...
+```
+
+=== async expectRevert.unspecified (promise)
+
+This helper asserts that `promise` was rejected due to a reverted transaction caused by a `require` or `revert` statement.
+
+=== async expectRevert.assertion (promise)
+
+This helper asserts that `promise` was rejected due to a reverted transaction caused by an `assert` statement or an invalid opcode.
+
+=== async expectRevert.outOfGas (promise)
+
+This helper asserts that `promise` was rejected due to a transaction running out of gas.
+
+[[make-interface-id]]
+== makeInterfaceId
+
+=== ERC165 (interfaces = [])
+
+Calculates the https://eips.ethereum.org/EIPS/eip-165[ERC165] interface ID of a contract, given a series of function signatures.
+
+=== ERC1820 (name)
+
+Calculates the https://eips.ethereum.org/EIPS/eip-1820[ERC1820] interface hash of a contract, given its name.
+
+[[send]]
+== send
+
+=== async send.ether (from, to, value)
+
+Sends `value` Ether from `from` to `to`.
+
+=== async function send.transaction (target, name, argsTypes, argsValues, opts = {})
+
+Sends a transaction to contract `target`, calling method `name` with `argValues`, which are of type `argTypes` (as per the method's signature).
+
+[[singletons]]
+== singletons
+
+=== async singletons.ERC1820Registry (funder)
+
+Returns an instance of an https://eips.ethereum.org/EIPS/eip-1820[ERC1820Registry] deployed as per the specification (i.e. the registry is located at the canonical address). This can be called multiple times to retrieve the same instance.
+
+[[time]]
+== time
+
+=== async time.advanceBlock ()
+
+Forces a block to be mined, incrementing the block height.
+
+=== async time.advanceBlockTo (target)
+
+Forces blocks to be mined until the the target block height is reached.
+
+Note: Using this function to advance too many blocks can really slow down your tests. Keep its use to a minimum.
+
+=== async time.latest ()
+
+Returns the timestamp of the latest mined block. Should be coupled with `advanceBlock` to retrieve the current blockchain time.
+
+=== async time.latestBlock ()
+
+Returns the latest mined block number.
+
+=== async time.increase (duration)
+
+Increases the time of the blockchain by link:#timeduration[`duration`] (in seconds), and mines a new block with that timestamp.
+
+=== async time.increaseTo (target)
+
+Same as `increase`, but a target time is specified instead of a duration.
+
+=== time.duration
+
+Helpers to convert different time units to seconds. Available helpers are: `seconds`, `minutes`, `hours`, `days`, `weeks` and `years`.
+
+```javascript
+await time.increase(time.duration.years(2));
+```

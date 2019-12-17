@@ -1,27 +1,24 @@
-# OpenZeppelin Test Helpers
-
-[![NPM Package](https://img.shields.io/npm/v/@openzeppelin/test-helpers.svg)](https://www.npmjs.org/package/@openzeppelin/test-helpers)
-[![Build Status](https://travis-ci.com/OpenZeppelin/openzeppelin-test-helpers.svg?branch=master)](https://travis-ci.com/OpenZeppelin/openzeppelin-test-helpers)
+= Test Helpers
 
 *Assertion library for Ethereum smart contract testing.* Make sure your contracts behave as expected!
 
- * Check that [transactions revert](docs/modules/ROOT/pages/api.adoc#expect-revert) for the correct reason
- * Verify [events](docs/modules/ROOT/pages/api.adoc#expect-event) where emitted with the right values
- * Track [balance changes](docs/modules/ROOT/pages/api.adoc#balance) elegantly
- * Handle [very large numbers](docs/modules/ROOT/pages/api.adoc#bn)
- * Simulate the [passing of time](docs/modules/ROOT/pages/api.adoc#time)
+ * Check that xref:api.adoc#expect-revert[transactions revert] for the correct reason
+ * Verify xref:api.adoc#expect-event[events] where emitted with the right values
+ * Track xref:api.adoc#balance[balance changes] elegantly
+ * Handle xref:api.adoc#bn[very large numbers]
+ * Simulate the xref:api.adoc#time[passing of time]
 
-Test Helpers integrates seamlessly with [OpenZeppelin Test Environment](https://github.com/OpenZeppelin/openzeppelin-test-environment), but it also supports both Truffle tests and regular web3 workflows.
+Test Helpers integrates seamlessly with https://github.com/OpenZeppelin/openzeppelin-test-environment[OpenZeppelin Test Environment], but it also supports both Truffle tests and regular web3 workflows.
 
-## Overview
+== Overview
 
-### Installation
+=== Installation
 
 ```bash
 npm install --save-dev @openzeppelin/test-helpers
 ```
 
-### Usage
+=== Usage
 
 Import `@openzeppelin/test-helpers` in your test files to access the different assertions and utilities.
 
@@ -78,12 +75,7 @@ describe('ERC20', function () {
 });
 ```
 
-## Learn More
+== Learn More
 
-* Head to [Configuration](docs/modules/ROOT/pages/configuration.adoc) for advanced settings.
-* For detailed usage information, take a look at the [API Reference](docs/modules/ROOT/pages/api.adoc).
-
-
-## License
-
-[MIT](LICENSE)
+* Head to xref:configuration.adoc[Configuration] for advanced settings.
+* For detailed usage information, take a look at the xref:api.adoc[API Reference].
