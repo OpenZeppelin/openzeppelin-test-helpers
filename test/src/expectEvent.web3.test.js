@@ -430,4 +430,54 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
       await assertFailure(expectEvent.inConstruction(this.emitter, 'ShortUint'));
     });
   });
+
+  describe('not', function () {
+    describe('inTransaction', function () {
+      context('with no arguments', function () {
+        beforeEach(async function () {
+          ({ transactionHash: this.txHash } = await this.emitter.methods.emitArgumentless().send());
+        });
+        it('accepts not emitted events', async function () {
+          await expectEvent.not.inTransaction(this.txHash, EventEmitter, 'WillNeverBeEmitted');
+        });
+        it('throws when event does not exist in ABI', async function () {
+          await assertFailure(expectEvent.not.inTransaction(this.txHash, EventEmitter, 'Nonexistant'));
+        });
+        it('throws when event its emitted', async function () {
+          await assertFailure(expectEvent.not.inTransaction(this.txHash, EventEmitter, 'Argumentless'));
+        });
+      });
+      context('with arguments', function () {
+        beforeEach(async function () {
+          this.value = 42;
+          ({ transactionHash: this.txHash } = await this.emitter.methods.emitShortUint(this.value).send());
+        });
+        it('accepts not emitted events', async function () {
+          await expectEvent.not.inTransaction(this.txHash, EventEmitter, 'WillNeverBeEmitted');
+        });
+        it('throws when event its emitted', async function () {
+          await assertFailure(expectEvent.not.inTransaction(this.txHash, EventEmitter, 'ShortUint'));
+        });
+      });
+      context('with events emitted by an indirectly called contract', function () {
+        beforeEach(async function () {
+          this.value = 'OpenZeppelin';
+          ({ transactionHash: this.txHash } = await this.emitter.methods.emitStringAndEmitIndirectly(
+            this.value, this.secondEmitter.options.address
+          ).send());
+        });
+        it('accepts not emitted events', async function () {
+          await expectEvent.not.inTransaction(this.txHash, EventEmitter, 'WillNeverBeEmitted');
+        });
+        it('throws when event its emitted', async function () {
+          await assertFailure(expectEvent.not.inTransaction(this.txHash, IndirectEventEmitter, 'IndirectString'));
+        });
+      });
+    });
+    describe('inConstruction', function () {
+      it('is unsupported', async function () {
+        await assertFailure(expectEvent.not.inConstruction(this.emitter, 'ShortUint'));
+      });
+    });
+  });
 });

@@ -477,18 +477,44 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
         });
       });
       context('with arguments', function () {
-        it('accepts not emitted events');
-        it('throws when event its emitted');
+        beforeEach(async function () {
+          this.value = 42;
+          const { receipt } = await this.emitter.emitShortUint(this.value);
+          this.txHash = receipt.transactionHash;
+        });
+        it('accepts not emitted events', async function () {
+          await expectEvent.not.inTransaction(this.txHash, EventEmitter, 'WillNeverBeEmitted');
+        });
+        it('throws when event its emitted', async function () {
+          await assertFailure(expectEvent.not.inTransaction(this.txHash, EventEmitter, 'ShortUint'));
+        });
       });
       context('with events emitted by an indirectly called contract', function () {
-        it('accepts not emitted events');
-        it('throws when event its emitted');
+        beforeEach(async function () {
+          this.value = 'OpenZeppelin';
+          const { receipt } = await this.emitter.emitStringAndEmitIndirectly(this.value, this.secondEmitter.address);
+          this.txHash = receipt.transactionHash;
+        });
+        it('accepts not emitted events', async function () {
+          await expectEvent.not.inTransaction(this.txHash, EventEmitter, 'WillNeverBeEmitted');
+        });
+        it('throws when event its emitted', async function () {
+          await assertFailure(expectEvent.not.inTransaction(this.txHash, IndirectEventEmitter, 'IndirectString'));
+        });
       });
     });
     describe('inConstructor', function () {
-      it('accepts not emitted events');
-      it('throws when event does not exist in ABI');
-      it('throws when event its emitted'); // test all three emitted events
+      it('accepts not emitted events', async function () {
+        await expectEvent.not.inConstruction(this.emitter, 'WillNeverBeEmitted');
+      });
+      it('throws when event does not exist in ABI', async function () {
+        await assertFailure(expectEvent.not.inConstruction(this.emitter, 'Nonexistant'));
+      });
+      it('throws when event its emitted', async function () {
+        await assertFailure(expectEvent.not.inConstruction(this.emitter, 'ShortUint'));
+        await assertFailure(expectEvent.not.inConstruction(this.emitter, 'Boolean'));
+        await assertFailure(expectEvent.not.inConstruction(this.emitter, 'String'));
+      });
     });
   });
 });
