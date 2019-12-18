@@ -56,29 +56,6 @@ function inLogs (logs, eventName, eventArgs = {}) {
   return event;
 }
 
-function dontExpectEvent (receipt, eventName) {
-  if (isWeb3Receipt(receipt)) {
-    const logs = flatten(Object.keys(receipt.events).map(name => {
-      if (Array.isArray(receipt.events[name])) {
-        return receipt.events[name].map(event => ({ event: name, args: event.returnValues }));
-      } else {
-        return ({ event: name, args: receipt.events[name].returnValues });
-      }
-    }));
-
-    notInLogs(logs, eventName);
-  } else if (isTruffleReceipt(receipt)) {
-    notInLogs(receipt.logs, eventName);
-  } else {
-    throw new Error('Unknown transaction receipt object');
-  }
-}
-
-function notInLogs (logs, eventName) {
-  const events = logs.filter(e => e.event === eventName);
-  expect(events.length === 0).to.equal(true, `Event ${eventName} was found`);
-}
-
 async function inConstruction (contract, eventName, eventArgs = {}) {
   if (!isTruffleContract(contract)) {
     throw new Error('expectEvent.inConstruction is only supported for truffle-contract objects');
@@ -105,7 +82,10 @@ async function notInTransaction (txHash, emitter, eventName) {
   const receipt = await web3.eth.getTransactionReceipt(txHash);
 
   const logs = decodeLogs(receipt.logs, emitter, eventName);
-  return notInLogs(logs, eventName);
+
+  const events = logs.filter(e => e.event === eventName);
+
+  expect(events.length === 0).to.equal(true, `Event ${eventName} was found`);
 }
 
 // This decodes longs for a single event type, and returns a decoded object in
@@ -176,8 +156,7 @@ expectEvent.inLogs = deprecate(inLogs, 'expectEvent.inLogs() is deprecated. Use 
 expectEvent.inConstruction = inConstruction;
 expectEvent.inTransaction = inTransaction;
 
-expectEvent.not = dontExpectEvent;
-expectEvent.not.inLogs = notInLogs;
+expectEvent.not = {};
 expectEvent.not.inConstruction = notInConstruction;
 expectEvent.not.inTransaction = notInTransaction;
 module.exports = expectEvent;

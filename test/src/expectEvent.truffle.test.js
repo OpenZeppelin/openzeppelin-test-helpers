@@ -460,25 +460,35 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
   });
 
   describe('not', function () {
-    // default = inLogs, default TBD.
-    describe('default', function () {
+    describe('inTransaction', function () {
       context('with no arguments', function () {
         beforeEach(async function () {
-          this.receipt = await this.emitter.emitArgumentless();
+          const { receipt } = await this.emitter.emitArgumentless();
+          this.txHash = receipt.transactionHash;
         });
-        it('accepts not emitted events', function () {
-          expectEvent.not(this.receipt, 'Nonexistant');
+        it('accepts not emitted events', async function () {
+          await expectEvent.not.inTransaction(this.txHash, EventEmitter, 'WillNeverBeEmitted');
         });
-        it('throws when event its emitted', function () {
-          expect(() => expectEvent.not(this.receipt, 'Argumentless')).to.throw();
+        it('throws when event does not exist in ABI', async function () {
+          await assertFailure(expectEvent.not.inTransaction(this.txHash, EventEmitter, 'Nonexistant'));
+        });
+        it('throws when event its emitted', async function () {
+          await assertFailure(expectEvent.not.inTransaction(this.txHash, EventEmitter, 'Argumentless'));
         });
       });
+      context('with arguments', function () {
+        it('accepts not emitted events');
+        it('throws when event its emitted');
+      });
+      context('with events emitted by an indirectly called contract', function () {
+        it('accepts not emitted events');
+        it('throws when event its emitted');
+      });
     });
-    describe('inConstruction', function () {
-      it('tests');
-    });
-    describe('inTransaction', function () {
-      it('tests');
+    describe('inConstructor', function () {
+      it('accepts not emitted events');
+      it('throws when event does not exist in ABI');
+      it('throws when event its emitted'); // test all three emitted events
     });
   });
 });
