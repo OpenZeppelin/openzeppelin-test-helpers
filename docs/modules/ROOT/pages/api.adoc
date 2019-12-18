@@ -5,13 +5,13 @@ This documentation is a work in progress: if in doubt, head over to the https://
 All returned numbers are of type https://github.com/indutny/bn.js[`BN`].
 
 [[balance]]
-== balance
+== `balance`
 
 Helpers to inspect Ether balances of a specific account.
 
 All of these functions return `BN` instances, with balances in 'wei' by default.
 
-=== current
+=== `current`
 
 ```javascript
 async function balance.current(account, unit = 'wei')
@@ -27,7 +27,7 @@ const balanceEth = await balance.current(account, 'ether')
 // same as new BN(web3.utils.fromWei(await web3.eth.getBalance(account), 'ether'))
 ```
 
-=== tracker
+=== `tracker`
 
 ```javascript
 async function balance.tracker(account, unit = 'wei')
@@ -39,7 +39,7 @@ Creates an instance of a balance tracker, which lets you keep track of the chang
 const tracker = await balance.tracker(account)
 ```
 
-==== get
+==== `get`
 
 ```javascript
 async function tracker.get(unit = tracker.unit)
@@ -52,7 +52,7 @@ const tracker = await balance.tracker(account) // instantiation
 const currentBalance = await tracker.get() // returns the current balance of account
 ```
 
-==== delta
+==== `delta`
 
 ```javascript
 async function tracker.delta(unit = tracker.unit)
@@ -84,38 +84,38 @@ const balanceEther = tracker.get('ether'); // in ether
 ```
 
 [[bn]]
-== BN
+== `BN`
 
 A https://github.com/indutny/bn.js[bn.js] object. Use `new BN(number)` to create `BN` instances.
 
 [[constants]]
-== constants
+== `constants`
 
 A collection of useful link:src/constants.js[constants].
 
-=== ZERO_ADDRESS
+=== `ZERO_ADDRESS`
 
 The initial value of a type `address` variable, i.e., `address(0)` in Solidity.
 
-=== MAX_UINT256
+=== `MAX_UINT256`
 
 The maximum unsigned integer `2\^256 - 1` represented in `BN`.
 
-=== MAX_INT256
+=== `MAX_INT256`
 
 The maximum signed integer `2\^255 - 1` represented in `BN`.
 
-=== MIN_INT256
+=== `MIN_INT256`
 
 The minimum signed integer `-2\^255` represented in `BN`.
 
 [[ether]]
-== ether
+== `ether`
 
 Converts a value in Ether to wei.
 
 [[expect-event]]
-== expectEvent
+== `expectEvent`
 
 ```javascript
 function expectEvent(receipt, eventName, eventArgs = {})
@@ -133,7 +133,7 @@ const truffleReceipt = await MyTruffleContract.foo('bar');
 expectEvent(truffleReceipt, 'Foo', { value: 'bar' });
 ```
 
-=== inTransaction
+=== `inTransaction`
 
 ```javascript
 async function expectEvent.inTransaction(txHash, emitter, eventName, eventArgs = {})
@@ -153,7 +153,7 @@ const { txHash } = await contract.foo('bar');
 await expectEvent.inTransaction(txHash, contract, 'Foo', { value: 'bar' });
 ```
 
-=== inConstruction
+=== `inConstruction`
 
 ```javascript
 async function expectEvent.inConstruction(emitter, eventName, eventArgs = {})
@@ -162,7 +162,7 @@ async function expectEvent.inConstruction(emitter, eventName, eventArgs = {})
 Same as `inTransaction`, but for events emitted during the construction of `emitter`. Note that this is currently only supported for truffle contracts.
 
 [[expect-revert]]
-== expectRevert
+== `expectRevert`
 
 ```javascript
 async function expectRevert(promise, message)
@@ -213,7 +213,7 @@ contract('Owned', ([owner, other]) => {
   ...
 ```
 
-=== unspecified
+=== `unspecified`
 
 ```javascript
 async function expectRevert.unspecified(promise)
@@ -221,7 +221,7 @@ async function expectRevert.unspecified(promise)
 
 Like `expectRevert`, asserts that `promise` was rejected due to a reverted transaction caused by a `require` or `revert` statement, but doesn't check the revert reason.
 
-=== assertion
+=== `assertion`
 
 ```javascript
 async function expectRevert.assertion(promise)
@@ -229,7 +229,7 @@ async function expectRevert.assertion(promise)
 
 Asserts that `promise` was rejected due to a reverted transaction caused by an `assert` statement or an invalid opcode.
 
-=== outOfGas
+=== `outOfGas`
 
 ```javascript
 async function expectRevert.outOfGas(promise)
@@ -238,9 +238,9 @@ async function expectRevert.outOfGas(promise)
 Asserts that `promise` was rejected due to a transaction running out of gas.
 
 [[make-interface-id]]
-== makeInterfaceId
+== `makeInterfaceId`
 
-=== ERC165
+=== `ERC165`
 
 ```javascript
 function makeInterfaceId.ERC165(interfaces = [])
@@ -248,7 +248,7 @@ function makeInterfaceId.ERC165(interfaces = [])
 
 Calculates the https://eips.ethereum.org/EIPS/eip-165[ERC165] interface ID of a contract, given a series of function signatures.
 
-=== ERC1820
+=== `ERC1820`
 
 ```javascript
 function makeInterfaceId.ERC1820(name)
@@ -257,9 +257,9 @@ function makeInterfaceId.ERC1820(name)
 Calculates the https://eips.ethereum.org/EIPS/eip-1820[ERC1820] interface hash of a contract, given its name.
 
 [[send]]
-== send
+== `send`
 
-=== ether
+=== `ether`
 
 ```javascript
 async function send.ether(from, to, value)
@@ -267,7 +267,7 @@ async function send.ether(from, to, value)
 
 Sends `value` Ether from `from` to `to`.
 
-=== transaction
+=== `transaction`
 
 ```javascript
 async function send.transaction(target, name, argsTypes, argsValues, opts = {})
@@ -276,9 +276,9 @@ async function send.transaction(target, name, argsTypes, argsValues, opts = {})
 Sends a transaction to contract `target`, calling method `name` with `argValues`, which are of type `argTypes` (as per the method's signature).
 
 [[singletons]]
-== singletons
+== `singletons`
 
-=== ERC1820Registry
+=== `ERC1820Registry`
 
 ```javascript
 async function singletons.ERC1820Registry(funder)
@@ -287,9 +287,9 @@ async function singletons.ERC1820Registry(funder)
 Returns an instance of an https://eips.ethereum.org/EIPS/eip-1820[ERC1820Registry] deployed as per the specification (i.e. the registry is located at the canonical address). This can be called multiple times to retrieve the same instance.
 
 [[time]]
-== time
+== `time`
 
-=== advanceBlock
+=== `advanceBlock`
 
 ```javascript
 async function time.advanceBlock()
@@ -297,7 +297,7 @@ async function time.advanceBlock()
 
 Forces a block to be mined, incrementing the block height.
 
-=== advanceBlockTo
+=== `advanceBlockTo`
 
 ```javascript
 async function time.advanceBlockTo(target)
@@ -307,7 +307,7 @@ Forces blocks to be mined until the the target block height is reached.
 
 Note: Using this function to advance too many blocks can really slow down your tests. Keep its use to a minimum.
 
-=== latest
+=== `latest`
 
 ```javascript
 async function time.latest()
@@ -315,7 +315,7 @@ async function time.latest()
 
 Returns the timestamp of the latest mined block. Should be coupled with `advanceBlock` to retrieve the current blockchain time.
 
-=== latestBlock
+=== `latestBlock`
 
 ```javascript
 async function time.latestBlock()
@@ -323,7 +323,7 @@ async function time.latestBlock()
 
 Returns the latest mined block number.
 
-=== increase
+=== `increase`
 
 ```javascript
 async function time.increase(duration)
@@ -331,7 +331,7 @@ async function time.increase(duration)
 
 Increases the time of the blockchain by link:#timeduration[`duration`] (in seconds), and mines a new block with that timestamp.
 
-=== increaseTo
+=== `increaseTo`
 
 ```javascript
 async function time.increaseTo(target)
@@ -339,7 +339,7 @@ async function time.increaseTo(target)
 
 Same as `increase`, but a target time is specified instead of a duration.
 
-=== duration
+=== `duration`
 
 ```javascript
 function time.duration()
