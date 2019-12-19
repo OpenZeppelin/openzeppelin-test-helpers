@@ -5,15 +5,17 @@ This documentation is a work in progress: if in doubt, head over to the https://
 All returned numbers are of type https://github.com/indutny/bn.js[`BN`].
 
 [[balance]]
-== balance
+== `balance`
 
 Helpers to inspect Ether balances of a specific account.
 
 All of these functions return `BN` instances, with balances in 'wei' by default.
 
-=== balance current
+=== `current`
 
-==== async balance.current(account, unit = 'wei')
+```javascript
+async function balance.current(account, unit = 'wei')
+```
 
 Returns the current balance of an account.
 
@@ -25,19 +27,23 @@ const balanceEth = await balance.current(account, 'ether')
 // same as new BN(web3.utils.fromWei(await web3.eth.getBalance(account), 'ether'))
 ```
 
-=== balance tracker
+=== `tracker`
 
-Allows you to keep track of the changes in an account's Ether balance.
+```javascript
+async function balance.tracker(account, unit = 'wei')
+```
 
-==== async balance.tracker(account, unit = 'wei')
-
-Creates an instance of a balance tracker.
+Creates an instance of a balance tracker, which lets you keep track of the changes in an account's Ether balance.
 
 ```javascript
 const tracker = await balance.tracker(account)
 ```
 
-==== async tracker.get(unit = tracker.unit)
+==== `get`
+
+```javascript
+async function tracker.get(unit = tracker.unit)
+```
 
 Returns the current balance of an account.
 
@@ -46,7 +52,11 @@ const tracker = await balance.tracker(account) // instantiation
 const currentBalance = await tracker.get() // returns the current balance of account
 ```
 
-==== async tracker.delta(unit = tracker.unit)
+==== `delta`
+
+```javascript
+async function tracker.delta(unit = tracker.unit)
+```
 
 Returns the change in the balance since the last time it was checked (with either `get()` or `delta()`).
 
@@ -74,38 +84,42 @@ const balanceEther = tracker.get('ether'); // in ether
 ```
 
 [[bn]]
-== BN
+== `BN`
 
 A https://github.com/indutny/bn.js[bn.js] object. Use `new BN(number)` to create `BN` instances.
 
 [[constants]]
-== constants
+== `constants`
 
 A collection of useful link:src/constants.js[constants].
 
-=== constants.ZERO_ADDRESS
+=== `ZERO_ADDRESS`
 
 The initial value of a type `address` variable, i.e., `address(0)` in Solidity.
 
-=== constants.MAX_UINT256
+=== `MAX_UINT256`
 
 The maximum unsigned integer `2\^256 - 1` represented in `BN`.
 
-=== constants.MAX_INT256
+=== `MAX_INT256`
 
 The maximum signed integer `2\^255 - 1` represented in `BN`.
 
-=== constants.MIN_INT256
+=== `MIN_INT256`
 
 The minimum signed integer `-2\^255` represented in `BN`.
 
 [[ether]]
-== ether
+== `ether`
 
 Converts a value in Ether to wei.
 
 [[expect-event]]
-== expectEvent (receipt, eventName, eventArgs = {})
+== `expectEvent`
+
+```javascript
+function expectEvent(receipt, eventName, eventArgs = {})
+```
 
 Asserts that the logs in `receipt` contain an event with name `eventName` and arguments that match those specified in `eventArgs`. `receipt` should be an object returned by either a web3 Contract or a truffle-contract call.
 
@@ -119,7 +133,11 @@ const truffleReceipt = await MyTruffleContract.foo('bar');
 expectEvent(truffleReceipt, 'Foo', { value: 'bar' });
 ```
 
-=== async inTransaction (txHash, emitter, eventName, eventArgs = {})
+=== `inTransaction`
+
+```javascript
+async function expectEvent.inTransaction(txHash, emitter, eventName, eventArgs = {})
+```
 
 Same as `expectEvent`, but for events emitted in an arbitrary transaction (of hash `txHash`), by an arbitrary contract (`emitter`, the contract instance), even if it was indirectly called (i.e. if it was called by another smart contract and not an externally owned account).
 
@@ -135,18 +153,26 @@ const { txHash } = await contract.foo('bar');
 await expectEvent.inTransaction(txHash, contract, 'Foo', { value: 'bar' });
 ```
 
-=== async function inConstruction (emitter, eventName, eventArgs = {})
+=== `inConstruction`
+
+```javascript
+async function expectEvent.inConstruction(emitter, eventName, eventArgs = {})
+```
 
 Same as `inTransaction`, but for events emitted during the construction of `emitter`. Note that this is currently only supported for truffle contracts.
 
 [[expect-revert]]
-== expectRevert
+== `expectRevert`
 
-Collection of assertions for transaction errors (similar to https://www.chaijs.com/api/bdd/#method_throw[chai's `throw`]).
+```javascript
+async function expectRevert(promise, message)
+```
 
-=== async expectRevert (promise, message)
+Helpers for transaction failure (similar to https://www.chaijs.com/api/bdd/#method_throw[chai's `throw`]): asserts that `promise` was rejected due to a reverted transaction.
 
-This helper asserts that `promise` was rejected due to a reverted transaction, and it will check that the revert reason includes `message`. Use `expectRevert.unspecified` when the revert reason is unknown. For example:
+It will also check that the revert reason includes `message`. Use `expectRevert.unspecified` when the revert reason is unknown.
+
+For example, given the following contract:
 
 [source,solidity]
 ```
@@ -164,7 +190,7 @@ contract Owned {
 }
 ```
 
-Can be tested as follows:
+The `require` statement in the `doOwnerOperation` function can be tested as follows:
 
 ```javascript
 const { expectRevert } = require('@openzeppelin/test-helpers');
@@ -178,83 +204,146 @@ contract('Owned', ([owner, other]) => {
 
   describe('doOwnerOperation', function() {
     it('Fails when called by a non-owner account', async function () {
-      await expectRevert(this.owned.doOwnerOperation({ from: other }), "Unauthorized");
+      await expectRevert(
+        this.owned.doOwnerOperation({ from: other }),
+        "Unauthorized"
+      );
     });
   });
   ...
 ```
 
-=== async expectRevert.unspecified (promise)
+=== `unspecified`
 
-This helper asserts that `promise` was rejected due to a reverted transaction caused by a `require` or `revert` statement.
+```javascript
+async function expectRevert.unspecified(promise)
+```
 
-=== async expectRevert.assertion (promise)
+Like `expectRevert`, asserts that `promise` was rejected due to a reverted transaction caused by a `require` or `revert` statement, but doesn't check the revert reason.
 
-This helper asserts that `promise` was rejected due to a reverted transaction caused by an `assert` statement or an invalid opcode.
+=== `assertion`
 
-=== async expectRevert.outOfGas (promise)
+```javascript
+async function expectRevert.assertion(promise)
+```
 
-This helper asserts that `promise` was rejected due to a transaction running out of gas.
+Asserts that `promise` was rejected due to a reverted transaction caused by an `assert` statement or an invalid opcode.
+
+=== `outOfGas`
+
+```javascript
+async function expectRevert.outOfGas(promise)
+```
+
+Asserts that `promise` was rejected due to a transaction running out of gas.
 
 [[make-interface-id]]
-== makeInterfaceId
+== `makeInterfaceId`
 
-=== ERC165 (interfaces = [])
+=== `ERC165`
+
+```javascript
+function makeInterfaceId.ERC165(interfaces = [])
+```
 
 Calculates the https://eips.ethereum.org/EIPS/eip-165[ERC165] interface ID of a contract, given a series of function signatures.
 
-=== ERC1820 (name)
+=== `ERC1820`
+
+```javascript
+function makeInterfaceId.ERC1820(name)
+```
 
 Calculates the https://eips.ethereum.org/EIPS/eip-1820[ERC1820] interface hash of a contract, given its name.
 
 [[send]]
-== send
+== `send`
 
-=== async send.ether (from, to, value)
+=== `ether`
+
+```javascript
+async function send.ether(from, to, value)
+```
 
 Sends `value` Ether from `from` to `to`.
 
-=== async function send.transaction (target, name, argsTypes, argsValues, opts = {})
+=== `transaction`
+
+```javascript
+async function send.transaction(target, name, argsTypes, argsValues, opts = {})
+```
 
 Sends a transaction to contract `target`, calling method `name` with `argValues`, which are of type `argTypes` (as per the method's signature).
 
 [[singletons]]
-== singletons
+== `singletons`
 
-=== async singletons.ERC1820Registry (funder)
+=== `ERC1820Registry`
+
+```javascript
+async function singletons.ERC1820Registry(funder)
+```
 
 Returns an instance of an https://eips.ethereum.org/EIPS/eip-1820[ERC1820Registry] deployed as per the specification (i.e. the registry is located at the canonical address). This can be called multiple times to retrieve the same instance.
 
 [[time]]
-== time
+== `time`
 
-=== async time.advanceBlock ()
+=== `advanceBlock`
+
+```javascript
+async function time.advanceBlock()
+```
 
 Forces a block to be mined, incrementing the block height.
 
-=== async time.advanceBlockTo (target)
+=== `advanceBlockTo`
+
+```javascript
+async function time.advanceBlockTo(target)
+```
 
 Forces blocks to be mined until the the target block height is reached.
 
 Note: Using this function to advance too many blocks can really slow down your tests. Keep its use to a minimum.
 
-=== async time.latest ()
+=== `latest`
+
+```javascript
+async function time.latest()
+```
 
 Returns the timestamp of the latest mined block. Should be coupled with `advanceBlock` to retrieve the current blockchain time.
 
-=== async time.latestBlock ()
+=== `latestBlock`
+
+```javascript
+async function time.latestBlock()
+```
 
 Returns the latest mined block number.
 
-=== async time.increase (duration)
+=== `increase`
+
+```javascript
+async function time.increase(duration)
+```
 
 Increases the time of the blockchain by link:#timeduration[`duration`] (in seconds), and mines a new block with that timestamp.
 
-=== async time.increaseTo (target)
+=== `increaseTo`
+
+```javascript
+async function time.increaseTo(target)
+```
 
 Same as `increase`, but a target time is specified instead of a duration.
 
-=== time.duration
+=== `duration`
+
+```javascript
+function time.duration()
+```
 
 Helpers to convert different time units to seconds. Available helpers are: `seconds`, `minutes`, `hours`, `days`, `weeks` and `years`.
 
