@@ -2,6 +2,7 @@
 
 ## 0.5.5 (unreleased)
  * Added function `advanceBlockTo`. ([#94](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/94))
+ * Added `expectEvent.not` support to test negative cases. ([#104](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/104))
 
 ## 0.5.4 (2019-11-13)
  * Fixed some RPC calls not having an `id` field. ([#92](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/92))
