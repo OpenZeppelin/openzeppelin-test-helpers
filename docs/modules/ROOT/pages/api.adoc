@@ -161,6 +161,43 @@ async function expectEvent.inConstruction(emitter, eventName, eventArgs = {})
 
 Same as `inTransaction`, but for events emitted during the construction of `emitter`. Note that this is currently only supported for truffle contracts.
 
+=== `not.inTransaction`
+
+```javascript
+async function notInTransaction (txHash, emitter, eventName)
+```
+
+Asserts that an event with the name `eventName` was not emitted in an arbistrary transaction (of hash `txHash`) by an arbitrary contract (`emitter`, the contract instance), even if it was inderectly emitted (i.e. if it was called by another smart contract and not an externally owned account).
+
+```javascript
+// With web3 contracts
+const contract = await MyContract.deploy().send();
+const { transactionHash } = await contract.methods.foo().send();
+await expectEvent.not.inTransaction(transactionHash, contract, 'NotEmittedByFoo');
+
+// With web3 contracts
+const contract = await MyContract.deploy().send();
+const { transactionHash } = await contract.methods.foo().send();
+await expectEvent.not.inTransaction(transactionHash, contract, 'EmittedByFoo'); // Will fail
+
+// With truffle contracts
+const contract = await MyContract.new();
+const { txHash } = await contract.foo();
+await expectEvent.not.inTransaction(txHash, contract, 'NotEmittedByFoo');
+
+const contract = await MyContract.new();
+const { txHash } = await contract.foo();
+await expectEvent.not.inTransaction(txHash, contract, 'EmittedByFoo'); // Will fail
+```
+
+=== `not.inConstruction`
+
+```javascript
+async function notInConstruction (contract, eventName)
+```
+
+Same as `not.inTransaction`, but for events emitted during the construction of emitter. Note that this is currently only supported for truffle contracts.
+
 [[expect-revert]]
 == `expectRevert`
 
