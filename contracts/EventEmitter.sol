@@ -4,6 +4,7 @@ import "./IndirectEventEmitter.sol";
 
 contract EventEmitter {
     event Argumentless();
+    event WillNeverBeEmitted();
     event ShortUint(uint8 value);
     event ShortInt(int8 value);
     event LongUint(uint256 value);

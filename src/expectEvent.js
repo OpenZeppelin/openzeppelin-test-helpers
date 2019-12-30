@@ -64,11 +64,28 @@ async function inConstruction (contract, eventName, eventArgs = {}) {
   return inTransaction(contract.transactionHash, contract.constructor, eventName, eventArgs);
 }
 
+async function notInConstruction (contract, eventName) {
+  if (!isTruffleContract(contract)) {
+    throw new Error('expectEvent.inConstruction is only supported for truffle-contract objects');
+  }
+  return notInTransaction(contract.transactionHash, contract.constructor, eventName);
+}
+
 async function inTransaction (txHash, emitter, eventName, eventArgs = {}) {
   const receipt = await web3.eth.getTransactionReceipt(txHash);
 
   const logs = decodeLogs(receipt.logs, emitter, eventName);
   return inLogs(logs, eventName, eventArgs);
+}
+
+async function notInTransaction (txHash, emitter, eventName) {
+  const receipt = await web3.eth.getTransactionReceipt(txHash);
+
+  const logs = decodeLogs(receipt.logs, emitter, eventName);
+
+  const events = logs.filter(e => e.event === eventName);
+
+  expect(events.length === 0).to.equal(true, `Event ${eventName} was found`);
 }
 
 // This decodes longs for a single event type, and returns a decoded object in
@@ -138,4 +155,8 @@ function isTruffleContract (contract) {
 expectEvent.inLogs = deprecate(inLogs, 'expectEvent.inLogs() is deprecated. Use expectEvent() instead.');
 expectEvent.inConstruction = inConstruction;
 expectEvent.inTransaction = inTransaction;
+
+expectEvent.not = {};
+expectEvent.not.inConstruction = notInConstruction;
+expectEvent.not.inTransaction = notInTransaction;
 module.exports = expectEvent;
