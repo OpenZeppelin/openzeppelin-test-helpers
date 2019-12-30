@@ -167,7 +167,7 @@ Same as `inTransaction`, but for events emitted during the construction of `emit
 async function notInTransaction (txHash, emitter, eventName)
 ```
 
-Asserts that an event with the name `eventName` was not emitted in an arbistrary transaction (of hash `txHash`) by an arbitrary contract (`emitter`, the contract instance), even if it was inderectly emitted (i.e. if it was called by another smart contract and not an externally owned account).
+Asserts that the event with name `eventName` as declared in the `emitter` contract was not emitted in the transaction with hash `txHash`. Note that the assertion will also fail if the transaction was emitted indirectly (in a nested external function call).
 
 ```javascript
 // With web3 contracts
