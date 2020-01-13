@@ -91,7 +91,7 @@ A https://github.com/indutny/bn.js[bn.js] object. Use `new BN(number)` to create
 [[constants]]
 == `constants`
 
-A collection of useful link:src/constants.js[constants].
+A collection of useful constants.
 
 === `ZERO_ADDRESS`
 
