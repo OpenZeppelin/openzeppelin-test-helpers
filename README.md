@@ -5,13 +5,13 @@
 
 **Assertion library for Ethereum smart contract testing.** Make sure your contracts behave as expected.
 
- * Check that [transactions revert](docs/modules/ROOT/pages/api.adoc#expect-revert) for the correct reason
- * Verify that [events](docs/modules/ROOT/pages/api.adoc#expect-event) were emitted with the right values
- * Track [balance changes](docs/modules/ROOT/pages/api.adoc#balance) elegantly
- * Handle [very large numbers](docs/modules/ROOT/pages/api.adoc#bn)
- * Simulate the [passing of time](docs/modules/ROOT/pages/api.adoc#time)
+ * Check that [transactions revert](https://docs.openzeppelin.com/test-helpers/api#expect-revert) for the correct reason
+ * Verify that [events](https://docs.openzeppelin.com/test-helpers/api#expect-event) were emitted with the right values
+ * Track [balance changes](https://docs.openzeppelin.com/test-helpers/api#balance) elegantly
+ * Handle [very large numbers](https://docs.openzeppelin.com/test-helpers/api#bn)
+ * Simulate the [passing of time](https://docs.openzeppelin.com/test-helpers/api#time)
 
-Test Helpers integrates seamlessly with [OpenZeppelin Test Environment](https://docs.openzeppelin.con/test-environment), but it also supports Truffle tests and regular web3 workflows.
+Test Helpers integrates seamlessly with [OpenZeppelin Test Environment](https://docs.openzeppelin.com/test-environment), but it also supports Truffle tests and regular web3 workflows.
 
 ## Overview
 
@@ -25,7 +25,7 @@ npm install --save-dev @openzeppelin/test-helpers
 
 Import `@openzeppelin/test-helpers` in your test files to access the different assertions and utilities.
 
-_Note: The following snippet uses [OpenZeppelin Test Environment](https://docs.openzeppelin.con/test-environment): a Truffle-based setup would work the same way._
+_Note: The following snippet uses [OpenZeppelin Test Environment](https://docs.openzeppelin.com/test-environment): a Truffle-based setup would work the same way._
 
 ```javascript
 const { accounts, contract } = require('@openzeppelin/test-environment');
