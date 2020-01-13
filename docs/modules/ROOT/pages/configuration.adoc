@@ -14,7 +14,7 @@ const { expectRevert } = require('@openzeppelin/test-helpers');
 
 The configuration must be applied on all test files, _before_ importing the helpers.
 
-TIP: When using https://github.com/OpenZeppelin/openzeppelin-test-environment[OpenZeppelin Test Environment], all of these options will be automatically configured.
+TIP: When using xref:test-environment::index.adoc[*OpenZeppelin Test Environment*], all of these options will be automatically configured.
 
 == `provider`
 

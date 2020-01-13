@@ -11,7 +11,7 @@
  * Handle [very large numbers](docs/modules/ROOT/pages/api.adoc#bn)
  * Simulate the [passing of time](docs/modules/ROOT/pages/api.adoc#time)
 
-Test Helpers integrates seamlessly with [OpenZeppelin Test Environment](https://github.com/OpenZeppelin/openzeppelin-test-environment), but it also supports Truffle tests and regular web3 workflows.
+Test Helpers integrates seamlessly with [OpenZeppelin Test Environment](https://docs.openzeppelin.con/test-environment), but it also supports Truffle tests and regular web3 workflows.
 
 ## Overview
 
@@ -25,7 +25,7 @@ npm install --save-dev @openzeppelin/test-helpers
 
 Import `@openzeppelin/test-helpers` in your test files to access the different assertions and utilities.
 
-_Note: The following snippet uses [OpenZeppelin Test Environment](https://github.com/OpenZeppelin/openzeppelin-test-environment): a Truffle-based setup would work the same way._
+_Note: The following snippet uses [OpenZeppelin Test Environment](https://docs.openzeppelin.con/test-environment): a Truffle-based setup would work the same way._
 
 ```javascript
 const { accounts, contract } = require('@openzeppelin/test-environment');
@@ -82,8 +82,8 @@ describe('ERC20', function () {
 
 ## Learn More
 
-* Head to [Configuration](docs/modules/ROOT/pages/configuration.adoc) for advanced settings.
-* For detailed usage information, take a look at the [API Reference](docs/modules/ROOT/pages/api.adoc).
+* Head to [Configuration](https://docs.openzeppelin.com/test-helpers/configuration) for advanced settings.
+* For detailed usage information, take a look at the [API Reference](https://docs.openzeppelin.com/test-helpers/api).
 
 
 ## License
