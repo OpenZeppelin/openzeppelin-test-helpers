@@ -139,7 +139,7 @@ const receipt = await MyWeb3Contract.methods.foo('bar').send();
 // Both of these assertions will pass
 expectEvent(receipt, 'Foo', { value: 'bar' });
 expectEvent(receipt, 'Foo');
-```javascript
+```
 
 === `inTransaction`
 
