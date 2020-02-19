@@ -124,11 +124,13 @@ function contains (args, key, value) {
   expect(key in args).to.equal(true, `Event argument '${key}' not found`);
 
   if (value === null) {
-    expect(args[key]).to.equal(null);
+    expect(args[key]).to.equal(null, `'${key}' was equal to ${args[key]}; expected to equal null`);
   } else if (isBN(args[key]) || isBN(value)) {
-    expect(args[key]).to.be.bignumber.equal(value);
+    const actual = isBN(args[key]) ? args[key].toString() : args[key];
+    const expected = isBN(value) ? value.toString() : value;
+    expect(args[key]).to.be.bignumber.equal(value, `'${key}' was equal to ${actual}; expected to equal '${expected}'`);
   } else {
-    expect(args[key]).to.be.equal(value);
+    expect(args[key]).to.be.equal(value, `'${key}' was equal to ${args[key]}; expected to equal '${value}'`);
   }
 }
 
