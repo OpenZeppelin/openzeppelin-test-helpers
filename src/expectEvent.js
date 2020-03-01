@@ -124,13 +124,16 @@ function contains (args, key, value) {
   expect(key in args).to.equal(true, `Event argument '${key}' not found`);
 
   if (value === null) {
-    expect(args[key]).to.equal(null, `expected event argument '${key}' to have value ${value} but got null`);
+    expect(args[key]).to.equal(null,
+      `expected event argument '${key}' to be null but got ${args[key]}`);
   } else if (isBN(args[key]) || isBN(value)) {
     const actual = isBN(args[key]) ? args[key].toString() : args[key];
     const expected = isBN(value) ? value.toString() : value;
-    expect(args[key]).to.be.bignumber.equal(value, `expected event argument '${key}' to have value ${expected} but got ${actual}`);
+    expect(args[key]).to.be.bignumber.equal(value,
+      `expected event argument '${key}' to have value ${expected} but got ${actual}`);
   } else {
-    expect(args[key]).to.be.equal(value, `expected event argument '${key}' to have value ${value} but got ${args[key]}`);
+    expect(args[key]).to.be.equal(value,
+      `expected event argument '${key}' to have value ${value} but got ${args[key]}`);
   }
 }
 
