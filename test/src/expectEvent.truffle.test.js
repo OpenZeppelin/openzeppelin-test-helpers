@@ -1,5 +1,5 @@
 const { BN } = require('../../src/setup');
-const { expect } = require('chai');
+const { expect, AssertionError } = require('chai');
 const assertFailure = require('../helpers/assertFailure');
 const expectEvent = require('../../src/expectEvent');
 
@@ -32,9 +32,11 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
       });
 
       it('throws if a correct JavaScript number is passed', async function () {
-        await assertFailure(
+        const { message } = await assertFailure(
           expectEvent.inConstruction(this.emitter, 'ShortUint', { value: this.constructionValues.uint })
         );
+        expect(message).to.be.equal(
+          'expected event argument \'value\' to have value 42 but got 42: expected \'42\' to equal 42');
       });
 
       it('throws if an incorrect value is passed', async function () {
@@ -108,7 +110,8 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
         });
 
         it('throws if an incorrect value is passed', function () {
-          expect(() => expectEvent(this.receipt, 'ShortUint', { value: 23 })).to.throw();
+          expect(() => expectEvent(this.receipt, 'ShortUint', { value: new BN(23) })).to.throw(
+            AssertionError, 'expected event argument \'value\' to have value 23 but got 42');
         });
       });
 
