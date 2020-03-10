@@ -95,7 +95,11 @@ A collection of useful link:src/constants.js[constants].
 
 === `ZERO_ADDRESS`
 
-The initial value of a type `address` variable, i.e., `address(0)` in Solidity.
+The initial value of an `address` type variable, i.e., `address(0)` in Solidity.
+
+=== `ZERO_BYTES32`
+
+The initial value of a `bytes32` type variable, i.e., `bytes32(0x00)` in Solidity.
 
 === `MAX_UINT256`
 
