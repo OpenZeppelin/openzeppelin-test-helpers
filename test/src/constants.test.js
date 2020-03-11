@@ -25,6 +25,10 @@ contract('consants', function () {
       expect(await this.constants.isZeroBytes32(ZERO_BYTES32)).to.equal(true);
     });
 
+    it('contracts interpret it as an array of 32 bytes', async function () {
+      expect(await this.constants.isBytesLength32(ZERO_BYTES32)).to.equal(true);
+    });
+
     it('contracts return it as zero bytes32', async function () {
       expect(await this.constants.returnZeroBytes32()).to.equal(ZERO_BYTES32);
     });
