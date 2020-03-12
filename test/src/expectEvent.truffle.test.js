@@ -19,7 +19,7 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
     this.emitter = await EventEmitter.new(
       this.constructionValues.uint,
       this.constructionValues.boolean,
-      this.constructionValues.string,
+      this.constructionValues.string
     );
 
     this.secondEmitter = await IndirectEventEmitter.new();
@@ -29,13 +29,13 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
     context('short uint value', function () {
       it('accepts emitted events with correct BN', async function () {
         await expectEvent.inConstruction(this.emitter, 'ShortUint',
-          { value: new BN(this.constructionValues.uint) },
+          { value: new BN(this.constructionValues.uint) }
         );
       });
 
       it('throws if a correct JavaScript number is passed', async function () {
         const { message } = await assertFailure(
-          expectEvent.inConstruction(this.emitter, 'ShortUint', { value: this.constructionValues.uint }),
+          expectEvent.inConstruction(this.emitter, 'ShortUint', { value: this.constructionValues.uint })
         );
         expect(message).to.match(errorRegex);
       });
@@ -54,7 +54,7 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
 
       it('throws if an incorrect value is passed', async function () {
         const { message } = await assertFailure(expectEvent.inConstruction(this.emitter, 'Boolean',
-          { value: !this.constructionValues.boolean },
+          { value: !this.constructionValues.boolean }
         ));
         expect(message).to.match(errorRegex);
       });
@@ -198,7 +198,7 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
 
         it('throws if an incorrect value is passed', function () {
           expect(() =>
-            expectEvent(this.receipt, 'Address', { value: '0x21d04e022e0b52b5d5bcf90b7f1aabf406be002d' }),
+            expectEvent(this.receipt, 'Address', { value: '0x21d04e022e0b52b5d5bcf90b7f1aabf406be002d' })
           ).to.throw();
         });
       });
@@ -288,7 +288,7 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
         this.booleanValue = true;
         this.stringValue = 'OpenZeppelin';
         this.receipt = await this.emitter.emitLongUintBooleanString(
-          this.uintValue, this.booleanValue, this.stringValue,
+          this.uintValue, this.booleanValue, this.stringValue
         );
       });
 
@@ -395,26 +395,26 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
 
           it('throws if an unemitted event is requested', async function () {
             await assertFailure(expectEvent.inTransaction(this.txHash, EventEmitter, 'UnemittedEvent',
-              { value: this.value },
+              { value: this.value }
             ));
           });
 
           it('throws if an incorrect string is passed', async function () {
             const { message } = await assertFailure(expectEvent.inTransaction(this.txHash, EventEmitter, 'String',
-              { value: 'ClosedZeppelin' },
+              { value: 'ClosedZeppelin' }
             ));
             expect(message).to.match(errorRegex);
           });
 
           it('throws if an event emitted from other contract is passed', async function () {
             await assertFailure(expectEvent.inTransaction(this.txHash, EventEmitter, 'IndirectString',
-              { value: this.value },
+              { value: this.value }
             ));
           });
 
           it('throws if an incorrect emitter is passed', async function () {
             await assertFailure(expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'String',
-              { value: this.value },
+              { value: this.value }
             ));
           });
         });
@@ -422,31 +422,31 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
         context('with indirectly called contract', function () {
           it('accepts events emitted from other contracts', async function () {
             await expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'IndirectString',
-              { value: this.value },
+              { value: this.value }
             );
           });
 
           it('throws if an unemitted event is requested', async function () {
             await assertFailure(expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'UnemittedEvent',
-              { value: this.value },
+              { value: this.value }
             ));
           });
 
           it('throws if an incorrect string is passed', async function () {
             await assertFailure(expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'IndirectString',
-              { value: 'ClosedZeppelin' },
+              { value: 'ClosedZeppelin' }
             ));
           });
 
           it('throws if an event emitted from other contract is passed', async function () {
             await assertFailure(expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'String',
-              { value: this.value },
+              { value: this.value }
             ));
           });
 
           it('throws if an incorrect emitter is passed', async function () {
             await assertFailure(expectEvent.inTransaction(this.txHash, EventEmitter, 'IndirectString',
-              { value: this.value },
+              { value: this.value }
             ));
           });
         });
