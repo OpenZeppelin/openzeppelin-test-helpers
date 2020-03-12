@@ -1,5 +1,5 @@
 const { BN } = require('../../src/setup');
-const { expect } = require('chai');
+const { expect, AssertionError } = require('chai');
 const assertFailure = require('../helpers/assertFailure');
 const expectEvent = require('../../src/expectEvent');
 
@@ -7,6 +7,8 @@ const EventEmitter = artifacts.require('EventEmitter');
 const IndirectEventEmitter = artifacts.require('IndirectEventEmitter');
 
 contract('expectEvent (truffle contracts)', function ([deployer]) {
+  const errorRegex = /expected event argument .* to have value .* but got .*/;
+
   beforeEach(async function () {
     this.constructionValues = {
       uint: 42,
@@ -32,13 +34,16 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
       });
 
       it('throws if a correct JavaScript number is passed', async function () {
-        await assertFailure(
+        const { message } = await assertFailure(
           expectEvent.inConstruction(this.emitter, 'ShortUint', { value: this.constructionValues.uint })
         );
+        expect(message).to.match(errorRegex);
       });
 
       it('throws if an incorrect value is passed', async function () {
-        await assertFailure(expectEvent.inConstruction(this.emitter, 'ShortUint', { value: 23 }));
+        const { message } = await assertFailure(expectEvent.inConstruction(this.emitter, 'ShortUint',
+          { value: new BN(23) }));
+        expect(message).to.match(errorRegex);
       });
     });
 
@@ -48,9 +53,10 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
       });
 
       it('throws if an incorrect value is passed', async function () {
-        await assertFailure(expectEvent.inConstruction(this.emitter, 'Boolean',
+        const { message } = await assertFailure(expectEvent.inConstruction(this.emitter, 'Boolean',
           { value: !this.constructionValues.boolean }
         ));
+        expect(message).to.match(errorRegex);
       });
     });
 
@@ -60,7 +66,9 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
       });
 
       it('throws if an incorrect string is passed', async function () {
-        await assertFailure(expectEvent.inConstruction(this.emitter, 'String', { value: 'ClosedZeppelin' }));
+        const { message } = await assertFailure(expectEvent.inConstruction(this.emitter, 'String',
+          { value: 'ClosedZeppelin' }));
+        expect(message).to.match(errorRegex);
       });
     });
 
@@ -108,7 +116,8 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
         });
 
         it('throws if an incorrect value is passed', function () {
-          expect(() => expectEvent(this.receipt, 'ShortUint', { value: 23 })).to.throw();
+          expect(() => expectEvent(this.receipt, 'ShortUint', { value: new BN(23) })).to.throw(
+            AssertionError, 'expected event argument \'value\' to have value 23 but got 42');
         });
       });
 
@@ -391,9 +400,10 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
           });
 
           it('throws if an incorrect string is passed', async function () {
-            await assertFailure(expectEvent.inTransaction(this.txHash, EventEmitter, 'String',
+            const { message } = await assertFailure(expectEvent.inTransaction(this.txHash, EventEmitter, 'String',
               { value: 'ClosedZeppelin' }
             ));
+            expect(message).to.match(errorRegex);
           });
 
           it('throws if an event emitted from other contract is passed', async function () {
