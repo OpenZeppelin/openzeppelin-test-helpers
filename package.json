@@ -41,7 +41,7 @@
     "@truffle/contract": "^4.0.35",
     "ansi-colors": "^3.2.3",
     "chai": "^4.2.0",
-    "chai-bn": "^0.2.0",
+    "chai-bn": "^0.2.1",
     "ethjs-abi": "^0.2.1",
     "lodash.flatten": "^4.4.0",
     "semver": "^5.6.0",
