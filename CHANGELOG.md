@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.5.5 (unreleased)
+## 0.5.5 (2020-03-12)
  * Added function `advanceBlockTo`. ([#94](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/94))
  * Added `expectEvent.not` support to test negative cases. ([#104](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/104))
  * Added `constants.ZERO_BYTES32`. ([#110](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/110))
