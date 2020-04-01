@@ -132,7 +132,7 @@ function contains (args, key, value) {
     expect(args[key]).to.be.bignumber.equal(value,
       `expected event argument '${key}' to have value ${expected} but got ${actual}`);
   } else {
-    expect(args[key]).to.be.equal(value,
+    expect(args[key]).to.be.deep.equal(value,
       `expected event argument '${key}' to have value ${value} but got ${args[key]}`);
   }
 }

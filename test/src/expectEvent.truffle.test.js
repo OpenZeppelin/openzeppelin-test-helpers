@@ -14,12 +14,14 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
       uint: 42,
       boolean: true,
       string: 'OpenZeppelin',
+      stringsArray: ['hello', 'world!'],
     };
 
     this.emitter = await EventEmitter.new(
       this.constructionValues.uint,
       this.constructionValues.boolean,
-      this.constructionValues.string
+      this.constructionValues.string,
+      this.constructionValues.stringsArray
     );
 
     this.secondEmitter = await IndirectEventEmitter.new();
@@ -68,6 +70,19 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
       it('throws if an incorrect string is passed', async function () {
         const { message } = await assertFailure(expectEvent.inConstruction(this.emitter, 'String',
           { value: 'ClosedZeppelin' }));
+        expect(message).to.match(errorRegex);
+      });
+    });
+
+    context('string array value', function () {
+      it('accepts emitted events with correct string array', async function () {
+        await expectEvent.inConstruction(this.emitter, 'StringArray',
+          { value: this.constructionValues.stringsArray });
+      });
+
+      it('throws if an incorrect string array is passed', async function () {
+        const { message } = await assertFailure(expectEvent.inConstruction(this.emitter, 'StringArray',
+          { value: ['shalom', 'world!'] }));
         expect(message).to.match(errorRegex);
       });
     });

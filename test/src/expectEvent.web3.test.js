@@ -21,12 +21,14 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
       uint: 42,
       boolean: true,
       string: 'OpenZeppelin',
+      stringsArray: ['hello', 'world!'],
     };
 
     this.emitter = await EventEmitter.deploy({ arguments: [
       this.constructionValues.uint,
       this.constructionValues.boolean,
       this.constructionValues.string,
+      this.constructionValues.stringsArray,
     ] }).send();
 
     this.secondEmitter = await IndirectEventEmitter.deploy().send();
