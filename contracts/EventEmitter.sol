@@ -1,4 +1,5 @@
 pragma solidity ^0.5.0;
+pragma experimental ABIEncoderV2;
 
 import "./IndirectEventEmitter.sol";
 
@@ -14,14 +15,16 @@ contract EventEmitter {
     event String(string value);
     event LongUintBooleanString(uint256 uintValue, bool booleanValue, string stringValue);
     event Bytes(bytes value);
+    event StringArray(string[] value);
 
     event Repeated();
     event Repeated(bytes value);
 
-    constructor (uint8 uintValue, bool booleanValue, string memory stringValue) public {
+    constructor (uint8 uintValue, bool booleanValue, string memory stringValue, string[] memory stringArrayValue) public {
         emit ShortUint(uintValue);
         emit Boolean(booleanValue);
         emit String(stringValue);
+        emit StringArray(stringArrayValue);
     }
 
     function emitArgumentless() public {

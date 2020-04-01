@@ -4,7 +4,6 @@ const assertFailure = require('../helpers/assertFailure');
 const expectEvent = require('../../src/expectEvent');
 
 const EventEmitter = artifacts.require('EventEmitter');
-const EventEmitterV2 = artifacts.require('EventEmitterV2');
 const IndirectEventEmitter = artifacts.require('IndirectEventEmitter');
 
 contract('expectEvent (truffle contracts)', function ([deployer]) {
@@ -15,19 +14,15 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
       uint: 42,
       boolean: true,
       string: 'OpenZeppelin',
+      stringsArray: ['hello', 'world!'],
     };
 
     this.emitter = await EventEmitter.new(
       this.constructionValues.uint,
       this.constructionValues.boolean,
-      this.constructionValues.string
+      this.constructionValues.string,
+      this.constructionValues.stringsArray
     );
-
-    this.constructionValuesV2 = {
-      stringsArray: ['hello', 'world!'],
-    };
-
-    this.emitterV2 = await EventEmitterV2.new(this.constructionValuesV2.stringsArray);
 
     this.secondEmitter = await IndirectEventEmitter.new();
   });
@@ -81,12 +76,12 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
 
     context('string array value', function () {
       it('accepts emitted events with correct string array', async function () {
-        await expectEvent.inConstruction(this.emitterV2, 'StringArray',
-          { value: this.constructionValuesV2.stringsArray });
+        await expectEvent.inConstruction(this.emitter, 'StringArray',
+          { value: this.constructionValues.stringsArray });
       });
 
       it('throws if an incorrect string array is passed', async function () {
-        const { message } = await assertFailure(expectEvent.inConstruction(this.emitterV2, 'StringArray',
+        const { message } = await assertFailure(expectEvent.inConstruction(this.emitter, 'StringArray',
           { value: ['shalom', 'world!'] }));
         expect(message).to.match(errorRegex);
       });
