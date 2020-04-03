@@ -71,15 +71,15 @@ contract('send', function ([sender, receiver]) {
       });
 
       it('throws if the number of arguments does not match', async function () {
-        await assertFailure(send.transaction(this.acknowledger, 'foo', 'uint256, uint256', [3, 5]), opts);
+        await assertFailure(send.transaction(this.acknowledger, 'foo', 'uint256, uint256', [3, 5], opts));
       });
 
       it('throws if the method does not exist', async function () {
-        await assertFailure(send.transaction(this.acknowledger, 'baz', 'uint256', [3]), opts);
+        await assertFailure(send.transaction(this.acknowledger, 'baz', 'uint256', [3], opts));
       });
 
       it('throws if there is a mismatch in the number of types and values', async function () {
-        await assertFailure(send.transaction(this.acknowledger, 'foo', 'uint256', [3, 3]), opts);
+        await assertFailure(send.transaction(this.acknowledger, 'foo', 'uint256', [3, 3], opts));
       });
     }
   });
