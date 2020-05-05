@@ -434,6 +434,19 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
   });
 
   describe('not', function () {
+    describe('notEmitted', function () {
+      beforeEach(async function () {
+        this.receipt = await this.emitter.methods.emitArgumentless().send();
+      });
+
+      it('accepts not-emitted events', function () {
+        expectEvent.notEmitted(this.receipt, 'UnemittedEvent');
+      });
+
+      it('throws if an emitted event is requested', function () {
+        expect(() => expectEvent.notEmitted(this.receipt, 'Argumentless')).to.throw();
+      });
+    });
     describe('inTransaction', function () {
       context('with no arguments', function () {
         beforeEach(async function () {
