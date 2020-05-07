@@ -149,7 +149,7 @@ describe('expectRevert', function () {
       await assertFailure(expectRevert.outOfGas(this.reverter.revertFromAssert()));
     });
 
-    it('accets an outOfGas', async function () {
+    it('accepts an outOfGas', async function () {
       await expectRevert.outOfGas(this.reverter.revertFromOutOfGas({ gas: 2000000 }));
     });
   });

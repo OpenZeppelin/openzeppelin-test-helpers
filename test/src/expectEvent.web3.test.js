@@ -453,13 +453,13 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
           ({ transactionHash: this.txHash } = await this.emitter.methods.emitArgumentless().send());
         });
         it('accepts not emitted events', async function () {
-          await expectEvent.not.inTransaction(this.txHash, EventEmitter, 'WillNeverBeEmitted');
+          await expectEvent.notEmitted.inTransaction(this.txHash, EventEmitter, 'WillNeverBeEmitted');
         });
         it('throws when event does not exist in ABI', async function () {
-          await assertFailure(expectEvent.not.inTransaction(this.txHash, EventEmitter, 'Nonexistant'));
+          await assertFailure(expectEvent.notEmitted.inTransaction(this.txHash, EventEmitter, 'Nonexistant'));
         });
         it('throws when event its emitted', async function () {
-          await assertFailure(expectEvent.not.inTransaction(this.txHash, EventEmitter, 'Argumentless'));
+          await assertFailure(expectEvent.notEmitted.inTransaction(this.txHash, EventEmitter, 'Argumentless'));
         });
       });
       context('with arguments', function () {
@@ -468,10 +468,10 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
           ({ transactionHash: this.txHash } = await this.emitter.methods.emitShortUint(this.value).send());
         });
         it('accepts not emitted events', async function () {
-          await expectEvent.not.inTransaction(this.txHash, EventEmitter, 'WillNeverBeEmitted');
+          await expectEvent.notEmitted.inTransaction(this.txHash, EventEmitter, 'WillNeverBeEmitted');
         });
         it('throws when event its emitted', async function () {
-          await assertFailure(expectEvent.not.inTransaction(this.txHash, EventEmitter, 'ShortUint'));
+          await assertFailure(expectEvent.notEmitted.inTransaction(this.txHash, EventEmitter, 'ShortUint'));
         });
       });
       context('with events emitted by an indirectly called contract', function () {
@@ -482,16 +482,18 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
           ).send());
         });
         it('accepts not emitted events', async function () {
-          await expectEvent.not.inTransaction(this.txHash, EventEmitter, 'WillNeverBeEmitted');
+          await expectEvent.notEmitted.inTransaction(this.txHash, EventEmitter, 'WillNeverBeEmitted');
         });
         it('throws when event its emitted', async function () {
-          await assertFailure(expectEvent.not.inTransaction(this.txHash, IndirectEventEmitter, 'IndirectString'));
+          await assertFailure(
+            expectEvent.notEmitted.inTransaction(this.txHash, IndirectEventEmitter, 'IndirectString')
+          );
         });
       });
     });
     describe('inConstruction', function () {
       it('is unsupported', async function () {
-        await assertFailure(expectEvent.not.inConstruction(this.emitter, 'ShortUint'));
+        await assertFailure(expectEvent.notEmitted.inConstruction(this.emitter, 'ShortUint'));
       });
     });
   });

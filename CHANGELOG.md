@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.6 (TBD)
+ * `expectEvent.not` deprecated and moved to `expectEvent.notEmitted` ([#121](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/121))
+ * Added `expectEvent.notEmitted()` for test negative cases using truffle receipt ([#121](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/121))
+
 ## 0.5.5 (2020-03-12)
  * Added function `advanceBlockTo`. ([#94](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/94))
  * Added `expectEvent.not` support to test negative cases. ([#104](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/104))
