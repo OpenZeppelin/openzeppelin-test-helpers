@@ -181,6 +181,8 @@ expectEvent.notEmitted = notExpectEvent;
 expectEvent.notEmitted.inConstruction = notInConstruction;
 expectEvent.notEmitted.inTransaction = notInTransaction;
 
-expectEvent.not = deprecate(inLogs, 'expectEvent.not is deprecated. Use expectEvent.notEmitted instead.');
+expectEvent.not = {};
+expectEvent.not.inConstruction = deprecate(notInConstruction, 'expectEvent.not is deprecated. Use expectEvent.notEmitted instead.');
+expectEvent.not.inTransaction = deprecate(notInTransaction, 'expectEvent.not is deprecated. Use expectEvent.notEmitted instead.');
 
 module.exports = expectEvent;

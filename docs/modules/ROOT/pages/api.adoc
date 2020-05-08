@@ -175,7 +175,7 @@ Same as `inTransaction`, but for events emitted during the construction of `emit
 
 === `notEmitted`
 
-In order to test that an event was not emitted there is `expectEvent.notEmitted`, there are several variants that follow API of previously mentioned functions:
+In order to test that an event was not emitted there is `expectEvent.notEmitted`. There are several variants that follow the API of previously mentioned functions:
 
  - `expectEvent.notEmitted(receipt, eventName)` similar to `expectEvent()`
  - `expectEvent.notEmitted.inTransaction(txHash, emitter, eventName)` similar to `expectEvent.inTransaction()`
