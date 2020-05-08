@@ -173,6 +173,14 @@ async function expectEvent.inConstruction(emitter, eventName, eventArgs = {})
 
 Same as `inTransaction`, but for events emitted during the construction of `emitter`. Note that this is currently only supported for truffle contracts.
 
+=== `notEmitted`
+
+In order to test that an event was not emitted there is `expectEvent.notEmitted`. There are several variants that follow the API of previously mentioned functions:
+
+ - `expectEvent.notEmitted(receipt, eventName)` similar to `expectEvent()`
+ - `expectEvent.notEmitted.inTransaction(txHash, emitter, eventName)` similar to `expectEvent.inTransaction()`
+ - `expectEvent.notEmitted.inConstruction(emitter, eventName)` similar to `expectEvent.inConstruction()`
+
 [[expect-revert]]
 == `expectRevert`
 

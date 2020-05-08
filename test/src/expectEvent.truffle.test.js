@@ -485,6 +485,19 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
   });
 
   describe('not', function () {
+    describe('notEmitted', function () {
+      beforeEach(async function () {
+        this.receipt = await this.emitter.emitArgumentless();
+      });
+
+      it('accepts not-emitted events', function () {
+        expectEvent.notEmitted(this.receipt, 'UnemittedEvent');
+      });
+
+      it('throws if an emitted event is requested', function () {
+        expect(() => expectEvent.notEmitted(this.receipt, 'Argumentless')).to.throw();
+      });
+    });
     describe('inTransaction', function () {
       context('with no arguments', function () {
         beforeEach(async function () {
@@ -492,13 +505,13 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
           this.txHash = receipt.transactionHash;
         });
         it('accepts not emitted events', async function () {
-          await expectEvent.not.inTransaction(this.txHash, EventEmitter, 'WillNeverBeEmitted');
+          await expectEvent.notEmitted.inTransaction(this.txHash, EventEmitter, 'WillNeverBeEmitted');
         });
         it('throws when event does not exist in ABI', async function () {
-          await assertFailure(expectEvent.not.inTransaction(this.txHash, EventEmitter, 'Nonexistant'));
+          await assertFailure(expectEvent.notEmitted.inTransaction(this.txHash, EventEmitter, 'Nonexistant'));
         });
         it('throws when event its emitted', async function () {
-          await assertFailure(expectEvent.not.inTransaction(this.txHash, EventEmitter, 'Argumentless'));
+          await assertFailure(expectEvent.notEmitted.inTransaction(this.txHash, EventEmitter, 'Argumentless'));
         });
       });
       context('with arguments', function () {
@@ -508,10 +521,10 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
           this.txHash = receipt.transactionHash;
         });
         it('accepts not emitted events', async function () {
-          await expectEvent.not.inTransaction(this.txHash, EventEmitter, 'WillNeverBeEmitted');
+          await expectEvent.notEmitted.inTransaction(this.txHash, EventEmitter, 'WillNeverBeEmitted');
         });
         it('throws when event its emitted', async function () {
-          await assertFailure(expectEvent.not.inTransaction(this.txHash, EventEmitter, 'ShortUint'));
+          await assertFailure(expectEvent.notEmitted.inTransaction(this.txHash, EventEmitter, 'ShortUint'));
         });
       });
       context('with events emitted by an indirectly called contract', function () {
@@ -521,24 +534,26 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
           this.txHash = receipt.transactionHash;
         });
         it('accepts not emitted events', async function () {
-          await expectEvent.not.inTransaction(this.txHash, EventEmitter, 'WillNeverBeEmitted');
+          await expectEvent.notEmitted.inTransaction(this.txHash, EventEmitter, 'WillNeverBeEmitted');
         });
         it('throws when event its emitted', async function () {
-          await assertFailure(expectEvent.not.inTransaction(this.txHash, IndirectEventEmitter, 'IndirectString'));
+          await assertFailure(
+            expectEvent.notEmitted.inTransaction(this.txHash, IndirectEventEmitter, 'IndirectString')
+          );
         });
       });
     });
     describe('inConstructor', function () {
       it('accepts not emitted events', async function () {
-        await expectEvent.not.inConstruction(this.emitter, 'WillNeverBeEmitted');
+        await expectEvent.notEmitted.inConstruction(this.emitter, 'WillNeverBeEmitted');
       });
       it('throws when event does not exist in ABI', async function () {
-        await assertFailure(expectEvent.not.inConstruction(this.emitter, 'Nonexistant'));
+        await assertFailure(expectEvent.notEmitted.inConstruction(this.emitter, 'Nonexistant'));
       });
       it('throws when event its emitted', async function () {
-        await assertFailure(expectEvent.not.inConstruction(this.emitter, 'ShortUint'));
-        await assertFailure(expectEvent.not.inConstruction(this.emitter, 'Boolean'));
-        await assertFailure(expectEvent.not.inConstruction(this.emitter, 'String'));
+        await assertFailure(expectEvent.notEmitted.inConstruction(this.emitter, 'ShortUint'));
+        await assertFailure(expectEvent.notEmitted.inConstruction(this.emitter, 'Boolean'));
+        await assertFailure(expectEvent.notEmitted.inConstruction(this.emitter, 'String'));
       });
     });
   });

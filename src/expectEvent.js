@@ -32,6 +32,20 @@ function expectEvent (receipt, eventName, eventArgs = {}) {
   }
 }
 
+function notExpectEvent (receipt, eventName) {
+  if (isWeb3Receipt(receipt)) {
+    // We don't need arguments for the assertion, so let's just map it to the expected format.
+    const logsWithoutArgs = Object.keys(receipt.events).map(name => {
+      return { event: name };
+    });
+    notInLogs(logsWithoutArgs, eventName);
+  } else if (isTruffleReceipt(receipt)) {
+    notInLogs(receipt.logs, eventName);
+  } else {
+    throw new Error('Unknown transaction receipt object');
+  }
+}
+
 function inLogs (logs, eventName, eventArgs = {}) {
   const events = logs.filter(e => e.event === eventName);
   expect(events.length > 0).to.equal(true, `No '${eventName}' events found`);
@@ -54,6 +68,11 @@ function inLogs (logs, eventName, eventArgs = {}) {
   }
 
   return event;
+}
+
+function notInLogs (logs, eventName) {
+  // eslint-disable-next-line no-unused-expressions
+  expect(logs.find(e => e.event === eventName), `Event ${eventName} was found`).to.be.undefined;
 }
 
 async function inConstruction (contract, eventName, eventArgs = {}) {
@@ -82,10 +101,7 @@ async function notInTransaction (txHash, emitter, eventName) {
   const receipt = await web3.eth.getTransactionReceipt(txHash);
 
   const logs = decodeLogs(receipt.logs, emitter, eventName);
-
-  const events = logs.filter(e => e.event === eventName);
-
-  expect(events.length === 0).to.equal(true, `Event ${eventName} was found`);
+  notInLogs(logs, eventName);
 }
 
 // This decodes longs for a single event type, and returns a decoded object in
@@ -161,7 +177,18 @@ expectEvent.inLogs = deprecate(inLogs, 'expectEvent.inLogs() is deprecated. Use 
 expectEvent.inConstruction = inConstruction;
 expectEvent.inTransaction = inTransaction;
 
+expectEvent.notEmitted = notExpectEvent;
+expectEvent.notEmitted.inConstruction = notInConstruction;
+expectEvent.notEmitted.inTransaction = notInTransaction;
+
 expectEvent.not = {};
-expectEvent.not.inConstruction = notInConstruction;
-expectEvent.not.inTransaction = notInTransaction;
+expectEvent.not.inConstruction = deprecate(
+  notInConstruction,
+  'expectEvent.not is deprecated. Use expectEvent.notEmitted instead.'
+);
+expectEvent.not.inTransaction = deprecate(
+  notInTransaction,
+  'expectEvent.not is deprecated. Use expectEvent.notEmitted instead.'
+);
+
 module.exports = expectEvent;
