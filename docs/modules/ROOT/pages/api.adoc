@@ -219,7 +219,7 @@ const Owned = artifacts.require('Owned');
 
 contract('Owned', ([owner, other]) => {
   beforeEach(async function () {
-    this.owned = Owned.new();
+    this.owned = Owned.new({ from: owner });
   });
 
   describe('doOwnerOperation', function() {
