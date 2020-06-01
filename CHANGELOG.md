@@ -4,6 +4,21 @@
  * Deprecated `expectEvent.not` in favor of `expectEvent.notEmitted`. ([#121](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/121))
  * Added `expectEvent.notEmitted()` for asserting absence of events in Truffle or Web3 receipts. ([#121](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/121))
 
+### How to upgrade from 0.5.5
+
+NOTE: These changes are only necessary to get rid of the new deprecation warning.
+
+- If you have a receipt:
+```text
+await expectEvent.not.inTransaction(receipt.tx, contract, event)
+```
+becomes
+```text
+expectEvent.notEmitted(receipt, event)
+```
+
+- If you don't have a receipt, you can continue using `inTransaction`, but through `notEmitted`: `expectEvent.not.inTransaction` becomes `expectEvent.notEmitted.inTransaction`.
+
 ## 0.5.5 (2020-03-12)
  * Added function `advanceBlockTo`. ([#94](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/94))
  * Added `expectEvent.not` support to test negative cases. ([#104](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/104))
