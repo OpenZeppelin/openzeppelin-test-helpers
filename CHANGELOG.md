@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.5.6 (unreleased)
+## 0.5.6 (2020-06-01)
  * Deprecated `expectEvent.not` in favor of `expectEvent.notEmitted`. ([#121](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/121))
  * Added `expectEvent.notEmitted()` for asserting absence of events in Truffle or Web3 receipts. ([#121](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/121))
 
