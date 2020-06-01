@@ -6,16 +6,11 @@
 
 ### How to upgrade from 0.5.5
 
-NOTE: These changes are only necessary to get rid of the new deprecation warning.
+These changes are only necessary to get rid of the new deprecation warning.
 
 - If you have a receipt:
-```text
-await expectEvent.not.inTransaction(receipt.tx, contract, event)
-```
-becomes
-```text
-expectEvent.notEmitted(receipt, event)
-```
+`await expectEvent.not.inTransaction(receipt.tx, contract, event)`
+becomes `expectEvent.notEmitted(receipt, event)`.
 
 - If you don't have a receipt, you can continue using `inTransaction`, but through `notEmitted`: `expectEvent.not.inTransaction` becomes `expectEvent.notEmitted.inTransaction`.
 
