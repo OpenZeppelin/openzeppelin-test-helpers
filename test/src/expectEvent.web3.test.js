@@ -44,6 +44,10 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
         expectEvent(this.receipt, 'Argumentless');
       });
 
+      it('returns the event', function () {
+        expect(expectEvent(this.receipt, 'Argumentless').event).to.equal('Argumentless');
+      });
+
       it('throws if an unemitted event is requested', function () {
         expect(() => expectEvent(this.receipt, 'UnemittedEvent')).to.throw();
       });
