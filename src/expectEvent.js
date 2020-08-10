@@ -24,9 +24,9 @@ function expectEvent (receipt, eventName, eventArgs = {}) {
       }
     }));
 
-    inLogs(logs, eventName, eventArgs);
+    return inLogs(logs, eventName, eventArgs);
   } else if (isTruffleReceipt(receipt)) {
-    inLogs(receipt.logs, eventName, eventArgs);
+    return inLogs(receipt.logs, eventName, eventArgs);
   } else {
     throw new Error('Unknown transaction receipt object');
   }
