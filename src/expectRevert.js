@@ -45,7 +45,7 @@ ${colors.white.bgBlack('@openzeppelin/test-helpers')} ${colors.black.bgYellow('W
       warn(`\
 Assertions may yield false negatives!
 
-Revert reason checks are only known to work on Ganache >=2.2.0 and Hardhat >= 2.0.0, and the current node is ${nodeInfo}.
+Revert reason checks are only known to work on Ganache >=2.2.0 and Hardhat, and the current node is ${nodeInfo}.
 
 If your node does support revert reasons, please let us know: \
 https://github.com/OpenZeppelin/openzeppelin-test-helpers/issues/new`
