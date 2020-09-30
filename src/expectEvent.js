@@ -131,7 +131,7 @@ function decodeLogs (logs, emitter, eventName) {
 
   // Only decode events of type 'EventName'
   return logs
-    .filter(log => log.topics.length > 0 && log.topics[0] === eventTopic)
+    .filter(log => log.topics.length > 0 && log.topics[0] === eventTopic && log.address == emitter.address)
     .map(log => web3.eth.abi.decodeLog(eventABI.inputs, log.data, log.topics.slice(1)))
     .map(decoded => ({ event: eventName, args: decoded }));
 }
