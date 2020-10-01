@@ -503,14 +503,14 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
       });
 
       context('with directly called contract', function () {
-        it('accepts emitted events with correct indexed parameter', async function () {
+        it('accepts emitted events with correct indexed parameter and emitter object', async function () {
           expectEvent.inTransaction(this.txHash, this.emitter, 'IndexedUint', {
             indexedValue: this.indexedValue,
             normalValue: this.normalValue,
           });
         });
 
-        it('accepts emitted indexed events with contract object without address', async function () {
+        it('accepts emitted indexed events with correct indexed parameter and emitter class', async function () {
           expectEvent.inTransaction(this.txHash, EventEmitter, 'IndexedUint', {
             indexedValue: this.indexedValue,
             normalValue: this.normalValue,
@@ -525,7 +525,7 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
             normalValue: this.normalValue2,
           });
         });
-        it('accepts emitted indexed events with contract object without address', async function () {
+        it('accepts emitted indexed events with correct indexed parameter and emitter class', async function () {
           expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'IndexedUint', {
             indexedValue: this.indexedValue2,
             normalValue: this.normalValue2,
@@ -549,14 +549,14 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
       });
 
       context('with directly called contract', function () {
-        it('accepts emitted events with correct indexed parameter', async function () {
+        it('accepts emitted events with correct indexed parameter and emitter object', async function () {
           await expectEvent.inTransaction(this.txHash, this.emitter, 'IndexedConflictingUint', {
             indexedValue: this.indexedValue,
             normalValue: this.normalValue,
           });
         });
 
-        it('throws if the contract object dont have address', async function () {
+        it('throws if the emitter class is passed', async function () {
           await assertFailure(expectEvent.inTransaction(this.txHash, EventEmitter, 'IndexedConflictingUint', {
             indexedValue: this.indexedValue,
             normalValue: this.normalValue,
@@ -593,7 +593,7 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
           });
         });
 
-        it('throws if the contract object dont have address', async function () {
+        it('throws if the emitter class is passed', async function () {
           await assertFailure(expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'IndexedConflictingUint', {
             normalValue: this.normalValue,
             indexedConflictValue: this.indexedConflictValue,
