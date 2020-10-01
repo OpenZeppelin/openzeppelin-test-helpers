@@ -391,7 +391,11 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
         });
 
         context('with directly called contract', function () {
-          it('accepts emitted events with correct string', async function () {
+          it('accepts emitted events with correct string and emitter object', async function () {
+            await expectEvent.inTransaction(this.txHash, this.emitter, 'String', { value: this.value });
+          });
+
+          it('accepts emitted events with correct string and emitter class', async function () {
             await expectEvent.inTransaction(this.txHash, EventEmitter, 'String', { value: this.value });
           });
 
@@ -413,15 +417,32 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
             ));
           });
 
-          it('throws if an incorrect emitter is passed', async function () {
+          it('throws if an incorrect emitter class is passed', async function () {
             await assertFailure(expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'String',
               { value: this.value }
             ));
           });
+
+          it('throws if an incorrect emitter object is passed', async function () {
+            await assertFailure(
+              expectEvent.inTransaction(
+                this.txHash,
+                await EventEmitter.deploy({ arguments: [0, false, '', []] }).send(),
+                'String',
+                { value: this.value }
+              )
+            );
+          });
         });
 
         context('with indirectly called contract', function () {
-          it('accepts events emitted from other contracts', async function () {
+          it('accepts events emitted from other contracts and emitter object', async function () {
+            await expectEvent.inTransaction(this.txHash, this.secondEmitter, 'IndirectString',
+              { value: this.value }
+            );
+          });
+
+          it('accepts events emitted from other contracts and emitter class', async function () {
             await expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'IndirectString',
               { value: this.value }
             );
@@ -449,6 +470,17 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
             await assertFailure(expectEvent.inTransaction(this.txHash, EventEmitter, 'IndirectString',
               { value: this.value }
             ));
+          });
+
+          it('throws if an incorrect emitter object is passed', async function () {
+            await assertFailure(
+              expectEvent.inTransaction(
+                this.txHash,
+                await IndirectEventEmitter.deploy().send(),
+                'IndirectString',
+                { value: this.value }
+              )
+            );
           });
         });
       });
