@@ -466,7 +466,7 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
             ));
           });
 
-          it('throws if an incorrect emitter is passed', async function () {
+          it('throws if an incorrect emitter class is passed', async function () {
             await assertFailure(expectEvent.inTransaction(this.txHash, EventEmitter, 'IndirectString',
               { value: this.value }
             ));
