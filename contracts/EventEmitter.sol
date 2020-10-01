@@ -88,9 +88,9 @@ contract EventEmitter {
         emit IndexedUint(indexedValue, normalValue);
     }
     
-    function emitIndexedUintAndEmitIndirectly(uint256 indexedValue, uint256 normalValue, IndirectEventEmitter emitter) public {
+    function emitIndexedUintAndEmitIndirectly(uint256 indexedValue, uint256 normalValue, uint256 indexedValue2, uint256 normalValue2, IndirectEventEmitter emitter) public {
         emit IndexedUint(indexedValue, normalValue);
-        emitter.emitIndexedUint(indexedValue, normalValue);
+        emitter.emitIndexedUint(indexedValue2, normalValue2);
     }
 
     function emitIndexedConflictingUint(uint256 indexedValue, uint256 normalValue, uint256 indexedConflictValue, IndirectEventEmitter emitter) public {

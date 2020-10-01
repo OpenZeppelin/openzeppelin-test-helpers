@@ -2,7 +2,7 @@ pragma solidity ^0.5.0;
 
 contract IndirectEventEmitter {
     event IndirectString(string value);
-    event IndexedConflictingUint(uint256 normalValue, uint256 indexed indexedConflictValue);
+    event IndexedConflictingUint(uint256 indexed normalValue, uint256 indexed indexedConflictValue);
     event IndexedUint(uint256 indexed indexedValue, uint256 normalValue);
 
     function emitStringIndirectly(string memory value) public {
