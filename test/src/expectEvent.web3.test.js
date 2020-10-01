@@ -494,7 +494,7 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
           });
         });
         it('accepts emitted indexed events with contract object without address', async function () {
-         expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'IndexedUint', {
+          expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'IndexedUint', {
             indexedValue: this.indexedValue2,
             normalValue: this.normalValue2,
           });

@@ -553,10 +553,10 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
 
         it('accepts emitted indexed events with contract object without address', async function () {
           expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'IndexedUint', {
-             indexedValue: this.indexedValue2,
-             normalValue: this.normalValue2,
-           });
-         });
+            indexedValue: this.indexedValue2,
+            normalValue: this.normalValue2,
+          });
+        });
       });
     });
 
@@ -618,7 +618,7 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
             indexedConflictValue: this.indexedConflictValue,
           });
         });
-        
+
         it('throws if the contract object dont have address', async function () {
           await assertFailure(expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'IndexedConflictingUint', {
             normalValue: this.normalValue,
@@ -632,7 +632,7 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
             indexedConflictValue: this.normalValue,
           }));
         });
-      })
+      });
 
       it('throws if the event from other contract is passed', async function () {
         await assertFailure(expectEvent.inTransaction(this.txHash, this.secondEmitter, 'IndexedConflictingUint', {
