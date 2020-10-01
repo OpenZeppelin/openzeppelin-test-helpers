@@ -576,7 +576,7 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
 
       context('with directly called contract', function () {
         it('accepts emitted events with correct indexed parameter', async function () {
-          expectEvent.inTransaction(this.txHash, this.emitter, 'IndexedConflictingUint', {
+          await expectEvent.inTransaction(this.txHash, this.emitter, 'IndexedConflictingUint', {
             indexedValue: this.indexedValue,
             normalValue: this.normalValue,
           });
@@ -613,7 +613,7 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
 
       context('with indirectly called contract', function () {
         it('accepts events emitted from other contracts', async function () {
-          expectEvent.inTransaction(this.txHash, this.secondEmitter, 'IndexedConflictingUint', {
+          await expectEvent.inTransaction(this.txHash, this.secondEmitter, 'IndexedConflictingUint', {
             normalValue: this.normalValue,
             indexedConflictValue: this.indexedConflictValue,
           });
