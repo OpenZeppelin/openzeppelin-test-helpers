@@ -396,6 +396,23 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
         expect(() => expectEvent(this.receipt, 'IndirectString', { value: this.value })).to.throw();
       });
     });
+
+    describe('with events containing indexed parameters', function () {
+      beforeEach(async function () {
+        this.indexedValue = 42;
+        this.normalValue = 2014;
+        this.receipt = await this.emitter.emitIndexedUint(
+          this.indexedValue, this.normalValue
+        );
+      });
+
+      it('accepts events emitted with correct values', function () {
+        expectEvent(this.receipt, 'IndexedUint', {
+          indexedValue: new BN(this.indexedValue),
+          normalValue: new BN(this.normalValue),
+        });
+      });
+    });
   });
 
   describe('inTransaction', function () {
@@ -468,6 +485,31 @@ contract('expectEvent (truffle contracts)', function ([deployer]) {
               { value: this.value }
             ));
           });
+        });
+      });
+    });
+
+    describe('with conflicting indexed event parameters', function () {
+      beforeEach(async function () {
+        this.indexedValue = 42;
+        this.normalValue = 2014;
+        this.indexedConflictValue = 2016;
+        const { receipt } = await this.emitter.emitIndexedUintConflict(
+          this.indexedValue,
+          this.normalValue,
+          this.indexedConflictValue,
+          this.secondEmitter.address
+        );
+        this.txHash = receipt.transactionHash;
+      });
+      it('accepts events with correct values', async function () {
+        expectEvent.inTransaction(this.txHash, this.emitter, 'IndexedUint', {
+          indexedValue: new BN(this.indexedValue),
+          normalValue: new BN(this.normalValue),
+        });
+        expectEvent.inTransaction(this.txHash, this.secondEmitter, 'IndexedUint', {
+          indexedValue: new BN(this.indexedValue),
+          indexedConflictValue: new BN(this.indexedConflictValue),
         });
       });
     });

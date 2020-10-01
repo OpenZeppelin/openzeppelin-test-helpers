@@ -45,8 +45,8 @@
     "ethjs-abi": "^0.2.1",
     "lodash.flatten": "^4.4.0",
     "semver": "^5.6.0",
-    "web3": "^1.2.1",
-    "web3-utils": "^1.2.1"
+    "web3": "^1.2.5",
+    "web3-utils": "^1.2.5"
   },
   "devDependencies": {
     "eslint": "^5.9.0",
@@ -58,6 +58,6 @@
     "eslint-plugin-standard": "^4.0.0",
     "ganache-cli": "^6.5.0",
     "openzeppelin-docs-utils": "github:OpenZeppelin/docs-utils",
-    "truffle": "^5.0.29"
+    "truffle": "^5.1.46"
   }
 }

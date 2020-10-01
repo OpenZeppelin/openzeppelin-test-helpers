@@ -16,6 +16,7 @@ contract EventEmitter {
     event LongUintBooleanString(uint256 uintValue, bool booleanValue, string stringValue);
     event Bytes(bytes value);
     event StringArray(string[] value);
+    event IndexedUint(uint256 indexed indexedValue, uint256 normalValue);
 
     event Repeated();
     event Repeated(bytes value);
@@ -80,6 +81,15 @@ contract EventEmitter {
     function emitTwoLongUint(uint256 firstValue, uint256 secondValue) public {
         emit LongUint(firstValue);
         emit LongUint(secondValue);
+    }
+
+    function emitIndexedUint(uint256 indexedValue, uint256 normalValue) public {
+        emit IndexedUint(indexedValue, normalValue);
+    }
+
+    function emitIndexedUintConflict(uint256 indexedValue, uint256 normalValue, uint256 indexedConflictValue, IndirectEventEmitter emitter) public {
+        emit IndexedUint(indexedValue, normalValue);
+        emitter.emitIndexedUint(indexedValue, indexedConflictValue);
     }
 
     function emitRepeated(bytes memory value) public {
