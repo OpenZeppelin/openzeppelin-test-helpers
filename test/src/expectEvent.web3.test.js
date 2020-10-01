@@ -437,13 +437,13 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
         this.indexedValue = 42;
         this.normalValue = 2014;
         this.indexedConflictValue = 2016;
-        const { receipt } = await this.emitter.methods.emitIndexedUintConflict(
+        this.receipt = await this.emitter.methods.emitIndexedUintConflict(
           this.indexedValue,
           this.normalValue,
           this.indexedConflictValue,
-          this.secondEmitter.address
+          this.secondEmitter.options.address
         ).send();
-        this.txHash = receipt.transactionHash;
+        this.txHash = this.receipt.transactionHash;
       });
       it('accepts events with correct values', async function () {
         expectEvent.inTransaction(this.txHash, this.emitter, 'IndexedUint', {
