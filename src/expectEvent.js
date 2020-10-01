@@ -114,9 +114,9 @@ function decodeLogs (logs, emitter, eventName) {
     address = emitter.options.address;
   } else if (isTruffleContract(emitter)) {
     abi = emitter.abi;
-    try{
+    try {
       address = emitter.address;
-    }catch(e){
+    } catch (e) {
       address = null;
     }
   } else {
