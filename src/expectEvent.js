@@ -108,10 +108,17 @@ async function notInTransaction (txHash, emitter, eventName) {
 // the same form truffle-contract uses on its receipts
 function decodeLogs (logs, emitter, eventName) {
   let abi;
+  let address;
   if (isWeb3Contract(emitter)) {
     abi = emitter.options.jsonInterface;
+    address = emitter.options.address;
   } else if (isTruffleContract(emitter)) {
     abi = emitter.abi;
+    try {
+      address = emitter.address;
+    } catch (e) {
+      address = null;
+    }
   } else {
     throw new Error('Unknown contract object');
   }
@@ -131,7 +138,7 @@ function decodeLogs (logs, emitter, eventName) {
 
   // Only decode events of type 'EventName'
   return logs
-    .filter(log => log.topics.length > 0 && log.topics[0] === eventTopic)
+    .filter(log => log.topics.length > 0 && log.topics[0] === eventTopic && (!address || log.address === address))
     .map(log => web3.eth.abi.decodeLog(eventABI.inputs, log.data, log.topics.slice(1)))
     .map(decoded => ({ event: eventName, args: decoded }));
 }
