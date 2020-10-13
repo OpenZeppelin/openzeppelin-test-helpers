@@ -2,6 +2,10 @@
 
 ## 0.5.7 (unreleased)
  * Made `expectEvent` return the event that was found. ([#129](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/129))
+ * Fix `expectEvent.inTransaction` when there are conflicting events. ([#133](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/133))
+
+### Breaking change
+The fix to `expectEvent.inTransaction` may break some tests that were not using the API as intended, or which were causing a false positive assertion. If the `emitter` argument was a contract instance, the event that the assertion found in the transaction was not guaranteed to have originated in that particular contract instance at that address, it could also have generated in a different instance of the same contract. This is no longer the case, and may be the cause of a test breaking after the update.
 
 ## 0.5.6 (2020-06-01)
  * Deprecated `expectEvent.not` in favor of `expectEvent.notEmitted`. ([#121](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/121))
