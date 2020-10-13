@@ -339,6 +339,47 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
         expect(() => expectEvent(this.receipt, 'IndirectString', { value: this.value })).to.throw();
       });
     });
+
+    describe('with events containing indexed parameters', function () {
+      beforeEach(async function () {
+        this.indexedValue = new BN(42);
+        this.normalValue = new BN(2014);
+        this.receipt = await this.emitter.methods.emitIndexedUint(
+          this.indexedValue,
+          this.normalValue
+        ).send();
+      });
+
+      it('accepts events emitted by the directly called contract', function () {
+        expectEvent(this.receipt, 'IndexedUint', {
+          indexedValue: this.indexedValue,
+          normalValue: this.normalValue,
+        });
+      });
+    });
+
+    describe('with events containing conflicting indexed parameters', function () {
+      beforeEach(async function () {
+        this.indexedValue1 = new BN(42);
+        this.normalValue1 = new BN(2014);
+        this.indexedValue2 = new BN(2016);
+        this.indexedValue3 = new BN(2009);
+        this.receipt = await this.emitter.methods.emitIndexedConflictingUint(
+          this.indexedValue1,
+          this.normalValue1,
+          this.indexedValue2,
+          this.indexedValue3,
+          this.secondEmitter.options.address
+        ).send();
+      });
+
+      it('accepts events emitted by the directly called contract', function () {
+        expectEvent(this.receipt, 'IndexedConflictingUint', {
+          indexedValue1: this.indexedValue1,
+          normalValue1: this.normalValue1,
+        });
+      });
+    });
   });
 
   describe('inTransaction', function () {
@@ -352,7 +393,11 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
         });
 
         context('with directly called contract', function () {
-          it('accepts emitted events with correct string', async function () {
+          it('accepts emitted events with correct string and emitter object', async function () {
+            await expectEvent.inTransaction(this.txHash, this.emitter, 'String', { value: this.value });
+          });
+
+          it('accepts emitted events with correct string and emitter class', async function () {
             await expectEvent.inTransaction(this.txHash, EventEmitter, 'String', { value: this.value });
           });
 
@@ -374,15 +419,32 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
             ));
           });
 
-          it('throws if an incorrect emitter is passed', async function () {
+          it('throws if an incorrect emitter class is passed', async function () {
             await assertFailure(expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'String',
               { value: this.value }
             ));
           });
+
+          it('throws if an incorrect emitter object is passed', async function () {
+            await assertFailure(
+              expectEvent.inTransaction(
+                this.txHash,
+                await EventEmitter.deploy({ arguments: [0, false, '', []] }).send(),
+                'String',
+                { value: this.value }
+              )
+            );
+          });
         });
 
         context('with indirectly called contract', function () {
-          it('accepts events emitted from other contracts', async function () {
+          it('accepts events emitted from other contracts and emitter object', async function () {
+            await expectEvent.inTransaction(this.txHash, this.secondEmitter, 'IndirectString',
+              { value: this.value }
+            );
+          });
+
+          it('accepts events emitted from other contracts and emitter class', async function () {
             await expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'IndirectString',
               { value: this.value }
             );
@@ -406,12 +468,162 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
             ));
           });
 
-          it('throws if an incorrect emitter is passed', async function () {
+          it('throws if an incorrect emitter class is passed', async function () {
             await assertFailure(expectEvent.inTransaction(this.txHash, EventEmitter, 'IndirectString',
               { value: this.value }
             ));
           });
+
+          it('throws if an incorrect emitter object is passed', async function () {
+            await assertFailure(
+              expectEvent.inTransaction(
+                this.txHash,
+                await IndirectEventEmitter.deploy().send(),
+                'IndirectString',
+                { value: this.value }
+              )
+            );
+          });
         });
+      });
+    });
+
+    describe('with indexed event parameters', function () {
+      beforeEach(async function () {
+        this.indexedValue = new BN(42);
+        this.normalValue = new BN(2014);
+        this.indexedValue2 = new BN(2016);
+        this.normalValue2 = new BN(2020);
+        this.receipt = await this.emitter.methods.emitIndexedUintAndEmitIndirectly(
+          this.indexedValue,
+          this.normalValue,
+          this.indexedValue2,
+          this.normalValue2,
+          this.secondEmitter.options.address
+        ).send();
+        this.txHash = this.receipt.transactionHash;
+      });
+
+      context('with directly called contract', function () {
+        it('accepts emitted events with correct indexed parameter and emitter object', async function () {
+          expectEvent.inTransaction(this.txHash, this.emitter, 'IndexedUint', {
+            indexedValue: this.indexedValue,
+            normalValue: this.normalValue,
+          });
+        });
+
+        it('accepts emitted indexed events with correct indexed parameter and emitter class', async function () {
+          expectEvent.inTransaction(this.txHash, EventEmitter, 'IndexedUint', {
+            indexedValue: this.indexedValue,
+            normalValue: this.normalValue,
+          });
+        });
+      });
+
+      context('with indirectly called contract', function () {
+        it('accepts events emitted from other contracts', async function () {
+          expectEvent.inTransaction(this.txHash, this.secondEmitter, 'IndexedUint', {
+            indexedValue: this.indexedValue2,
+            normalValue: this.normalValue2,
+          });
+        });
+        it('accepts emitted indexed events with correct indexed parameter and emitter class', async function () {
+          expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'IndexedUint', {
+            indexedValue: this.indexedValue2,
+            normalValue: this.normalValue2,
+          });
+        });
+      });
+    });
+
+    describe('with conflicting indexed event parameters', function () {
+      beforeEach(async function () {
+        this.indexedValue1 = new BN(42);
+        this.normalValue1 = new BN(2014);
+        this.indexedValue2 = new BN(2016);
+        this.indexedValue3 = new BN(2009);
+        this.receipt = await this.emitter.methods.emitIndexedConflictingUint(
+          this.indexedValue1,
+          this.normalValue1,
+          this.indexedValue2,
+          this.indexedValue3,
+          this.secondEmitter.options.address
+        ).send();
+        this.txHash = this.receipt.transactionHash;
+      });
+
+      context('with directly called contract', function () {
+        it('accepts emitted events with correct indexed parameter and emitter object', async function () {
+          await expectEvent.inTransaction(this.txHash, this.emitter, 'IndexedConflictingUint', {
+            indexedValue1: this.indexedValue1,
+            normalValue1: this.normalValue1,
+          });
+        });
+
+        it('throws if the emitter class is passed', async function () {
+          await assertFailure(expectEvent.inTransaction(this.txHash, EventEmitter, 'IndexedConflictingUint', {
+            indexedValue1: this.indexedValue1,
+            normalValue1: this.normalValue1,
+          }));
+        });
+
+        it('throws if the event value emitted from other contract is passed', async function () {
+          await assertFailure(expectEvent.inTransaction(this.txHash, this.emitter, 'IndexedConflictingUint', {
+            indexedValue1: this.indexedValue2,
+            normalValue1: this.indexedValue3,
+          }));
+        });
+
+        it('throws if the event emitted from other contract is passed', async function () {
+          await assertFailure(expectEvent.inTransaction(this.txHash, this.emitter, 'IndexedConflictingUint', {
+            indexedValue2: this.indexedValue2,
+            indexedValue3: this.indexedValue3,
+          }));
+        });
+
+        it('throws if the wrong event is requested', async function () {
+          await assertFailure(expectEvent.inTransaction(this.txHash, this.secondEmitter, 'IndexedConflictingUint', {
+            indexedValue2: this.indexedValue1,
+            indexedValue3: this.normalValue1,
+          }));
+        });
+      });
+
+      context('with indirectly called contract', function () {
+        it('accepts events emitted from other contracts', async function () {
+          await expectEvent.inTransaction(this.txHash, this.secondEmitter, 'IndexedConflictingUint', {
+            indexedValue2: this.indexedValue2,
+            indexedValue3: this.indexedValue3,
+          });
+        });
+
+        it('throws if the emitter class is passed', async function () {
+          await assertFailure(expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'IndexedConflictingUint', {
+            indexedValue2: this.indexedValue2,
+            indexedValue3: this.indexedValue3,
+          }));
+        });
+
+        it('throws if the event value from other contract is passed', async function () {
+          await assertFailure(expectEvent.inTransaction(this.txHash, this.secondEmitter, 'IndexedConflictingUint', {
+            indexedValue2: this.indexedValue1,
+            indexedValue3: this.normalValue1,
+          }));
+        });
+      });
+
+      it('throws if the event from other contract is passed', async function () {
+        await assertFailure(expectEvent.inTransaction(this.txHash, this.secondEmitter, 'IndexedConflictingUint', {
+          indexedValue1: this.indexedValue1,
+          normalValue1: this.normalValue1,
+        }));
+      });
+
+      it('throws if the wrong event is requested', async function () {
+        await assertFailure(expectEvent.inTransaction(this.txHash, this.secondEmitter, 'IndexedConflictingUint', {
+          indexedValue1: this.indexedValue2,
+          normalValue1: this.indexedValue3,
+        }));
       });
     });
 
