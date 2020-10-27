@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.5.8 (unreleased)
+## 0.5.8 (2020-10-27)
 * Fixed `expectRevert` for Hardhat. ([#131](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/131))
 
 ## 0.5.7 (2020-10-13)
