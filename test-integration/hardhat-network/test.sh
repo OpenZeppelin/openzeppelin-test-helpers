@@ -14,6 +14,8 @@ cleanup() {
 
 hardhat_network_port=8545
 
+export CI=true
+
 hardhat_network_running() {
   nc -z localhost "$hardhat_network_port"
 }
