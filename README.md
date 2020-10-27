@@ -80,6 +80,16 @@ describe('ERC20', function () {
   });
 });
 ```
+#### Hardhat (formerly Buidler)
+Install `web3` and the `hardhat-web3` plugin with `npm install --save-dev @nomiclabs/hardhat-web3 web3`. Then import the `hardhat-web3` plugin from your `hardhat.config.js` or `hardhat.config.ts` if using typescript:
+
+```
+// hardhat.config.js
+require('@nomiclabs/hardhat-web3')
+
+// hardhat.config.ts
+import '@nomiclabs/hardhat-web3'
+```
 
 ## Learn More
 
