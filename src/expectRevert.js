@@ -33,6 +33,7 @@ async function checkRevertReasonSupport (provider) {
 
     const nodeInfo = await web3.eth.getNodeInfo();
     const ganacheVersion = /TestRPC\/v([\w.-]+)\/ethereum-js/.exec(nodeInfo);
+    const hardhatVersion = /HardhatNetwork\/([\w.-]+)\/ethereumjs-vm/.exec(nodeInfo);
 
     const warn = function (msg) {
       console.log(`\
@@ -40,16 +41,16 @@ ${colors.white.bgBlack('@openzeppelin/test-helpers')} ${colors.black.bgYellow('W
       );
     };
 
-    if (ganacheVersion === null) {
+    if (ganacheVersion === null && hardhatVersion === null) {
       warn(`\
 Assertions may yield false negatives!
 
-Revert reason checks are only known to work on Ganache >=2.2.0, and the current node is ${nodeInfo}.
+Revert reason checks are only known to work on Ganache >=2.2.0 and Hardhat, and the current node is ${nodeInfo}.
 
 If your node does support revert reasons, please let us know: \
 https://github.com/OpenZeppelin/openzeppelin-test-helpers/issues/new`
       );
-    } else if (!semver.gte(ganacheVersion[1], '2.2.0')) {
+    } else if (ganacheVersion !== null && !semver.gte(ganacheVersion[1], '2.2.0')) {
       throw new Error(`\
 The current version of Ganache (v${ganacheVersion[1]}) doesn't return revert reasons.
 
