@@ -22,6 +22,16 @@ Test Helpers integrates seamlessly with [OpenZeppelin Test Environment](https://
 npm install --save-dev @openzeppelin/test-helpers
 ```
 
+#### Hardhat (formerly Buidler)
+
+Install `web3` and the `hardhat-web3` plugin.
+
+```
+npm install --save-dev @nomiclabs/hardhat-web3 web3
+```
+
+Remember to include the plugin in your configuration as explained in the [installation instructions](https://hardhat.org/plugins/nomiclabs-hardhat-web3.html#installation).
+
 ### Usage
 
 Import `@openzeppelin/test-helpers` in your test files to access the different assertions and utilities.
