@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.5.8 (unreleased)
+* Fixed `expectRevert` for Hardhat. ([#131](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/131))
+
 ## 0.5.7 (2020-10-13)
  * Made `expectEvent` return the event that was found. ([#129](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/129))
  * Fix `expectEvent.inTransaction` when there are conflicting events. ([#133](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/133))
