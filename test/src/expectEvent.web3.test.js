@@ -5,7 +5,10 @@ const expectEvent = require('../../src/expectEvent');
 
 const { setupLoader } = require('@openzeppelin/contract-loader');
 
-const web3Loader = setupLoader({ provider: web3.eth.currentProvider }).web3;
+const web3Loader = setupLoader({
+  provider: web3.eth.currentProvider,
+  defaultGas: 2e6,
+}).web3;
 
 const EventEmitter = web3Loader.fromArtifact('EventEmitter');
 const IndirectEventEmitter = web3Loader.fromArtifact('IndirectEventEmitter');
