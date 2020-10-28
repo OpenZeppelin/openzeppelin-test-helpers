@@ -7,8 +7,8 @@ const { setupLoader } = require('@openzeppelin/contract-loader');
 
 const web3Loader = setupLoader({ provider: web3.eth.currentProvider }).web3;
 
-const EventEmitter = web3Loader.fromArtifacts('EventEmitter');
-const IndirectEventEmitter = web3Loader.fromArtifacts('IndirectEventEmitter');
+const EventEmitter = web3Loader.fromArtifact('EventEmitter');
+const IndirectEventEmitter = web3Loader.fromArtifact('IndirectEventEmitter');
 
 contract('expectEvent (web3 contracts) ', function ([deployer]) {
   before(function () {

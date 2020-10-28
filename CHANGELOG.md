@@ -1,7 +1,10 @@
 # Changelog
 
+## 0.5.9 (2020-10-27)
+ * Updated `@openzeppelin/contract-loader` dependency.
+
 ## 0.5.8 (2020-10-27)
-* Fixed `expectRevert` for Hardhat. ([#131](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/131))
+ * Fixed `expectRevert` for Hardhat. ([#131](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/131))
 
 ## 0.5.7 (2020-10-13)
  * Made `expectEvent` return the event that was found. ([#129](https://github.com/OpenZeppelin/openzeppelin-test-helpers/pull/129))

@@ -48,7 +48,7 @@ const {
   expectRevert, // Assertions for transactions that should fail
 } = require('@openzeppelin/test-helpers');
 
-const ERC20 = contract.fromArtifacts('ERC20');
+const ERC20 = contract.fromArtifact('ERC20');
 
 describe('ERC20', function () {
   const [sender, receiver] =  accounts;
