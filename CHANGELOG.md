@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.5.10 (unreleased)
+## 0.5.10 (2020-12-22)
  * Updated `@truffle/contract` dependency.
 
 ## 0.5.9 (2020-10-27)
