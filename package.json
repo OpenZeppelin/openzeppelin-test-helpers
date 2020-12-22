@@ -2,13 +2,12 @@
   "name": "@openzeppelin/test-helpers",
   "version": "0.5.9",
   "description": "JavaScript testing helpers for Ethereum smart contract development.",
-  "main": "index.js",
+  "main": "index.ts",
   "files": [
-    "src",
-    "index.js",
-    "configure.js"
+    "build/index.js"
   ],
   "scripts": {
+    "build": "tsc",
     "docs": "oz-docs",
     "docs:watch": "npm run docs watch",
     "lint": "eslint .",
@@ -49,6 +48,9 @@
     "web3-utils": "^1.2.5"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.15",
+    "@types/mocha": "^8.0.4",
+    "@types/node": "^14.14.7",
     "eslint": "^5.9.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
@@ -58,6 +60,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "ganache-cli": "^6.5.0",
     "openzeppelin-docs-utils": "github:OpenZeppelin/docs-utils",
-    "truffle": "^5.1.46"
+    "truffle": "^5.1.46",
+    "typescript": "^4.0.5"
   }
 }

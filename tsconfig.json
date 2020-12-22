@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "incremental": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "./build",
+    "sourceMap": true,
+    "strict": true,
+    "target": "es2018",
+    "typeRoots": [],
+    "types": ["node"],                           /* Type declaration files to be included in compilation. */
+  },
+  "include": ["src/**/*"],
+  "exclude": ["./node_modules/*"]
+}
