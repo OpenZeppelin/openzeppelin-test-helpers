@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.5.10 (unreleased)
+ * Updated `@truffle/contract` dependency.
+
 ## 0.5.9 (2020-10-27)
  * Updated `@openzeppelin/contract-loader` dependency.
 
