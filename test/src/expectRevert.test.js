@@ -51,6 +51,10 @@ describe('expectRevert', function () {
       await assertFailure(expectRevert(this.reverter.revertFromRequireWithReason(), 'Wrong reason'));
     });
 
+    it('rejects a failed requirement with partial error message match', async function () {
+      await assertFailure(expectRevert(this.reverter.revertFromRequireWithReason(), 'VM'));
+    });
+
     it('accepts a failed requirement with correct expected reason', async function () {
       await expectRevert(this.reverter.revertFromRequireWithReason(), 'Failed requirement');
     });

@@ -6,17 +6,32 @@ const semver = require('semver');
 
 const checkedProviders = new WeakSet();
 
+function getVMException (errorMessage) {
+  const VMExceptionPattern = /Returned error: VM Exception while processing transaction: (.*?)\.?$/;
+  const [, VMException] = errorMessage.match(VMExceptionPattern);
+  return VMException || null;
+}
+
+function getRevertString (VMException) {
+  const match = VMException.match(/revert (?:(?:(.*) -- Reason given: \1)|(.*))/);
+  const [, newForm, oldForm] = match;
+  return newForm || oldForm || null;
+}
+
 async function expectException (promise, expectedError) {
   try {
     await promise;
   } catch (error) {
-    if (error.message.indexOf(expectedError) === -1) {
-      // When the exception was a revert, the resulting string will include only
-      // the revert reason, otherwise it will be the type of exception (e.g. 'invalid opcode')
-      const actualError = error.message.replace(
-        /Returned error: VM Exception while processing transaction: (revert )?/,
-        '',
-      );
+    const VMException = getVMException(error.message);
+
+    if (expectedError === 'revert') {
+      // eslint-disable-next-line no-unused-expressions
+      expect(VMException.startsWith('revert'), 'Wrong kind of exception received').to.be.true;
+    } else {
+      const actualError = VMException.startsWith('revert')
+        ? getRevertString(VMException)
+        : VMException;
+
       expect(actualError).to.equal(expectedError, 'Wrong kind of exception received');
     }
     return;
