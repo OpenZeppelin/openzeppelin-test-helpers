@@ -7,13 +7,20 @@ const semver = require('semver');
 const checkedProviders = new WeakSet();
 
 function getVMException (errorMessage) {
+  switch (errorMessage) {
+  case 'Returned error: Transaction reverted without a reason':
+    return 'revert';
+  }
   const VMExceptionPattern = /Returned error: VM Exception while processing transaction: (.*?)\.?$/;
-  const [, VMException] = errorMessage.match(VMExceptionPattern);
+  const match = errorMessage.match(VMExceptionPattern);
+  if (!match) throw new Error(`Unrecognized VM error string "${errorMessage}"`);
+  const [, VMException] = match;
   return VMException || null;
 }
 
 function getRevertString (VMException) {
   const match = VMException.match(/revert (?:(?:(.*) -- Reason given: \1)|(.*))/);
+  if (!match) throw new Error(`Unrecognized revert error string "${VMException}"`);
   const [, newForm, oldForm] = match;
   return newForm || oldForm || null;
 }
