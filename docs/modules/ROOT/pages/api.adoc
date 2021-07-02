@@ -382,7 +382,7 @@ async function snapshot()
 Returns a snapshot object with the 'restore' function, which reverts blockchain to the captured state.
 
 ```javascript
-const snapshotA = snapshot()
+const snapshotA = await snapshot()
 // ...
-snapshotA.restore()
+await snapshotA.restore()
 ```
