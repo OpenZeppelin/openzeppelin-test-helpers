@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.5.12 (unreleased)
+## 0.5.12 (2021-07-05)
  * Added new `snapshot` module to capture and revert blockchain state.
 
 ## 0.5.11 (2021-04-29)
