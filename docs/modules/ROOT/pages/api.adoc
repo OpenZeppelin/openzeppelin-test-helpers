@@ -372,3 +372,17 @@ Helpers to convert different time units to seconds. Available helpers are: `seco
 ```javascript
 await time.increase(time.duration.years(2));
 ```
+
+[[snapshot]]
+== `snapshot`
+
+```javascript
+async function snapshot()
+```
+Returns a snapshot object with the 'restore' function, which reverts blockchain to the captured state.
+
+```javascript
+const snapshotA = await snapshot()
+// ...
+await snapshotA.restore()
+```
