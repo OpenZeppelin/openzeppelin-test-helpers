@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.13 (unreleased)
+ * Changed `send.ether` so it no longer forces `gasPrice: 0`.
+
+NOTE: This may break some tests but gas price 0 is no longer valid since the London hard fork.
+
 ## 0.5.12 (2021-07-05)
  * Added new `snapshot` module to capture and revert blockchain state.
 

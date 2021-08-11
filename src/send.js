@@ -22,7 +22,7 @@ async function transaction (target, name, argsTypes, argsValues, opts = {}) {
 }
 
 function ether (from, to, value) {
-  return web3.eth.sendTransaction({ from, to, value, gasPrice: 0 });
+  return web3.eth.sendTransaction({ from, to, value });
 }
 
 module.exports = {
