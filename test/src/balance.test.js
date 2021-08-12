@@ -51,7 +51,8 @@ contract('balance', function ([sender, receiver]) {
       it('returns balance decrements', async function () {
         const tracker = await balance.tracker(sender);
         await send.ether(sender, receiver, ether('1'));
-        expect(await tracker.delta()).to.be.bignumber.equal(ether('-1'));
+        const { delta, fees } = await tracker.deltaWithFees();
+        expect(delta.add(fees)).to.be.bignumber.equal(ether('-1'));
       });
 
       it('returns consecutive deltas', async function () {
@@ -66,16 +67,16 @@ contract('balance', function ([sender, receiver]) {
       const unit = 'gwei';
 
       beforeEach(async function () {
-        this.tracker = await balance.tracker(sender, unit);
+        this.tracker = await balance.tracker(receiver, unit);
       });
 
       it('returns current balance in tracker-specified unit', async function () {
-        expect(await this.tracker.get()).to.be.bignumber.equal(fromWei(await web3.eth.getBalance(sender), unit));
+        expect(await this.tracker.get()).to.be.bignumber.equal(fromWei(await web3.eth.getBalance(receiver), unit));
       });
 
       it('returns deltas in tracker-specified unit', async function () {
         await send.ether(sender, receiver, ether('1'));
-        expect(await this.tracker.delta()).to.be.bignumber.equal(fromWei(ether('-1'), unit));
+        expect(await this.tracker.delta()).to.be.bignumber.equal(fromWei(ether('1'), unit));
       });
 
       describe('overrides', function () {
@@ -83,13 +84,13 @@ contract('balance', function ([sender, receiver]) {
 
         it('returns current balance in overridden unit', async function () {
           expect(await this.tracker.get(override)).to.be.bignumber.equal(
-            fromWei(await web3.eth.getBalance(sender), override)
+            fromWei(await web3.eth.getBalance(receiver), override)
           );
         });
 
         it('returns deltas in overridden unit', async function () {
           await send.ether(sender, receiver, ether('1'));
-          expect(await this.tracker.delta(override)).to.be.bignumber.equal(fromWei(ether('-1'), override));
+          expect(await this.tracker.delta(override)).to.be.bignumber.equal(fromWei(ether('1'), override));
         });
       });
     });

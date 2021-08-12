@@ -9,18 +9,22 @@ const Acknowledger = artifacts.require('Acknowledger');
 
 contract('send', function ([sender, receiver]) {
   describe('ether', function () {
-    it('sends ether with no gas cost', async function () {
+    it('sends ether', async function () {
       const value = ether('1');
 
       const initialSenderBalance = new BN(await web3.eth.getBalance(sender));
       const initialReceiverBalance = new BN(await web3.eth.getBalance(receiver));
 
-      await send.ether(sender, receiver, value);
+      const tx = await send.ether(sender, receiver, value);
+
+      const { gasUsed, transactionHash } = tx;
+      const { gasPrice } = await web3.eth.getTransaction(transactionHash);
+      const fees = new BN(gasPrice).muln(gasUsed);
 
       const finalSenderBalance = new BN(await web3.eth.getBalance(sender));
       const finalReceiverBalance = new BN(await web3.eth.getBalance(receiver));
 
-      expect(finalSenderBalance.sub(initialSenderBalance)).to.be.bignumber.equal(value.neg());
+      expect(finalSenderBalance.sub(initialSenderBalance)).to.be.bignumber.equal(value.neg().sub(fees));
       expect(finalReceiverBalance.sub(initialReceiverBalance)).to.be.bignumber.equal(value);
     });
 

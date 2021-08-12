@@ -39,7 +39,7 @@ Creates an instance of a balance tracker, which lets you keep track of the chang
 const tracker = await balance.tracker(account)
 ```
 
-==== `get`
+==== `tracker.get`
 
 ```javascript
 async function tracker.get(unit = tracker.unit)
@@ -52,13 +52,13 @@ const tracker = await balance.tracker(account) // instantiation
 const currentBalance = await tracker.get() // returns the current balance of account
 ```
 
-==== `delta`
+==== `tracker.delta`
 
 ```javascript
 async function tracker.delta(unit = tracker.unit)
 ```
 
-Returns the change in the balance since the last time it was checked (with either `get()` or `delta()`).
+Returns the change in the balance since the last time it was queried (with either `get`, `delta`, or `deltaWithFees`).
 
 ```javascript
 const tracker = await balance.tracker(receiver, 'ether')
@@ -81,6 +81,20 @@ A tracker can also return all balances and deltas in a specific unit:
 const tracker = await balance.tracker(account, 'gwei');
 const balanceGwei = tracker.get(); // in gigawei
 const balanceEther = tracker.get('ether'); // in ether
+```
+
+==== `tracker.deltaWithFees`
+
+```javascript
+async function tracker.deltaWithFees(unit = tracker.unit)
+```
+
+Returns an object containing both the change in the balance since the last time it was queried (with either `get`, `delta`, or `deltaWithFees`), as well as the gas fees paid during this time.
+
+```javascript
+const tracker = await balance.tracker(account, 'gwei');
+...
+const { delta, fees } = await tracker.deltaWithFees();
 ```
 
 [[bn]]

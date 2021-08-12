@@ -5,6 +5,8 @@
 
 NOTE: This may break some tests but gas price 0 is no longer valid since the London hard fork.
 
+ * Added `tracker.deltaWithFees`.
+
 ## 0.5.12 (2021-07-05)
  * Added new `snapshot` module to capture and revert blockchain state.
 
