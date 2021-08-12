@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.5.13 (unreleased)
+## 0.5.13 (2021-08-12)
  * Changed `send.ether` so it no longer forces `gasPrice: 0`.
 
 NOTE: This may break some tests but gas price 0 is no longer valid since the London hard fork.
