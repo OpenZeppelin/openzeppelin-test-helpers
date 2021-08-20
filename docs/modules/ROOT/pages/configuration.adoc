@@ -14,8 +14,6 @@ const { expectRevert } = require('@openzeppelin/test-helpers');
 
 The configuration must be applied on all test files, _before_ importing the helpers.
 
-TIP: When using xref:test-environment::index.adoc[*OpenZeppelin Test Environment*], all of these options will be automatically configured.
-
 == `provider`
 
 Used by helpers that connect to the test environment via a web3 provider, like xref:api.adoc#balance[`balance`] and xref:api.adoc#time[`time`].

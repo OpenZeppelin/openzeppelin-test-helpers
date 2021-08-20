@@ -8,8 +8,6 @@
  * Handle xref:api.adoc#bn[very large numbers]
  * Simulate the xref:api.adoc#time[passing of time]
 
-Test Helpers integrates seamlessly with xref:test-environment::index.adoc[*OpenZeppelin Test Environment*], but it also supports both Truffle tests and regular web3 workflows.
-
 == Overview
 
 === Installation
@@ -32,11 +30,7 @@ Remember to include the plugin in your configuration as explained in the https:/
 
 Import `@openzeppelin/test-helpers` in your test files to access the different assertions and utilities.
 
-NOTE: The following snippet uses xref:test-environment::index.adoc[OpenZeppelin Test Environment]: a Truffle-based setup would work the same way.
-
 ```javascript
-const { accounts, contract } = require('@openzeppelin/test-environment');
-
 const {
   BN,           // Big Number support
   constants,    // Common constants, like the zero address and largest integers
@@ -44,11 +38,9 @@ const {
   expectRevert, // Assertions for transactions that should fail
 } = require('@openzeppelin/test-helpers');
 
-const ERC20 = contract.fromArtifact('ERC20');
+const ERC20 = artifacts.require('ERC20');
 
-describe('ERC20', function () {
-  const [sender, receiver] =  accounts;
-
+describe('ERC20', function ([sender, receiver]) {
   beforeEach(async function () {
     // The bundled BN library is the same one web3 uses under the hood
     this.value = new BN(1);
