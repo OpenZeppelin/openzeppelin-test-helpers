@@ -3,7 +3,7 @@
 *Assertion library for Ethereum smart contract testing.* Make sure your contracts behave as expected!
 
  * Check that xref:api.adoc#expect-revert[transactions revert] for the correct reason
- * Verify xref:api.adoc#expect-event[events] where emitted with the right values
+ * Verify xref:api.adoc#expect-event[events] were emitted with the right values
  * Track xref:api.adoc#balance[balance changes] elegantly
  * Handle xref:api.adoc#bn[very large numbers]
  * Simulate the xref:api.adoc#time[passing of time]
