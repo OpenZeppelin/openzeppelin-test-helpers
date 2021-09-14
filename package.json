@@ -13,6 +13,7 @@
     "docs": "oz-docs",
     "docs:watch": "npm run docs watch",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "release": "scripts/release/release.sh",
     "test": "mocha --exit --recursive",
     "test-legacy": "./scripts/test.sh --network ganache",
