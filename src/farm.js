@@ -24,7 +24,7 @@ const MasterApe = contract.fromABI(MasterApeBuild.abi, MasterApeBuild.bytecode);
  */
 async function deployMockFarm([owner, feeTo]) {
     // Setup BananaToken
-    const INITIAL_MINT = String(25000 * 1e18);
+    const INITIAL_MINT = '25000' + '000000000000000000';
     const bananaToken = await BananaToken.new({ from: owner });
     await bananaToken.mint(owner, INITIAL_MINT, { from: owner });
     // Setup BananaSplitBar
@@ -35,7 +35,7 @@ async function deployMockFarm([owner, feeTo]) {
         bananaToken.address,
         bananaSplitBar.address,
         feeTo, // Dev fee getter
-        ether('10'), // BANANA per block
+        '10' + '000000000000000000', // BANANA per block
         0, // Starting block number
         1, // multiplier
         { from: owner }

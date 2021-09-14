@@ -28,7 +28,7 @@ const ERC20Mock = contract.fromABI(ERC20MockBuild.abi, ERC20MockBuild.bytecode);
  */
 // NOTE: Currently does not create a BANANA/WBNB pair
 async function deployMockDex([owner, feeTo, alice], numPairs = 2) {
-    const BASE_BALANCE = String(1000 * 1e18);
+    const BASE_BALANCE = '1000' + '000000000000000000';
     // Setup DEX factory
     dexFactory = await ApeFactory.new(feeTo, { from: owner });
 
