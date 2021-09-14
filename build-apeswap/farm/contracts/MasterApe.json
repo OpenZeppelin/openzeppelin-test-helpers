@@ -1,0 +1,642 @@
+{
+  "contractName": "MasterApe",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "contract BananaToken",
+          "name": "_banana",
+          "type": "address"
+        },
+        {
+          "internalType": "contract BananaSplitBar",
+          "name": "_bananaSplit",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_devaddr",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_bananaPerBlock",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_startBlock",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_multiplier",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "pid",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "Deposit",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "pid",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "EmergencyWithdraw",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "pid",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "Withdraw",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "BONUS_MULTIPLIER",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "cake",
+      "outputs": [
+        {
+          "internalType": "contract BananaToken",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "cakePerBlock",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "devaddr",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "poolInfo",
+      "outputs": [
+        {
+          "internalType": "contract IBEP20",
+          "name": "lpToken",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "allocPoint",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "lastRewardBlock",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "accCakePerShare",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "startBlock",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "syrup",
+      "outputs": [
+        {
+          "internalType": "contract BananaSplitBar",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "totalAllocPoint",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "userInfo",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "rewardDebt",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "multiplierNumber",
+          "type": "uint256"
+        }
+      ],
+      "name": "updateMultiplier",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "poolLength",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract IBEP20",
+          "name": "_lpToken",
+          "type": "address"
+        }
+      ],
+      "name": "checkPoolDuplicate",
+      "outputs": [],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_allocPoint",
+          "type": "uint256"
+        },
+        {
+          "internalType": "contract IBEP20",
+          "name": "_lpToken",
+          "type": "address"
+        },
+        {
+          "internalType": "bool",
+          "name": "_withUpdate",
+          "type": "bool"
+        }
+      ],
+      "name": "add",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_pid",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_allocPoint",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bool",
+          "name": "_withUpdate",
+          "type": "bool"
+        }
+      ],
+      "name": "set",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_from",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_to",
+          "type": "uint256"
+        }
+      ],
+      "name": "getMultiplier",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_pid",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        }
+      ],
+      "name": "pendingCake",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "massUpdatePools",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_pid",
+          "type": "uint256"
+        }
+      ],
+      "name": "updatePool",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_pid",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "deposit",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_pid",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdraw",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "enterStaking",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "leaveStaking",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_pid",
+          "type": "uint256"
+        }
+      ],
+      "name": "emergencyWithdraw",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_pid",
+          "type": "uint256"
+        }
+      ],
+      "name": "getPoolInfo",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "lpToken",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "allocPoint",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "lastRewardBlock",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "accCakePerShare",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_devaddr",
+          "type": "address"
+        }
+      ],
+      "name": "dev",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x6080604052600060085534801561001557600080fd5b506040516120f33803806120f3833981810160405260c081101561003857600080fd5b508051602082015160408301516060840151608085015160a090950151939492939192909160006100676101e7565b600080546001600160a01b0319166001600160a01b0383169081178255604051929350917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908290a350600180546001600160a01b03199081166001600160a01b039889169081178355600280548316988a16989098179097556003805482169689169690961790955560049384556009839055600591909155604080516080810182529586526103e86020870181815291870193845260006060880181815260068054958601815590915296517ff652222313e28459528d920b65115c16c04f3efc82aaedc97be59f3f377c0d3f939095029283018054909616949097169390931790935590517ff652222313e28459528d920b65115c16c04f3efc82aaedc97be59f3f377c0d40830155517ff652222313e28459528d920b65115c16c04f3efc82aaedc97be59f3f377c0d4182015590517ff652222313e28459528d920b65115c16c04f3efc82aaedc97be59f3f377c0d42909101556008556101eb565b3390565b611ef9806101fa6000396000f3fe608060405234801561001057600080fd5b50600436106101c45760003560e01c80635ffe6146116100f95780638da5cb5b11610097578063d49e77cd11610071578063d49e77cd1461049e578063dce17484146104a6578063e2bbb158146104ae578063f2fde38b146104d1576101c4565b80638da5cb5b1461042e5780638dbb1e3a1461043657806393f1a40b14610459576101c4565b8063715018a6116100d3578063715018a6146103d457806386a952c4146103dc5780638aa28550146104005780638d88a90e14610408576101c4565b80635ffe614614610384578063630b5ba1146103a157806364482f79146103a9576101c4565b80632f380b3511610166578063441a3e7011610140578063441a3e701461031f57806348cd4cb11461034257806351eb05a61461034a5780635312ea8e14610367576101c4565b80632f380b35146102bf578063322d0d4a146102dc57806341441d3b14610302576101c4565b80631175a1dd116101a25780631175a1dd1461020a5780631526fe271461023657806317caf6f1146102835780631eaaa0451461028b576101c4565b80630755e0b6146101c9578063081e3eda146101e35780631058d281146101eb575b600080fd5b6101d16104f7565b60408051918252519081900360200190f35b6101d16104fd565b6102086004803603602081101561020157600080fd5b5035610503565b005b6101d16004803603604081101561022057600080fd5b50803590602001356001600160a01b03166106e7565b6102536004803603602081101561024c57600080fd5b5035610851565b604080516001600160a01b0390951685526020850193909352838301919091526060830152519081900360800190f35b6101d1610892565b610208600480360360608110156102a157600080fd5b508035906001600160a01b0360208201351690604001351515610898565b610253600480360360208110156102d557600080fd5b5035610a27565b610208600480360360208110156102f257600080fd5b50356001600160a01b0316610ac4565b6102086004803603602081101561031857600080fd5b5035610b58565b6102086004803603604081101561033557600080fd5b5080359060200135610cec565b6101d1610ee7565b6102086004803603602081101561036057600080fd5b5035610eed565b6102086004803603602081101561037d57600080fd5b5035611169565b6102086004803603602081101561039a57600080fd5b5035611204565b610208611261565b610208600480360360608110156103bf57600080fd5b50803590602081013590604001351515611280565b61020861135d565b6103e46113ff565b604080516001600160a01b039092168252519081900360200190f35b6101d161140e565b6102086004803603602081101561041e57600080fd5b50356001600160a01b0316611414565b6103e4611481565b6101d16004803603604081101561044c57600080fd5b5080359060200135611490565b6104856004803603604081101561046f57600080fd5b50803590602001356001600160a01b03166114ab565b6040805192835260208301919091528051918290030190f35b6103e46114cf565b6103e46114de565b610208600480360360408110156104c457600080fd5b50803590602001356114ed565b610208600480360360208110156104e757600080fd5b50356001600160a01b03166116a7565b60045481565b60065490565b6000600660008154811061051357fe5b600091825260208083203384527f6d5257204ebe7d88fd91ae87941cb2dd9d8062b64ae5a2bd2d28ec40b9fbf6df909152604090922080546004909202909201925083111561059e576040805162461bcd60e51b81526020600482015260126024820152711dda5d1a191c985dce881b9bdd0819dbdbd960721b604482015290519081900360640190fd5b6105a86000610eed565b60006105e282600101546105dc64e8d4a510006105d68760030154876000015461170b90919063ffffffff16565b90611764565b906117a6565b905080156105f4576105f433826117e8565b831561061e57815461060690856117a6565b8255825461061e906001600160a01b03163386611859565b600383015482546106399164e8d4a51000916105d69161170b565b600183015560025460408051632770a7eb60e21b81523360048201526024810187905290516001600160a01b0390921691639dc29fac9160448082019260009290919082900301818387803b15801561069157600080fd5b505af11580156106a5573d6000803e3d6000fd5b5050604080518781529051600093503392507ff279e6a1f5e320cca91135676d9cb6e44ca8a08c0b88342bcdb1144f6511b5689181900360200190a350505050565b600080600684815481106106f757fe5b600091825260208083208784526007825260408085206001600160a01b03898116875290845281862060049586029093016003810154815484516370a0823160e01b81523098810198909852935191985093969395939492909116926370a08231926024808301939192829003018186803b15801561077557600080fd5b505afa158015610789573d6000803e3d6000fd5b505050506040513d602081101561079f57600080fd5b50516002850154909150431180156107b657508015155b1561081c5760006107cb856002015443611490565b905060006107f86008546105d688600101546107f26004548761170b90919063ffffffff16565b9061170b565b9050610817610810846105d68464e8d4a5100061170b565b85906118ab565b935050505b61084483600101546105dc64e8d4a510006105d686886000015461170b90919063ffffffff16565b9450505050505b92915050565b6006818154811061085e57fe5b600091825260209091206004909102018054600182015460028301546003909301546001600160a01b039092169350919084565b60085481565b6108a0611905565b6000546001600160a01b039081169116146108f0576040805162461bcd60e51b81526020600482018190526024820152600080516020611ea4833981519152604482015290519081900360640190fd5b80156108fe576108fe611261565b61090782610ac4565b6000600954431161091a5760095461091c565b435b60085490915061092c90856118ab565b600855604080516080810182526001600160a01b0385811682526020820187815292820184815260006060840181815260068054600181018255925293517ff652222313e28459528d920b65115c16c04f3efc82aaedc97be59f3f377c0d3f600490920291820180546001600160a01b031916919094161790925592517ff652222313e28459528d920b65115c16c04f3efc82aaedc97be59f3f377c0d4082015591517ff652222313e28459528d920b65115c16c04f3efc82aaedc97be59f3f377c0d41830155517ff652222313e28459528d920b65115c16c04f3efc82aaedc97be59f3f377c0d4290910155610a21611909565b50505050565b60008060008060068581548110610a3a57fe5b6000918252602090912060049091020154600680546001600160a01b039092169187908110610a6557fe5b90600052602060002090600402016001015460068781548110610a8457fe5b90600052602060002090600402016002015460068881548110610aa357fe5b90600052602060002090600402016003015493509350935093509193509193565b60065460005b81811015610b5357826001600160a01b031660068281548110610ae957fe5b60009182526020909120600490910201546001600160a01b03161415610b4b576040805162461bcd60e51b81526020600482015260126024820152711859190e88195e1a5cdd1a5b99c81c1bdbdb60721b604482015290519081900360640190fd5b600101610aca565b505050565b60006006600081548110610b6857fe5b600091825260208083203384527f6d5257204ebe7d88fd91ae87941cb2dd9d8062b64ae5a2bd2d28ec40b9fbf6df90915260408320600490920201925090610baf90610eed565b805415610bf8576000610be482600101546105dc64e8d4a510006105d68760030154876000015461170b90919063ffffffff16565b90508015610bf657610bf633826117e8565b505b8215610c24578154610c15906001600160a01b03163330866119ce565b8054610c2190846118ab565b81555b60038201548154610c3f9164e8d4a51000916105d69161170b565b6001820155600254604080516340c10f1960e01b81523360048201526024810186905290516001600160a01b03909216916340c10f199160448082019260009290919082900301818387803b158015610c9757600080fd5b505af1158015610cab573d6000803e3d6000fd5b5050604080518681529051600093503392507f90890809c654f11d6e72a28fa60149770a0d11ec6c92319d6ceb2bb0a4ea1a159181900360200190a3505050565b60065482908110610d41576040805162461bcd60e51b815260206004820152601a60248201527976616c6964617465506f6f6c3a20706f6f6c206578697374733f60301b604482015290519081900360640190fd5b82610d93576040805162461bcd60e51b815260206004820152601c60248201527f77697468647261772042414e414e4120627920756e7374616b696e6700000000604482015290519081900360640190fd5b600060068481548110610da257fe5b600091825260208083208784526007825260408085203386529092529220805460049092029092019250841115610e15576040805162461bcd60e51b81526020600482015260126024820152711dda5d1a191c985dce881b9bdd0819dbdbd960721b604482015290519081900360640190fd5b610e1e85610eed565b6000610e4c82600101546105dc64e8d4a510006105d68760030154876000015461170b90919063ffffffff16565b90508015610e5e57610e5e33826117e8565b8415610e88578154610e7090866117a6565b82558254610e88906001600160a01b03163387611859565b60038301548254610ea39164e8d4a51000916105d69161170b565b6001830155604080518681529051879133917ff279e6a1f5e320cca91135676d9cb6e44ca8a08c0b88342bcdb1144f6511b5689181900360200190a3505050505050565b60095481565b60065481908110610f42576040805162461bcd60e51b815260206004820152601a60248201527976616c6964617465506f6f6c3a20706f6f6c206578697374733f60301b604482015290519081900360640190fd5b600060068381548110610f5157fe5b9060005260206000209060040201905080600201544311610f725750611165565b8054604080516370a0823160e01b815230600482015290516000926001600160a01b0316916370a08231916024808301926020929190829003018186803b158015610fbc57600080fd5b505afa158015610fd0573d6000803e3d6000fd5b505050506040513d6020811015610fe657600080fd5b5051905080610ffc575043600290910155611165565b600061100c836002015443611490565b905060006110336008546105d686600101546107f26004548761170b90919063ffffffff16565b6001546003549192506001600160a01b03908116916340c10f19911661105a84600a611764565b6040518363ffffffff1660e01b815260040180836001600160a01b0316815260200182815260200192505050600060405180830381600087803b1580156110a057600080fd5b505af11580156110b4573d6000803e3d6000fd5b5050600154600254604080516340c10f1960e01b81526001600160a01b0392831660048201526024810187905290519190921693506340c10f199250604480830192600092919082900301818387803b15801561111057600080fd5b505af1158015611124573d6000803e3d6000fd5b50505050611152611147846105d664e8d4a510008561170b90919063ffffffff16565b6003860154906118ab565b6003850155505043600290920191909155505b5050565b60006006828154811061117857fe5b600091825260208083208584526007825260408085203380875293529093208054600490930290930180549094506111bd926001600160a01b03919091169190611859565b80546040805191825251849133917fbb757047c2b5f3974fe26b7c10f732e7bce710b0952a71082702781e62ae05959181900360200190a360008082556001909101555050565b61120c611905565b6000546001600160a01b0390811691161461125c576040805162461bcd60e51b81526020600482018190526024820152600080516020611ea4833981519152604482015290519081900360640190fd5b600555565b60065460005b818110156111655761127881610eed565b600101611267565b611288611905565b6000546001600160a01b039081169116146112d8576040805162461bcd60e51b81526020600482018190526024820152600080516020611ea4833981519152604482015290519081900360640190fd5b80156112e6576112e6611261565b6000600684815481106112f557fe5b9060005260206000209060040201600101549050826006858154811061131757fe5b906000526020600020906004020160010181905550828114610a21576113528361134c836008546117a690919063ffffffff16565b906118ab565b600855610a21611909565b611365611905565b6000546001600160a01b039081169116146113b5576040805162461bcd60e51b81526020600482018190526024820152600080516020611ea4833981519152604482015290519081900360640190fd5b600080546040516001600160a01b03909116907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908390a3600080546001600160a01b0319169055565b6002546001600160a01b031681565b60055481565b6003546001600160a01b0316331461145f576040805162461bcd60e51b81526020600482015260096024820152686465763a207775743f60b81b604482015290519081900360640190fd5b600380546001600160a01b0319166001600160a01b0392909216919091179055565b6000546001600160a01b031690565b6005546000906114a4906107f284866117a6565b9392505050565b60076020908152600092835260408084209091529082529020805460019091015482565b6003546001600160a01b031681565b6001546001600160a01b031681565b60065482908110611542576040805162461bcd60e51b815260206004820152601a60248201527976616c6964617465506f6f6c3a20706f6f6c206578697374733f60301b604482015290519081900360640190fd5b82611594576040805162461bcd60e51b815260206004820152601960248201527f6465706f7369742042414e414e41206279207374616b696e6700000000000000604482015290519081900360640190fd5b6000600684815481106115a357fe5b600091825260208083208784526007825260408085203386529092529220600490910290910191506115d485610eed565b80541561161d57600061160982600101546105dc64e8d4a510006105d68760030154876000015461170b90919063ffffffff16565b9050801561161b5761161b33826117e8565b505b831561164957815461163a906001600160a01b03163330876119ce565b805461164690856118ab565b81555b600382015481546116649164e8d4a51000916105d69161170b565b6001820155604080518581529051869133917f90890809c654f11d6e72a28fa60149770a0d11ec6c92319d6ceb2bb0a4ea1a159181900360200190a35050505050565b6116af611905565b6000546001600160a01b039081169116146116ff576040805162461bcd60e51b81526020600482018190526024820152600080516020611ea4833981519152604482015290519081900360640190fd5b61170881611a28565b50565b60008261171a5750600061084b565b8282028284828161172757fe5b04146114a45760405162461bcd60e51b8152600401808060200182810382526021815260200180611e836021913960400191505060405180910390fd5b60006114a483836040518060400160405280601a81526020017f536166654d6174683a206469766973696f6e206279207a65726f000000000000815250611ac8565b60006114a483836040518060400160405280601e81526020017f536166654d6174683a207375627472616374696f6e206f766572666c6f770000815250611b6a565b600254604080516328b9b77360e21b81526001600160a01b038581166004830152602482018590529151919092169163a2e6ddcc91604480830192600092919082900301818387803b15801561183d57600080fd5b505af1158015611851573d6000803e3d6000fd5b505050505050565b604080516001600160a01b038416602482015260448082018490528251808303909101815260649091019091526020810180516001600160e01b031663a9059cbb60e01b179052610b53908490611bc4565b6000828201838110156114a4576040805162461bcd60e51b815260206004820152601b60248201527f536166654d6174683a206164646974696f6e206f766572666c6f770000000000604482015290519081900360640190fd5b3390565b600654600060015b828110156119545761194a6006828154811061192957fe5b906000526020600020906004020160010154836118ab90919063ffffffff16565b9150600101611911565b50801561116557611966816003611764565b90506119a08161134c600660008154811061197d57fe5b9060005260206000209060040201600101546008546117a690919063ffffffff16565b6008819055508060066000815481106119b557fe5b9060005260206000209060040201600101819055505050565b604080516001600160a01b0380861660248301528416604482015260648082018490528251808303909101815260849091019091526020810180516001600160e01b03166323b872dd60e01b179052610a21908590611bc4565b6001600160a01b038116611a6d5760405162461bcd60e51b8152600401808060200182810382526026815260200180611e5d6026913960400191505060405180910390fd5b600080546040516001600160a01b03808516939216917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e091a3600080546001600160a01b0319166001600160a01b0392909216919091179055565b60008183611b545760405162461bcd60e51b81526004018080602001828103825283818151815260200191508051906020019080838360005b83811015611b19578181015183820152602001611b01565b50505050905090810190601f168015611b465780820380516001836020036101000a031916815260200191505b509250505060405180910390fd5b506000838581611b6057fe5b0495945050505050565b60008184841115611bbc5760405162461bcd60e51b8152602060048201818152835160248401528351909283926044909101919085019080838360008315611b19578181015183820152602001611b01565b505050900390565b6060611c19826040518060400160405280602081526020017f5361666542455032303a206c6f772d6c6576656c2063616c6c206661696c6564815250856001600160a01b0316611c759092919063ffffffff16565b805190915015610b5357808060200190516020811015611c3857600080fd5b5051610b535760405162461bcd60e51b815260040180806020018281038252602a815260200180611e33602a913960400191505060405180910390fd5b6060611c848484600085611c8c565b949350505050565b6060611c9785611df9565b611ce8576040805162461bcd60e51b815260206004820152601d60248201527f416464726573733a2063616c6c20746f206e6f6e2d636f6e7472616374000000604482015290519081900360640190fd5b60006060866001600160a01b031685876040518082805190602001908083835b60208310611d275780518252601f199092019160209182019101611d08565b6001836020036101000a03801982511681845116808217855250505050505090500191505060006040518083038185875af1925050503d8060008114611d89576040519150601f19603f3d011682016040523d82523d6000602084013e611d8e565b606091505b50915091508115611da2579150611c849050565b805115611db25780518082602001fd5b60405162461bcd60e51b8152602060048201818152865160248401528651879391928392604401919085019080838360008315611b19578181015183820152602001611b01565b6000813f7fc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470818114801590611c8457505015159291505056fe5361666542455032303a204245503230206f7065726174696f6e20646964206e6f7420737563636565644f776e61626c653a206e6577206f776e657220697320746865207a65726f2061646472657373536166654d6174683a206d756c7469706c69636174696f6e206f766572666c6f774f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572a264697066735822122001ce73b7a103950ab0b091bc07afc14a4c518031e2c0b11ceab965d7919d917a64736f6c634300060c0033",
+  "immutableReferences": {},
+  "source": "pragma solidity 0.6.12;\n\n/*\n * ApeSwapFinance \n * App:             https://apeswap.finance\n * Medium:          https://medium.com/@ape_swap    \n * Twitter:         https://twitter.com/ape_swap \n * Telegram:        https://t.me/ape_swap\n * Announcements:   https://t.me/ape_swap_news\n * GitHub:          https://github.com/ApeSwapFinance\n */\n\nimport '@pancakeswap/pancake-swap-lib/contracts/math/SafeMath.sol';\nimport '@pancakeswap/pancake-swap-lib/contracts/token/BEP20/IBEP20.sol';\nimport '@pancakeswap/pancake-swap-lib/contracts/token/BEP20/SafeBEP20.sol';\nimport '@pancakeswap/pancake-swap-lib/contracts/access/Ownable.sol';\n\nimport \"./BananaToken.sol\";\nimport \"./BananaSplitBar.sol\";\n\n// import \"@nomiclabs/buidler/console.sol\";\n\n// MasterApe is the master of BANANA AND BANANASPLIT. \n// He can make Banana and he is a fair guy.\n//\n// Note that it's ownable and the owner wields tremendous power. The ownership\n// will be transferred to a governance smart contract once BANANA is sufficiently\n// distributed and the community can show to govern itself.\n//\n// Have fun reading it. Hopefully it's bug-free. God bless.\ncontract MasterApe is Ownable {\n    using SafeMath for uint256;\n    using SafeBEP20 for IBEP20;\n\n    // Info of each user.\n    struct UserInfo {\n        uint256 amount;     // How many LP tokens the user has provided.\n        uint256 rewardDebt; // Reward debt. See explanation below.\n        //\n        // We do some fancy math here. Basically, any point in time, the amount of BANANAs\n        // entitled to a user but is pending to be distributed is:\n        //\n        //   pending reward = (user.amount * pool.accBananaPerShare) - user.rewardDebt\n        //\n        // Whenever a user deposits or withdraws LP tokens to a pool. Here's what happens:\n        //   1. The pool's `accCakePerShare` (and `lastRewardBlock`) gets updated.\n        //   2. User receives the pending reward sent to his/her address.\n        //   3. User's `amount` gets updated.\n        //   4. User's `rewardDebt` gets updated.\n    }\n\n    // Info of each pool.\n    struct PoolInfo {\n        IBEP20 lpToken;           // Address of LP token contract.\n        uint256 allocPoint;       // How many allocation points assigned to this pool. BANANAs to distribute per block.\n        uint256 lastRewardBlock;  // Last block number that BANANAs distribution occurs.\n        uint256 accCakePerShare; // Accumulated BANANAs per share, times 1e12. See below.\n    }\n\n    // The BANANA TOKEN!\n    BananaToken public cake;\n    // The BANANA SPLIT TOKEN!\n    BananaSplitBar public syrup;\n    // Dev address.\n    address public devaddr;\n    // BANANA tokens created per block.\n    uint256 public cakePerBlock;\n    // Bonus muliplier for early banana makers.\n    uint256 public BONUS_MULTIPLIER;\n\n\n    // Info of each pool.\n    PoolInfo[] public poolInfo;\n    // Info of each user that stakes LP tokens.\n    mapping (uint256 => mapping (address => UserInfo)) public userInfo;\n    // Total allocation points. Must be the sum of all allocation points in all pools.\n    uint256 public totalAllocPoint = 0;\n    // The block number when BANANA mining starts.\n    uint256 public startBlock;\n\n    event Deposit(address indexed user, uint256 indexed pid, uint256 amount);\n    event Withdraw(address indexed user, uint256 indexed pid, uint256 amount);\n    event EmergencyWithdraw(address indexed user, uint256 indexed pid, uint256 amount);\n\n    constructor(\n        BananaToken _banana,\n        BananaSplitBar _bananaSplit,\n        address _devaddr,\n        uint256 _bananaPerBlock,\n        uint256 _startBlock,\n        uint256 _multiplier\n    ) public {\n        cake = _banana;\n        syrup = _bananaSplit;\n        devaddr = _devaddr;\n        cakePerBlock = _bananaPerBlock;\n        startBlock = _startBlock;\n        BONUS_MULTIPLIER = _multiplier;\n\n        // staking pool\n        poolInfo.push(PoolInfo({\n            lpToken: _banana,\n            allocPoint: 1000,\n            lastRewardBlock: startBlock,\n            accCakePerShare: 0\n        }));\n\n        totalAllocPoint = 1000;\n\n    }\n\n    modifier validatePool(uint256 _pid) {\n        require(_pid < poolInfo.length, \"validatePool: pool exists?\");\n        _;\n    }\n\n    function updateMultiplier(uint256 multiplierNumber) public onlyOwner {\n        BONUS_MULTIPLIER = multiplierNumber;\n    }\n\n    function poolLength() external view returns (uint256) {\n        return poolInfo.length;\n    }\n\n    // Detects whether the given pool already exists\n    function checkPoolDuplicate(IBEP20 _lpToken) public view {\n        uint256 length = poolInfo.length;\n        for (uint256 _pid = 0; _pid < length; _pid++) {\n            require(poolInfo[_pid].lpToken != _lpToken, \"add: existing pool\");\n        }\n    }\n\n    // Add a new lp to the pool. Can only be called by the owner.\n    // XXX DO NOT add the same LP token more than once. Rewards will be messed up if you do.\n    function add(uint256 _allocPoint, IBEP20 _lpToken, bool _withUpdate) public onlyOwner {\n        if (_withUpdate) {\n            massUpdatePools();\n        }\n        checkPoolDuplicate(_lpToken);\n        uint256 lastRewardBlock = block.number > startBlock ? block.number : startBlock;\n        totalAllocPoint = totalAllocPoint.add(_allocPoint);\n        poolInfo.push(PoolInfo({\n            lpToken: _lpToken,\n            allocPoint: _allocPoint,\n            lastRewardBlock: lastRewardBlock,\n            accCakePerShare: 0\n        }));\n        updateStakingPool();\n    }\n\n    // Update the given pool's BANANA allocation point. Can only be called by the owner.\n    function set(uint256 _pid, uint256 _allocPoint, bool _withUpdate) public onlyOwner {\n        if (_withUpdate) {\n            massUpdatePools();\n        }\n        uint256 prevAllocPoint = poolInfo[_pid].allocPoint;\n        poolInfo[_pid].allocPoint = _allocPoint;\n        if (prevAllocPoint != _allocPoint) {\n            totalAllocPoint = totalAllocPoint.sub(prevAllocPoint).add(_allocPoint);\n            updateStakingPool();\n        }\n    }\n\n    function updateStakingPool() internal {\n        uint256 length = poolInfo.length;\n        uint256 points = 0;\n        for (uint256 pid = 1; pid < length; ++pid) {\n            points = points.add(poolInfo[pid].allocPoint);\n        }\n        if (points != 0) {\n            points = points.div(3);\n            totalAllocPoint = totalAllocPoint.sub(poolInfo[0].allocPoint).add(points);\n            poolInfo[0].allocPoint = points;\n        }\n    }\n\n    // Return reward multiplier over the given _from to _to block.\n    function getMultiplier(uint256 _from, uint256 _to) public view returns (uint256) {\n        return _to.sub(_from).mul(BONUS_MULTIPLIER);\n    }\n\n    // View function to see pending BANANAs on frontend.\n    function pendingCake(uint256 _pid, address _user) external view returns (uint256) {\n        PoolInfo storage pool = poolInfo[_pid];\n        UserInfo storage user = userInfo[_pid][_user];\n        uint256 accCakePerShare = pool.accCakePerShare;\n        uint256 lpSupply = pool.lpToken.balanceOf(address(this));\n        if (block.number > pool.lastRewardBlock && lpSupply != 0) {\n            uint256 multiplier = getMultiplier(pool.lastRewardBlock, block.number);\n            uint256 cakeReward = multiplier.mul(cakePerBlock).mul(pool.allocPoint).div(totalAllocPoint);\n            accCakePerShare = accCakePerShare.add(cakeReward.mul(1e12).div(lpSupply));\n        }\n        return user.amount.mul(accCakePerShare).div(1e12).sub(user.rewardDebt);\n    }\n\n    // Update reward variables for all pools. Be careful of gas spending!\n    function massUpdatePools() public {\n        uint256 length = poolInfo.length;\n        for (uint256 pid = 0; pid < length; ++pid) {\n            updatePool(pid);\n        }\n    }\n\n\n    // Update reward variables of the given pool to be up-to-date.\n    function updatePool(uint256 _pid) public validatePool(_pid) {\n        PoolInfo storage pool = poolInfo[_pid];\n        if (block.number <= pool.lastRewardBlock) {\n            return;\n        }\n        uint256 lpSupply = pool.lpToken.balanceOf(address(this));\n        if (lpSupply == 0) {\n            pool.lastRewardBlock = block.number;\n            return;\n        }\n        uint256 multiplier = getMultiplier(pool.lastRewardBlock, block.number);\n        uint256 cakeReward = multiplier.mul(cakePerBlock).mul(pool.allocPoint).div(totalAllocPoint);\n        cake.mint(devaddr, cakeReward.div(10));\n        cake.mint(address(syrup), cakeReward);\n        pool.accCakePerShare = pool.accCakePerShare.add(cakeReward.mul(1e12).div(lpSupply));\n        pool.lastRewardBlock = block.number;\n    }\n\n    // Deposit LP tokens to MasterApe for BANANA allocation.\n    function deposit(uint256 _pid, uint256 _amount) public validatePool(_pid) {\n\n        require (_pid != 0, 'deposit BANANA by staking');\n\n        PoolInfo storage pool = poolInfo[_pid];\n        UserInfo storage user = userInfo[_pid][msg.sender];\n        updatePool(_pid);\n        if (user.amount > 0) {\n            uint256 pending = user.amount.mul(pool.accCakePerShare).div(1e12).sub(user.rewardDebt);\n            if(pending > 0) {\n                safeCakeTransfer(msg.sender, pending);\n            }\n        }\n        if (_amount > 0) {\n            pool.lpToken.safeTransferFrom(address(msg.sender), address(this), _amount);\n            user.amount = user.amount.add(_amount);\n        }\n        user.rewardDebt = user.amount.mul(pool.accCakePerShare).div(1e12);\n        emit Deposit(msg.sender, _pid, _amount);\n    }\n\n    // Withdraw LP tokens from MasterApe.\n    function withdraw(uint256 _pid, uint256 _amount) public validatePool(_pid) {\n        require (_pid != 0, 'withdraw BANANA by unstaking');\n        PoolInfo storage pool = poolInfo[_pid];\n        UserInfo storage user = userInfo[_pid][msg.sender];\n        require(user.amount >= _amount, \"withdraw: not good\");\n\n        updatePool(_pid);\n        uint256 pending = user.amount.mul(pool.accCakePerShare).div(1e12).sub(user.rewardDebt);\n        if(pending > 0) {\n            safeCakeTransfer(msg.sender, pending);\n        }\n        if(_amount > 0) {\n            user.amount = user.amount.sub(_amount);\n            pool.lpToken.safeTransfer(address(msg.sender), _amount);\n        }\n        user.rewardDebt = user.amount.mul(pool.accCakePerShare).div(1e12);\n        emit Withdraw(msg.sender, _pid, _amount);\n    }\n\n    // Stake BANANA tokens to MasterApe\n    function enterStaking(uint256 _amount) public {\n        PoolInfo storage pool = poolInfo[0];\n        UserInfo storage user = userInfo[0][msg.sender];\n        updatePool(0);\n        if (user.amount > 0) {\n            uint256 pending = user.amount.mul(pool.accCakePerShare).div(1e12).sub(user.rewardDebt);\n            if(pending > 0) {\n                safeCakeTransfer(msg.sender, pending);\n            }\n        }\n        if(_amount > 0) {\n            pool.lpToken.safeTransferFrom(address(msg.sender), address(this), _amount);\n            user.amount = user.amount.add(_amount);\n        }\n        user.rewardDebt = user.amount.mul(pool.accCakePerShare).div(1e12);\n\n        syrup.mint(msg.sender, _amount);\n        emit Deposit(msg.sender, 0, _amount);\n    }\n\n    // Withdraw BANANA tokens from STAKING.\n    function leaveStaking(uint256 _amount) public {\n        PoolInfo storage pool = poolInfo[0];\n        UserInfo storage user = userInfo[0][msg.sender];\n        require(user.amount >= _amount, \"withdraw: not good\");\n        updatePool(0);\n        uint256 pending = user.amount.mul(pool.accCakePerShare).div(1e12).sub(user.rewardDebt);\n        if(pending > 0) {\n            safeCakeTransfer(msg.sender, pending);\n        }\n        if(_amount > 0) {\n            user.amount = user.amount.sub(_amount);\n            pool.lpToken.safeTransfer(address(msg.sender), _amount);\n        }\n        user.rewardDebt = user.amount.mul(pool.accCakePerShare).div(1e12);\n\n        syrup.burn(msg.sender, _amount);\n        emit Withdraw(msg.sender, 0, _amount);\n    }\n\n    // Withdraw without caring about rewards. EMERGENCY ONLY.\n    function emergencyWithdraw(uint256 _pid) public {\n        PoolInfo storage pool = poolInfo[_pid];\n        UserInfo storage user = userInfo[_pid][msg.sender];\n        pool.lpToken.safeTransfer(address(msg.sender), user.amount);\n        emit EmergencyWithdraw(msg.sender, _pid, user.amount);\n        user.amount = 0;\n        user.rewardDebt = 0;\n    }\n\n    function getPoolInfo(uint256 _pid) public view\n    returns(address lpToken, uint256 allocPoint, uint256 lastRewardBlock, uint256 accCakePerShare) {\n        return (address(poolInfo[_pid].lpToken),\n            poolInfo[_pid].allocPoint,\n            poolInfo[_pid].lastRewardBlock,\n            poolInfo[_pid].accCakePerShare);\n    }\n\n    // Safe cake transfer function, just in case if rounding error causes pool to not have enough BANANAs.\n    function safeCakeTransfer(address _to, uint256 _amount) internal {\n        syrup.safeCakeTransfer(_to, _amount);\n    }\n\n    // Update dev address by the previous dev.\n    function dev(address _devaddr) public {\n        require(msg.sender == devaddr, \"dev: wut?\");\n        devaddr = _devaddr;\n    }\n}\n",
+  "compiler": {
+    "name": "solc",
+    "version": "0.6.12+commit.27d51765.Emscripten.clang"
+  },
+  "schemaVersion": "3.3.3",
+  "updatedAt": "2021-09-13T21:53:39.136Z",
+  "networkType": "ethereum",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "owner()": {
+        "details": "Returns the address of the current owner."
+      },
+      "renounceOwnership()": {
+        "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
+      },
+      "transferOwnership(address)": {
+        "details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

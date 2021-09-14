@@ -1,0 +1,859 @@
+{
+  "contractName": "BananaSplitBar",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "contract BananaToken",
+          "name": "_cake",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "spender",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "value",
+          "type": "uint256"
+        }
+      ],
+      "name": "Approval",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "delegator",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "fromDelegate",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "toDelegate",
+          "type": "address"
+        }
+      ],
+      "name": "DelegateChanged",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "delegate",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "previousBalance",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "newBalance",
+          "type": "uint256"
+        }
+      ],
+      "name": "DelegateVotesChanged",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "value",
+          "type": "uint256"
+        }
+      ],
+      "name": "Transfer",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "DELEGATION_TYPEHASH",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "DOMAIN_TYPEHASH",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "spender",
+          "type": "address"
+        }
+      ],
+      "name": "allowance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "spender",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "approve",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "balanceOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "cake",
+      "outputs": [
+        {
+          "internalType": "contract BananaToken",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "uint32",
+          "name": "",
+          "type": "uint32"
+        }
+      ],
+      "name": "checkpoints",
+      "outputs": [
+        {
+          "internalType": "uint32",
+          "name": "fromBlock",
+          "type": "uint32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "votes",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "decimals",
+      "outputs": [
+        {
+          "internalType": "uint8",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "spender",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "subtractedValue",
+          "type": "uint256"
+        }
+      ],
+      "name": "decreaseAllowance",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getOwner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "spender",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "addedValue",
+          "type": "uint256"
+        }
+      ],
+      "name": "increaseAllowance",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "name",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "nonces",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "numCheckpoints",
+      "outputs": [
+        {
+          "internalType": "uint32",
+          "name": "",
+          "type": "uint32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "symbol",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "totalSupply",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "transfer",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "transferFrom",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "mint",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "mint",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_from",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "burn",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "safeCakeTransfer",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "delegator",
+          "type": "address"
+        }
+      ],
+      "name": "delegates",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "delegatee",
+          "type": "address"
+        }
+      ],
+      "name": "delegate",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "delegatee",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "nonce",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "expiry",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint8",
+          "name": "v",
+          "type": "uint8"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "r",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "s",
+          "type": "bytes32"
+        }
+      ],
+      "name": "delegateBySig",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "getCurrentVotes",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "blockNumber",
+          "type": "uint256"
+        }
+      ],
+      "name": "getPriorVotes",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    }
+  ],
+  "bytecode": "0x60806040523480156200001157600080fd5b50604051620021dd380380620021dd833981810160405260208110156200003757600080fd5b5051604080518082018252601481527f42616e616e6153706c697442617220546f6b656e0000000000000000000000006020828101919091528251808401909352600b83526a10905390539054d413125560aa1b908301529060006200009c6200014b565b600080546001600160a01b0319166001600160a01b0383169081178255604051929350917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908290a3508151620000fb9060049060208501906200014f565b508051620001119060059060208401906200014f565b5050600680546001600160a01b0390931661010002610100600160a81b031960ff19909416601217939093169290921790915550620001eb565b3390565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f106200019257805160ff1916838001178555620001c2565b82800160010185558215620001c2579182015b82811115620001c2578251825591602001919060010190620001a5565b50620001d0929150620001d4565b5090565b5b80821115620001d05760008155600101620001d5565b611fe280620001fb6000396000f3fe608060405234801561001057600080fd5b50600436106101da5760003560e01c8063893d20e811610104578063a9059cbb116100a2578063dd62ed3e11610071578063dd62ed3e146105ed578063e7a324dc1461061b578063f1127ed814610623578063f2fde38b14610675576101da565b8063a9059cbb1461054c578063b4b5ea5714610578578063c3cda5201461059e578063dce17484146105e5576101da565b80639dc29fac116100de5780639dc29fac146104ab578063a0712d68146104d7578063a2e6ddcc146104f4578063a457c2d714610520576101da565b8063893d20e8146104935780638da5cb5b1461049b57806395d89b41146104a3576101da565b806340c10f191161017c57806370a082311161014b57806370a0823114610413578063715018a614610439578063782d6fe1146104415780637ecebe001461046d576101da565b806340c10f191461033e578063587cde1e1461036c5780635c19a95c146103ae5780636fcfff45146103d4576101da565b806320606b70116101b857806320606b70146102b657806323b872dd146102be578063313ce567146102f45780633950935114610312576101da565b806306fdde03146101df578063095ea7b31461025c57806318160ddd1461029c575b600080fd5b6101e761069b565b6040805160208082528351818301528351919283929083019185019080838360005b83811015610221578181015183820152602001610209565b50505050905090810190601f16801561024e5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b6102886004803603604081101561027257600080fd5b506001600160a01b038135169060200135610731565b604080519115158252519081900360200190f35b6102a461074f565b60408051918252519081900360200190f35b6102a4610755565b610288600480360360608110156102d457600080fd5b506001600160a01b03813581169160208101359091169060400135610779565b6102fc610800565b6040805160ff9092168252519081900360200190f35b6102886004803603604081101561032857600080fd5b506001600160a01b038135169060200135610809565b61036a6004803603604081101561035457600080fd5b506001600160a01b038135169060200135610857565b005b6103926004803603602081101561038257600080fd5b50356001600160a01b03166108e2565b604080516001600160a01b039092168252519081900360200190f35b61036a600480360360208110156103c457600080fd5b50356001600160a01b0316610900565b6103fa600480360360208110156103ea57600080fd5b50356001600160a01b031661090d565b6040805163ffffffff9092168252519081900360200190f35b6102a46004803603602081101561042957600080fd5b50356001600160a01b0316610925565b61036a610940565b6102a46004803603604081101561045757600080fd5b506001600160a01b0381351690602001356109e2565b6102a46004803603602081101561048357600080fd5b50356001600160a01b0316610bea565b610392610bfc565b610392610c0b565b6101e7610c1a565b61036a600480360360408110156104c157600080fd5b506001600160a01b038135169060200135610c7b565b610288600480360360208110156104ed57600080fd5b5035610d03565b61036a6004803603604081101561050a57600080fd5b506001600160a01b038135169060200135610d76565b6102886004803603604081101561053657600080fd5b506001600160a01b038135169060200135610f70565b6102886004803603604081101561056257600080fd5b506001600160a01b038135169060200135610fd8565b6102a46004803603602081101561058e57600080fd5b50356001600160a01b0316610fec565b61036a600480360360c08110156105b457600080fd5b506001600160a01b038135169060208101359060408101359060ff6060820135169060808101359060a00135611050565b6103926112c3565b6102a46004803603604081101561060357600080fd5b506001600160a01b03813581169160200135166112d7565b6102a4611302565b6106556004803603604081101561063957600080fd5b5080356001600160a01b0316906020013563ffffffff16611326565b6040805163ffffffff909316835260208301919091528051918290030190f35b61036a6004803603602081101561068b57600080fd5b50356001600160a01b0316611353565b60048054604080516020601f60026000196101006001881615020190951694909404938401819004810282018101909252828152606093909290918301828280156107275780601f106106fc57610100808354040283529160200191610727565b820191906000526020600020905b81548152906001019060200180831161070a57829003601f168201915b5050505050905090565b600061074561073e6113b4565b84846113b8565b5060015b92915050565b60035490565b7f8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a86681565b60006107868484846114a4565b6107f6846107926113b4565b6107f185604051806060016040528060288152602001611dbf602891396001600160a01b038a166000908152600260205260408120906107d06113b4565b6001600160a01b0316815260208101919091526040016000205491906115f6565b6113b8565b5060019392505050565b60065460ff1690565b60006107456108166113b4565b846107f185600260006108276113b4565b6001600160a01b03908116825260208083019390935260409182016000908120918c16815292529020549061168d565b61085f6113b4565b6000546001600160a01b039081169116146108af576040805162461bcd60e51b81526020600482018190526024820152600080516020611e41833981519152604482015290519081900360640190fd5b6108b982826116e7565b6001600160a01b038083166000908152600760205260408120546108de9216836117cd565b5050565b6001600160a01b039081166000908152600760205260409020541690565b61090a338261190a565b50565b60096020526000908152604090205463ffffffff1681565b6001600160a01b031660009081526001602052604090205490565b6109486113b4565b6000546001600160a01b03908116911614610998576040805162461bcd60e51b81526020600482018190526024820152600080516020611e41833981519152604482015290519081900360640190fd5b600080546040516001600160a01b03909116907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908390a3600080546001600160a01b0319169055565b6000438210610a225760405162461bcd60e51b8152600401808060200182810382526029815260200180611eaf6029913960400191505060405180910390fd5b6001600160a01b03831660009081526009602052604090205463ffffffff1680610a50576000915050610749565b6001600160a01b038416600090815260086020908152604080832063ffffffff600019860181168552925290912054168310610abf576001600160a01b03841660009081526008602090815260408083206000199490940163ffffffff16835292905220600101549050610749565b6001600160a01b038416600090815260086020908152604080832083805290915290205463ffffffff16831015610afa576000915050610749565b600060001982015b8163ffffffff168163ffffffff161115610bb357600282820363ffffffff16048103610b2c611d38565b506001600160a01b038716600090815260086020908152604080832063ffffffff808616855290835292819020815180830190925280549093168082526001909301549181019190915290871415610b8e576020015194506107499350505050565b805163ffffffff16871115610ba557819350610bac565b6001820392505b5050610b02565b506001600160a01b038516600090815260086020908152604080832063ffffffff9094168352929052206001015491505092915050565b600a6020526000908152604090205481565b6000610c06610c0b565b905090565b6000546001600160a01b031690565b60058054604080516020601f60026000196101006001881615020190951694909404938401819004810282018101909252828152606093909290918301828280156107275780601f106106fc57610100808354040283529160200191610727565b610c836113b4565b6000546001600160a01b03908116911614610cd3576040805162461bcd60e51b81526020600482018190526024820152600080516020611e41833981519152604482015290519081900360640190fd5b610cdd828261199f565b6001600160a01b038083166000908152600760205260408120546108de921690836117cd565b6000610d0d6113b4565b6000546001600160a01b03908116911614610d5d576040805162461bcd60e51b81526020600482018190526024820152600080516020611e41833981519152604482015290519081900360640190fd5b610d6e610d686113b4565b836116e7565b506001919050565b610d7e6113b4565b6000546001600160a01b03908116911614610dce576040805162461bcd60e51b81526020600482018190526024820152600080516020611e41833981519152604482015290519081900360640190fd5b600654604080516370a0823160e01b8152306004820152905160009261010090046001600160a01b0316916370a08231916024808301926020929190829003018186803b158015610e1e57600080fd5b505afa158015610e32573d6000803e3d6000fd5b505050506040513d6020811015610e4857600080fd5b5051905080821115610ee2576006546040805163a9059cbb60e01b81526001600160a01b0386811660048301526024820185905291516101009093049091169163a9059cbb916044808201926020929091908290030181600087803b158015610eb057600080fd5b505af1158015610ec4573d6000803e3d6000fd5b505050506040513d6020811015610eda57600080fd5b50610f6b9050565b6006546040805163a9059cbb60e01b81526001600160a01b0386811660048301526024820186905291516101009093049091169163a9059cbb916044808201926020929091908290030181600087803b158015610f3e57600080fd5b505af1158015610f52573d6000803e3d6000fd5b505050506040513d6020811015610f6857600080fd5b50505b505050565b6000610745610f7d6113b4565b846107f185604051806060016040528060258152602001611efb6025913960026000610fa76113b4565b6001600160a01b03908116825260208083019390935260409182016000908120918d168152925290205491906115f6565b6000610745610fe56113b4565b84846114a4565b6001600160a01b03811660009081526009602052604081205463ffffffff1680611017576000611049565b6001600160a01b038316600090815260086020908152604080832063ffffffff60001986011684529091529020600101545b9392505050565b60007f8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a86661107b61069b565b8051906020012061108a611a8f565b60408051602080820195909552808201939093526060830191909152306080808401919091528151808403909101815260a0830182528051908401207fe48329057bfd03d55e49b547132e39cffd9c1820ad7b9d4c5307691425d15adf60c08401526001600160a01b038b1660e084015261010083018a90526101208084018a9052825180850390910181526101408401835280519085012061190160f01b6101608501526101628401829052610182808501829052835180860390910181526101a285018085528151918701919091206000918290526101c2860180865281905260ff8b166101e287015261020286018a90526102228601899052935192965090949293909260019261024280840193601f198301929081900390910190855afa1580156111bd573d6000803e3d6000fd5b5050604051601f1901519150506001600160a01b03811661120f5760405162461bcd60e51b8152600401808060200182810382526028815260200180611e616028913960400191505060405180910390fd5b6001600160a01b0381166000908152600a60205260409020805460018101909155891461126d5760405162461bcd60e51b8152600401808060200182810382526024815260200180611e1d6024913960400191505060405180910390fd5b874211156112ac5760405162461bcd60e51b8152600401808060200182810382526028815260200180611f636028913960400191505060405180910390fd5b6112b6818b61190a565b505050505b505050505050565b60065461010090046001600160a01b031681565b6001600160a01b03918216600090815260026020908152604080832093909416825291909152205490565b7fe48329057bfd03d55e49b547132e39cffd9c1820ad7b9d4c5307691425d15adf81565b60086020908152600092835260408084209091529082529020805460019091015463ffffffff9091169082565b61135b6113b4565b6000546001600160a01b039081169116146113ab576040805162461bcd60e51b81526020600482018190526024820152600080516020611e41833981519152604482015290519081900360640190fd5b61090a81611a93565b3390565b6001600160a01b0383166113fd5760405162461bcd60e51b8152600401808060200182810382526024815260200180611d756024913960400191505060405180910390fd5b6001600160a01b0382166114425760405162461bcd60e51b8152600401808060200182810382526022815260200180611f8b6022913960400191505060405180910390fd5b6001600160a01b03808416600081815260026020908152604080832094871680845294825291829020859055815185815291517f8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b9259281900390910190a3505050565b6001600160a01b0383166114e95760405162461bcd60e51b8152600401808060200182810382526025815260200180611d506025913960400191505060405180910390fd5b6001600160a01b03821661152e5760405162461bcd60e51b8152600401808060200182810382526023815260200180611ed86023913960400191505060405180910390fd5b61156b81604051806060016040528060268152602001611e89602691396001600160a01b03861660009081526001602052604090205491906115f6565b6001600160a01b03808516600090815260016020526040808220939093559084168152205461159a908261168d565b6001600160a01b0380841660008181526001602090815260409182902094909455805185815290519193928716927fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef92918290030190a3505050565b600081848411156116855760405162461bcd60e51b81526004018080602001828103825283818151815260200191508051906020019080838360005b8381101561164a578181015183820152602001611632565b50505050905090810190601f1680156116775780820380516001836020036101000a031916815260200191505b509250505060405180910390fd5b505050900390565b600082820183811015611049576040805162461bcd60e51b815260206004820152601b60248201527f536166654d6174683a206164646974696f6e206f766572666c6f770000000000604482015290519081900360640190fd5b6001600160a01b038216611742576040805162461bcd60e51b815260206004820152601f60248201527f42455032303a206d696e7420746f20746865207a65726f206164647265737300604482015290519081900360640190fd5b60035461174f908261168d565b6003556001600160a01b038216600090815260016020526040902054611775908261168d565b6001600160a01b03831660008181526001602090815260408083209490945583518581529351929391927fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef9281900390910190a35050565b816001600160a01b0316836001600160a01b0316141580156117ef5750600081115b15610f6b576001600160a01b03831615611881576001600160a01b03831660009081526009602052604081205463ffffffff16908161182f576000611861565b6001600160a01b038516600090815260086020908152604080832063ffffffff60001987011684529091529020600101545b9050600061186f8285611b33565b905061187d86848484611b75565b5050505b6001600160a01b03821615610f6b576001600160a01b03821660009081526009602052604081205463ffffffff1690816118bc5760006118ee565b6001600160a01b038416600090815260086020908152604080832063ffffffff60001987011684529091529020600101545b905060006118fc828561168d565b90506112bb85848484611b75565b6001600160a01b038083166000908152600760205260408120549091169061193184610925565b6001600160a01b0385811660008181526007602052604080822080546001600160a01b031916898616908117909155905194955093928616927f3134e8a2e6d97e929a7e54011ea5485d7d196dd5f0ba4d4ef95803e8e3fc257f9190a46119998284836117cd565b50505050565b6001600160a01b0382166119e45760405162461bcd60e51b8152600401808060200182810382526021815260200180611f206021913960400191505060405180910390fd5b611a2181604051806060016040528060228152602001611f41602291396001600160a01b03851660009081526001602052604090205491906115f6565b6001600160a01b038316600090815260016020526040902055600354611a479082611b33565b6003556040805182815290516000916001600160a01b038516917fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef9181900360200190a35050565b4690565b6001600160a01b038116611ad85760405162461bcd60e51b8152600401808060200182810382526026815260200180611d996026913960400191505060405180910390fd5b600080546040516001600160a01b03808516939216917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e091a3600080546001600160a01b0319166001600160a01b0392909216919091179055565b600061104983836040518060400160405280601e81526020017f536166654d6174683a207375627472616374696f6e206f766572666c6f7700008152506115f6565b6000611b9943604051806060016040528060368152602001611de760369139611cda565b905060008463ffffffff16118015611be257506001600160a01b038516600090815260086020908152604080832063ffffffff6000198901811685529252909120548282169116145b15611c1f576001600160a01b038516600090815260086020908152604080832063ffffffff60001989011684529091529020600101829055611c90565b60408051808201825263ffffffff808416825260208083018681526001600160a01b038a166000818152600884528681208b8616825284528681209551865490861663ffffffff19918216178755925160019687015590815260099092529390208054928801909116919092161790555b604080518481526020810184905281516001600160a01b038816927fdec2bacdd2f05b59de34da9b523dff8be42e5e38e818c82fdb0bae774387a724928290030190a25050505050565b6000816401000000008410611d305760405162461bcd60e51b815260206004820181815283516024840152835190928392604490910191908501908083836000831561164a578181015183820152602001611632565b509192915050565b60408051808201909152600080825260208201529056fe42455032303a207472616e736665722066726f6d20746865207a65726f206164647265737342455032303a20617070726f76652066726f6d20746865207a65726f20616464726573734f776e61626c653a206e6577206f776e657220697320746865207a65726f206164647265737342455032303a207472616e7366657220616d6f756e74206578636565647320616c6c6f77616e636542414e414e413a3a5f7772697465436865636b706f696e743a20626c6f636b206e756d6265722065786365656473203332206269747342414e414e413a3a64656c656761746542795369673a20696e76616c6964206e6f6e63654f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e657242414e414e413a3a64656c656761746542795369673a20696e76616c6964207369676e617475726542455032303a207472616e7366657220616d6f756e7420657863656564732062616c616e636542414e414e413a3a6765745072696f72566f7465733a206e6f74207965742064657465726d696e656442455032303a207472616e7366657220746f20746865207a65726f206164647265737342455032303a2064656372656173656420616c6c6f77616e63652062656c6f77207a65726f42455032303a206275726e2066726f6d20746865207a65726f206164647265737342455032303a206275726e20616d6f756e7420657863656564732062616c616e636542414e414e413a3a64656c656761746542795369673a207369676e6174757265206578706972656442455032303a20617070726f766520746f20746865207a65726f2061646472657373a26469706673582212202517894a2eafb0776c391b3aea796f3205ce5e24058b71cd890e8d847c6b365b64736f6c634300060c0033",
+  "immutableReferences": {},
+  "source": "pragma solidity 0.6.12;\n\n/*\n * ApeSwapFinance \n * App:             https://apeswap.finance\n * Medium:          https://medium.com/@ape_swap    \n * Twitter:         https://twitter.com/ape_swap \n * Telegram:        https://t.me/ape_swap\n * Announcements:   https://t.me/ape_swap_news\n * GitHub:          https://github.com/ApeSwapFinance\n */\n\nimport \"@pancakeswap/pancake-swap-lib/contracts/token/BEP20/BEP20.sol\";\n\nimport \"./BananaToken.sol\";\n\n// BananaSplitBar with Governance.\ncontract BananaSplitBar is BEP20('BananaSplitBar Token', 'BANANASPLIT') {\n    /// @notice Creates `_amount` token to `_to`. Must only be called by the owner (MasterApe).\n    function mint(address _to, uint256 _amount) public onlyOwner {\n        _mint(_to, _amount);\n        _moveDelegates(address(0), _delegates[_to], _amount);\n    }\n\n    function burn(address _from ,uint256 _amount) public onlyOwner {\n        _burn(_from, _amount);\n        _moveDelegates(_delegates[_from], address(0), _amount);\n    }\n\n    // The BANANA TOKEN!\n    BananaToken public cake;\n\n\n    constructor(\n        BananaToken _cake\n    ) public {\n        cake = _cake;\n    }\n\n    // Safe cake transfer function, just in case if rounding error causes pool to not have enough BANANAs.\n    function safeCakeTransfer(address _to, uint256 _amount) public onlyOwner {\n        uint256 cakeBal = cake.balanceOf(address(this));\n        if (_amount > cakeBal) {\n            cake.transfer(_to, cakeBal);\n        } else {\n            cake.transfer(_to, _amount);\n        }\n    }\n\n    // Copied and modified from YAM code:\n    // https://github.com/yam-finance/yam-protocol/blob/master/contracts/token/YAMGovernanceStorage.sol\n    // https://github.com/yam-finance/yam-protocol/blob/master/contracts/token/YAMGovernance.sol\n    // Which is copied and modified from COMPOUND:\n    // https://github.com/compound-finance/compound-protocol/blob/master/contracts/Governance/Comp.sol\n\n    /// @notice A record of each accounts delegate\n    mapping (address => address) internal _delegates;\n\n    /// @notice A checkpoint for marking number of votes from a given block\n    struct Checkpoint {\n        uint32 fromBlock;\n        uint256 votes;\n    }\n\n    /// @notice A record of votes checkpoints for each account, by index\n    mapping (address => mapping (uint32 => Checkpoint)) public checkpoints;\n\n    /// @notice The number of checkpoints for each account\n    mapping (address => uint32) public numCheckpoints;\n\n    /// @notice The EIP-712 typehash for the contract's domain\n    bytes32 public constant DOMAIN_TYPEHASH = keccak256(\"EIP712Domain(string name,uint256 chainId,address verifyingContract)\");\n\n    /// @notice The EIP-712 typehash for the delegation struct used by the contract\n    bytes32 public constant DELEGATION_TYPEHASH = keccak256(\"Delegation(address delegatee,uint256 nonce,uint256 expiry)\");\n\n    /// @notice A record of states for signing / validating signatures\n    mapping (address => uint) public nonces;\n\n      /// @notice An event thats emitted when an account changes its delegate\n    event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate);\n\n    /// @notice An event thats emitted when a delegate account's vote balance changes\n    event DelegateVotesChanged(address indexed delegate, uint previousBalance, uint newBalance);\n\n    /**\n     * @notice Delegate votes from `msg.sender` to `delegatee`\n     * @param delegator The address to get delegatee for\n     */\n    function delegates(address delegator)\n        external\n        view\n        returns (address)\n    {\n        return _delegates[delegator];\n    }\n\n   /**\n    * @notice Delegate votes from `msg.sender` to `delegatee`\n    * @param delegatee The address to delegate votes to\n    */\n    function delegate(address delegatee) external {\n        return _delegate(msg.sender, delegatee);\n    }\n\n    /**\n     * @notice Delegates votes from signatory to `delegatee`\n     * @param delegatee The address to delegate votes to\n     * @param nonce The contract state required to match the signature\n     * @param expiry The time at which to expire the signature\n     * @param v The recovery byte of the signature\n     * @param r Half of the ECDSA signature pair\n     * @param s Half of the ECDSA signature pair\n     */\n    function delegateBySig(\n        address delegatee,\n        uint nonce,\n        uint expiry,\n        uint8 v,\n        bytes32 r,\n        bytes32 s\n    )\n        external\n    {\n        bytes32 domainSeparator = keccak256(\n            abi.encode(\n                DOMAIN_TYPEHASH,\n                keccak256(bytes(name())),\n                getChainId(),\n                address(this)\n            )\n        );\n\n        bytes32 structHash = keccak256(\n            abi.encode(\n                DELEGATION_TYPEHASH,\n                delegatee,\n                nonce,\n                expiry\n            )\n        );\n\n        bytes32 digest = keccak256(\n            abi.encodePacked(\n                \"\\x19\\x01\",\n                domainSeparator,\n                structHash\n            )\n        );\n\n        address signatory = ecrecover(digest, v, r, s);\n        require(signatory != address(0), \"BANANA::delegateBySig: invalid signature\");\n        require(nonce == nonces[signatory]++, \"BANANA::delegateBySig: invalid nonce\");\n        require(now <= expiry, \"BANANA::delegateBySig: signature expired\");\n        return _delegate(signatory, delegatee);\n    }\n\n    /**\n     * @notice Gets the current votes balance for `account`\n     * @param account The address to get votes balance\n     * @return The number of current votes for `account`\n     */\n    function getCurrentVotes(address account)\n        external\n        view\n        returns (uint256)\n    {\n        uint32 nCheckpoints = numCheckpoints[account];\n        return nCheckpoints > 0 ? checkpoints[account][nCheckpoints - 1].votes : 0;\n    }\n\n    /**\n     * @notice Determine the prior number of votes for an account as of a block number\n     * @dev Block number must be a finalized block or else this function will revert to prevent misinformation.\n     * @param account The address of the account to check\n     * @param blockNumber The block number to get the vote balance at\n     * @return The number of votes the account had as of the given block\n     */\n    function getPriorVotes(address account, uint blockNumber)\n        external\n        view\n        returns (uint256)\n    {\n        require(blockNumber < block.number, \"BANANA::getPriorVotes: not yet determined\");\n\n        uint32 nCheckpoints = numCheckpoints[account];\n        if (nCheckpoints == 0) {\n            return 0;\n        }\n\n        // First check most recent balance\n        if (checkpoints[account][nCheckpoints - 1].fromBlock <= blockNumber) {\n            return checkpoints[account][nCheckpoints - 1].votes;\n        }\n\n        // Next check implicit zero balance\n        if (checkpoints[account][0].fromBlock > blockNumber) {\n            return 0;\n        }\n\n        uint32 lower = 0;\n        uint32 upper = nCheckpoints - 1;\n        while (upper > lower) {\n            uint32 center = upper - (upper - lower) / 2; // ceil, avoiding overflow\n            Checkpoint memory cp = checkpoints[account][center];\n            if (cp.fromBlock == blockNumber) {\n                return cp.votes;\n            } else if (cp.fromBlock < blockNumber) {\n                lower = center;\n            } else {\n                upper = center - 1;\n            }\n        }\n        return checkpoints[account][lower].votes;\n    }\n\n    function _delegate(address delegator, address delegatee)\n        internal\n    {\n        address currentDelegate = _delegates[delegator];\n        uint256 delegatorBalance = balanceOf(delegator); // balance of underlying BANANAs (not scaled);\n        _delegates[delegator] = delegatee;\n\n        emit DelegateChanged(delegator, currentDelegate, delegatee);\n\n        _moveDelegates(currentDelegate, delegatee, delegatorBalance);\n    }\n\n    function _moveDelegates(address srcRep, address dstRep, uint256 amount) internal {\n        if (srcRep != dstRep && amount > 0) {\n            if (srcRep != address(0)) {\n                // decrease old representative\n                uint32 srcRepNum = numCheckpoints[srcRep];\n                uint256 srcRepOld = srcRepNum > 0 ? checkpoints[srcRep][srcRepNum - 1].votes : 0;\n                uint256 srcRepNew = srcRepOld.sub(amount);\n                _writeCheckpoint(srcRep, srcRepNum, srcRepOld, srcRepNew);\n            }\n\n            if (dstRep != address(0)) {\n                // increase new representative\n                uint32 dstRepNum = numCheckpoints[dstRep];\n                uint256 dstRepOld = dstRepNum > 0 ? checkpoints[dstRep][dstRepNum - 1].votes : 0;\n                uint256 dstRepNew = dstRepOld.add(amount);\n                _writeCheckpoint(dstRep, dstRepNum, dstRepOld, dstRepNew);\n            }\n        }\n    }\n\n    function _writeCheckpoint(\n        address delegatee,\n        uint32 nCheckpoints,\n        uint256 oldVotes,\n        uint256 newVotes\n    )\n        internal\n    {\n        uint32 blockNumber = safe32(block.number, \"BANANA::_writeCheckpoint: block number exceeds 32 bits\");\n\n        if (nCheckpoints > 0 && checkpoints[delegatee][nCheckpoints - 1].fromBlock == blockNumber) {\n            checkpoints[delegatee][nCheckpoints - 1].votes = newVotes;\n        } else {\n            checkpoints[delegatee][nCheckpoints] = Checkpoint(blockNumber, newVotes);\n            numCheckpoints[delegatee] = nCheckpoints + 1;\n        }\n\n        emit DelegateVotesChanged(delegatee, oldVotes, newVotes);\n    }\n\n    function safe32(uint n, string memory errorMessage) internal pure returns (uint32) {\n        require(n < 2**32, errorMessage);\n        return uint32(n);\n    }\n\n    function getChainId() internal pure returns (uint) {\n        uint256 chainId;\n        assembly { chainId := chainid() }\n        return chainId;\n    }\n}\n",
+  "compiler": {
+    "name": "solc",
+    "version": "0.6.12+commit.27d51765.Emscripten.clang"
+  },
+  "schemaVersion": "3.3.3",
+  "updatedAt": "2021-09-13T21:53:39.166Z",
+  "networkType": "ethereum",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "allowance(address,address)": {
+        "details": "See {BEP20-allowance}."
+      },
+      "approve(address,uint256)": {
+        "details": "See {BEP20-approve}. Requirements: - `spender` cannot be the zero address."
+      },
+      "balanceOf(address)": {
+        "details": "See {BEP20-balanceOf}."
+      },
+      "decimals()": {
+        "details": "Returns the token decimals."
+      },
+      "decreaseAllowance(address,uint256)": {
+        "details": "Atomically decreases the allowance granted to `spender` by the caller. This is an alternative to {approve} that can be used as a mitigation for problems described in {BEP20-approve}. Emits an {Approval} event indicating the updated allowance. Requirements: - `spender` cannot be the zero address. - `spender` must have allowance for the caller of at least `subtractedValue`."
+      },
+      "delegate(address)": {
+        "params": {
+          "delegatee": "The address to delegate votes to"
+        }
+      },
+      "delegateBySig(address,uint256,uint256,uint8,bytes32,bytes32)": {
+        "params": {
+          "delegatee": "The address to delegate votes to",
+          "expiry": "The time at which to expire the signature",
+          "nonce": "The contract state required to match the signature",
+          "r": "Half of the ECDSA signature pair",
+          "s": "Half of the ECDSA signature pair",
+          "v": "The recovery byte of the signature"
+        }
+      },
+      "delegates(address)": {
+        "params": {
+          "delegator": "The address to get delegatee for"
+        }
+      },
+      "getCurrentVotes(address)": {
+        "params": {
+          "account": "The address to get votes balance"
+        },
+        "returns": {
+          "_0": "The number of current votes for `account`"
+        }
+      },
+      "getOwner()": {
+        "details": "Returns the bep token owner."
+      },
+      "getPriorVotes(address,uint256)": {
+        "details": "Block number must be a finalized block or else this function will revert to prevent misinformation.",
+        "params": {
+          "account": "The address of the account to check",
+          "blockNumber": "The block number to get the vote balance at"
+        },
+        "returns": {
+          "_0": "The number of votes the account had as of the given block"
+        }
+      },
+      "increaseAllowance(address,uint256)": {
+        "details": "Atomically increases the allowance granted to `spender` by the caller. This is an alternative to {approve} that can be used as a mitigation for problems described in {BEP20-approve}. Emits an {Approval} event indicating the updated allowance. Requirements: - `spender` cannot be the zero address."
+      },
+      "mint(uint256)": {
+        "details": "Creates `amount` tokens and assigns them to `msg.sender`, increasing the total supply. Requirements - `msg.sender` must be the token owner"
+      },
+      "name()": {
+        "details": "Returns the token name."
+      },
+      "owner()": {
+        "details": "Returns the address of the current owner."
+      },
+      "renounceOwnership()": {
+        "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
+      },
+      "symbol()": {
+        "details": "Returns the token symbol."
+      },
+      "totalSupply()": {
+        "details": "See {BEP20-totalSupply}."
+      },
+      "transfer(address,uint256)": {
+        "details": "See {BEP20-transfer}. Requirements: - `recipient` cannot be the zero address. - the caller must have a balance of at least `amount`."
+      },
+      "transferFrom(address,address,uint256)": {
+        "details": "See {BEP20-transferFrom}. Emits an {Approval} event indicating the updated allowance. This is not required by the EIP. See the note at the beginning of {BEP20}; Requirements: - `sender` and `recipient` cannot be the zero address. - `sender` must have a balance of at least `amount`. - the caller must have allowance for `sender`'s tokens of at least `amount`."
+      },
+      "transferOwnership(address)": {
+        "details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "events": {
+      "DelegateChanged(address,address,address)": {
+        "notice": "An event thats emitted when an account changes its delegate"
+      },
+      "DelegateVotesChanged(address,uint256,uint256)": {
+        "notice": "An event thats emitted when a delegate account's vote balance changes"
+      }
+    },
+    "kind": "user",
+    "methods": {
+      "DELEGATION_TYPEHASH()": {
+        "notice": "The EIP-712 typehash for the delegation struct used by the contract"
+      },
+      "DOMAIN_TYPEHASH()": {
+        "notice": "The EIP-712 typehash for the contract's domain"
+      },
+      "checkpoints(address,uint32)": {
+        "notice": "A record of votes checkpoints for each account, by index"
+      },
+      "delegate(address)": {
+        "notice": "Delegate votes from `msg.sender` to `delegatee`"
+      },
+      "delegateBySig(address,uint256,uint256,uint8,bytes32,bytes32)": {
+        "notice": "Delegates votes from signatory to `delegatee`"
+      },
+      "delegates(address)": {
+        "notice": "Delegate votes from `msg.sender` to `delegatee`"
+      },
+      "getCurrentVotes(address)": {
+        "notice": "Gets the current votes balance for `account`"
+      },
+      "getPriorVotes(address,uint256)": {
+        "notice": "Determine the prior number of votes for an account as of a block number"
+      },
+      "mint(address,uint256)": {
+        "notice": "Creates `_amount` token to `_to`. Must only be called by the owner (MasterApe)."
+      },
+      "nonces(address)": {
+        "notice": "A record of states for signing / validating signatures"
+      },
+      "numCheckpoints(address)": {
+        "notice": "The number of checkpoints for each account"
+      }
+    },
+    "version": 1
+  }
+}
