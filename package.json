@@ -5,6 +5,7 @@
   "main": "index.js",
   "files": [
     "src",
+    "build-apeswap",
     "index.js",
     "configure.js"
   ],
@@ -43,6 +44,7 @@
   "homepage": "https://github.com/ApeSwapFinance/apeswap-test-helpers#readme",
   "dependencies": {
     "@openzeppelin/contract-loader": "^0.6.2",
+    "@openzeppelin/test-environment": "^0.1.9",
     "@truffle/contract": "^4.0.35",
     "ansi-colors": "^3.2.3",
     "chai": "^4.2.0",
