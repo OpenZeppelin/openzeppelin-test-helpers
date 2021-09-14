@@ -57,7 +57,7 @@ push_and_publish() {
   npm publish --tag "$dist_tag" --otp "$(prompt_otp)" --access=public
 
   if [[ "$dist_tag" == "latest" ]]; then
-    npm dist-tag rm --otp "$(prompt_otp)" @openzeppelin/test-helpers next
+    npm dist-tag rm --otp "$(prompt_otp)" @apeswapfinance/test-helpers next
   fi
 }
 

@@ -1,7 +1,7 @@
 {
-  "name": "@openzeppelin/test-helpers",
-  "version": "0.5.13",
-  "description": "JavaScript testing helpers for Ethereum smart contract development.",
+  "name": "@apeswapfinance/test-helpers",
+  "version": "0.0.1",
+  "description": "JavaScript testing helpers for ApeSwap contract integration.",
   "main": "index.js",
   "files": [
     "src",
@@ -19,7 +19,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OpenZeppelin/openzeppelin-test-helpers.git"
+    "url": "git+https://github.com/ApeSwapFinance/apeswap-test-helpers.git"
+  },
+  "publishConfig": {
+    "@apeswapfinance:test-helpers": "https://npm.pkg.github.com"
   },
   "keywords": [
     "ethereum",
@@ -28,14 +31,16 @@
     "test",
     "solidity",
     "zeppelin",
-    "openzeppelin"
+    "openzeppelin",
+    "ape",
+    "apeswap"
   ],
-  "author": "OpenZeppelin Community <maintainers@openzeppelin.org>",
+  "author": "ApeSwap",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/OpenZeppelin/openzeppelin-test-helpers/issues"
+    "url": "https://github.com/ApeSwapFinance/apeswap-test-helpers/issues"
   },
-  "homepage": "https://github.com/OpenZeppelin/openzeppelin-test-helpers#readme",
+  "homepage": "https://github.com/ApeSwapFinance/apeswap-test-helpers#readme",
   "dependencies": {
     "@openzeppelin/contract-loader": "^0.6.2",
     "@truffle/contract": "^4.0.35",
