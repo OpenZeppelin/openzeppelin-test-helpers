@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.5.14 (unreleased)
+## 0.5.14 (2021-10-04)
 
  * Add missing export of `snapshot` module.
 
