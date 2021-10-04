@@ -11,4 +11,5 @@ module.exports = {
   get expectRevert () { return require('./src/expectRevert'); },
   get singletons () { return require('./src/singletons'); },
   get time () { return require('./src/time'); },
+  get snapshot () { return require('./src/snapshot'); },
 };

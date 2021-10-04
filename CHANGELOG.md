@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.14 (unreleased)
+
+ * Add missing export of `snapshot` module.
+
 ## 0.5.13 (2021-08-12)
  * Changed `send.ether` so it no longer forces `gasPrice: 0`.
 
