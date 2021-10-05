@@ -1,8 +1,8 @@
 const { web3 } = require('./setup');
 const { promisify } = require('util');
 
-const makeSnapshot = async () =>
-  await promisify(web3.currentProvider.send.bind(web3.currentProvider))({
+const makeSnapshot = () =>
+  promisify(web3.currentProvider.send.bind(web3.currentProvider))({
     jsonrpc: '2.0',
     method: 'evm_snapshot',
     id: new Date().getTime(),
