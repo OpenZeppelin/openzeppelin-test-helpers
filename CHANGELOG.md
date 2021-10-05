@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.15 (unreleased)
+
+ * Fix `snapshot.restore` when used multiple times.
+
 ## 0.5.14 (2021-10-04)
 
  * Add missing export of `snapshot` module.

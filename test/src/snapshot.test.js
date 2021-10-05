@@ -28,10 +28,22 @@ describe('snapshot', function () {
   });
 
   contract('reverting transactions', function ([sender, receiver]) {
-    it('returns a snapshot object with restore method restoring previous ether balances', async function () {
+    it('restores previous balances on revert', async function () {
       const snapshotA = await snapshot();
       const tracker = await balance.tracker(receiver);
-      await tracker.get();
+      await send.ether(sender, receiver, ether('1'));
+      expect(await tracker.delta()).to.be.bignumber.equal(ether('1'));
+      await snapshotA.restore();
+      expect(await tracker.delta()).to.be.bignumber.equal(ether('-1'));
+    });
+
+    it('can revert twice', async function () {
+      const snapshotA = await snapshot();
+      const tracker = await balance.tracker(receiver);
+      await send.ether(sender, receiver, ether('1'));
+      expect(await tracker.delta()).to.be.bignumber.equal(ether('1'));
+      await snapshotA.restore();
+      expect(await tracker.delta()).to.be.bignumber.equal(ether('-1'));
       await send.ether(sender, receiver, ether('1'));
       expect(await tracker.delta()).to.be.bignumber.equal(ether('1'));
       await snapshotA.restore();
