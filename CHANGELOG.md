@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.5.15 (unreleased)
+## 0.5.15 (2021-10-05)
 
  * Fix `snapshot.restore` when used multiple times.
 
