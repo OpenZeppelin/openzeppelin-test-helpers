@@ -1,0 +1,10 @@
+{
+  "extends": "code-style/tsconfig.json",
+  "compilerOptions": {
+    "incremental": true,
+    "noUncheckedIndexedAccess": true
+  },
+  "ts-node": {
+    "transpileOnly": true
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "@openzeppelin/test-helpers",
+  "version": "0.6.0",
+  "description": "Test helpers for smart contract development",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "test": "hardhat test && truffle test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OpenZeppelin/openzeppelin-test-helpers.git"
+  },
+  "author": "Francisco Giordano <fg@frang.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/OpenZeppelin/openzeppelin-test-helpers/issues"
+  },
+  "homepage": "https://github.com/OpenZeppelin/openzeppelin-test-helpers#readme",
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.4",
+    "@nomiclabs/hardhat-truffle5": "^2.0.3",
+    "@nomiclabs/hardhat-web3": "^2.0.0",
+    "@types/mocha": "^9.1.0",
+    "code-style": "github:OpenZeppelin/code-style",
+    "ganache": "^7.0.2",
+    "hardhat": "^2.8.2",
+    "truffle": "^5.4.32",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.5"
+  }
+}

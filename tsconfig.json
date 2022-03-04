@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.shared.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "exclude": ["src"],
+  "references": [
+    { "path": "src/tsconfig.json" }
+  ]
+}
