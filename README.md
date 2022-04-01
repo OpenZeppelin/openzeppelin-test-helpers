@@ -20,7 +20,7 @@
 npm install --save-dev @openzeppelin/test-helpers
 ```
 
-#### Hardhat (formerly Buidler)
+#### Hardhat
 
 Install `web3` and the `hardhat-web3` plugin.
 
