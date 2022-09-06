@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.5.16 (unreleased)
+## 0.5.16 (2022-09-06)
  * Fix warning under Hardhat 2.11.
 
 ## 0.5.15 (2021-10-05)
