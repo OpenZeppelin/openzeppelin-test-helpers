@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.5.16 (unreleased)
+ * Fix warning under Hardhat 2.11.
+
 ## 0.5.15 (2021-10-05)
 
  * Fix `snapshot.restore` when used multiple times.

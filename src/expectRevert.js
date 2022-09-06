@@ -33,7 +33,7 @@ async function checkRevertReasonSupport (provider) {
 
     const nodeInfo = await web3.eth.getNodeInfo();
     const ganacheVersion = /TestRPC\/v([\w.-]+)\/ethereum-js/.exec(nodeInfo);
-    const hardhatVersion = /HardhatNetwork\/([\w.-]+)\/(ethereumjs-vm|@ethereumjs\/vm)/.exec(nodeInfo);
+    const hardhatVersion = /HardhatNetwork\/([\w.-]+)\/((@nomicfoundation\/)?ethereumjs-vm|@ethereumjs\/vm)/.exec(nodeInfo);
 
     const warn = function (msg) {
       console.log(`\
