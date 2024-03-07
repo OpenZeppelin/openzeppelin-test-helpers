@@ -509,14 +509,14 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
 
       context('with directly called contract', function () {
         it('accepts emitted events with correct indexed parameter and emitter object', async function () {
-          expectEvent.inTransaction(this.txHash, this.emitter, 'IndexedUint', {
+          await expectEvent.inTransaction(this.txHash, this.emitter, 'IndexedUint', {
             indexedValue: this.indexedValue,
             normalValue: this.normalValue,
           });
         });
 
         it('accepts emitted indexed events with correct indexed parameter and emitter class', async function () {
-          expectEvent.inTransaction(this.txHash, EventEmitter, 'IndexedUint', {
+          await expectEvent.inTransaction(this.txHash, EventEmitter, 'IndexedUint', {
             indexedValue: this.indexedValue,
             normalValue: this.normalValue,
           });
@@ -525,13 +525,13 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
 
       context('with indirectly called contract', function () {
         it('accepts events emitted from other contracts', async function () {
-          expectEvent.inTransaction(this.txHash, this.secondEmitter, 'IndexedUint', {
+          await expectEvent.inTransaction(this.txHash, this.secondEmitter, 'IndexedUint', {
             indexedValue: this.indexedValue2,
             normalValue: this.normalValue2,
           });
         });
         it('accepts emitted indexed events with correct indexed parameter and emitter class', async function () {
-          expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'IndexedUint', {
+          await expectEvent.inTransaction(this.txHash, IndirectEventEmitter, 'IndexedUint', {
             indexedValue: this.indexedValue2,
             normalValue: this.normalValue2,
           });
@@ -632,8 +632,8 @@ contract('expectEvent (web3 contracts) ', function ([deployer]) {
 
     describe('with non-unique event names', function () {
       it('throws', async function () {
-        const { transactionHash } = await this.emitter.methods.emitRepeated('0x').send();
-        await assertFailure(expectEvent.inTransaction(transactionHash, EventEmitter, 'Repeated'));
+        const { transactionHash } = await this.emitter.methods.emitRepeated('0x01').send();
+        await expectEvent.inTransaction(transactionHash, EventEmitter, 'Repeated', { value: '0x01' });
       });
     });
 

@@ -123,23 +123,29 @@ function decodeLogs (logs, emitter, eventName) {
     throw new Error('Unknown contract object');
   }
 
-  let eventABI = abi.filter(x => x.type === 'event' && x.name === eventName);
-  if (eventABI.length === 0) {
+  const eventABIs = abi.filter(x => x.type === 'event' && x.name === eventName);
+  if (eventABIs.length === 0) {
     throw new Error(`No ABI entry for event '${eventName}'`);
-  } else if (eventABI.length > 1) {
-    throw new Error(`Multiple ABI entries for event '${eventName}', only uniquely named events are supported`);
   }
 
-  eventABI = eventABI[0];
-
   // The first topic will equal the hash of the event signature
-  const eventSignature = `${eventName}(${eventABI.inputs.map(input => input.type).join(',')})`;
-  const eventTopic = web3.utils.sha3(eventSignature);
+  const eventSignatures = eventABIs.map(
+    eventABI => `${eventName}(${eventABI.inputs.map(input => input.type).join(',')})`,
+  );
+  const eventTopics = eventSignatures.map(eventSignature => web3.utils.sha3(eventSignature));
 
   // Only decode events of type 'EventName'
   return logs
-    .filter(log => log.topics.length > 0 && log.topics[0] === eventTopic && (!address || log.address === address))
-    .map(log => web3.eth.abi.decodeLog(eventABI.inputs, log.data, log.topics.slice(1)))
+    .filter(
+      log => log.topics.length > 0 &&
+      eventTopics.find(eventTopic => log.topics[0] === eventTopic) &&
+      (!address || log.address === address),
+    )
+    .map(log => web3.eth.abi.decodeLog(
+      eventABIs[eventTopics.findIndex(eventTopic => log.topics[0] === eventTopic)].inputs,
+      log.data,
+      log.topics.slice(1)),
+    )
     .map(decoded => ({ event: eventName, args: decoded }));
 }
 
@@ -191,11 +197,11 @@ expectEvent.notEmitted.inTransaction = notInTransaction;
 expectEvent.not = {};
 expectEvent.not.inConstruction = deprecate(
   notInConstruction,
-  'expectEvent.not is deprecated. Use expectEvent.notEmitted instead.'
+  'expectEvent.not is deprecated. Use expectEvent.notEmitted instead.',
 );
 expectEvent.not.inTransaction = deprecate(
   notInTransaction,
-  'expectEvent.not is deprecated. Use expectEvent.notEmitted instead.'
+  'expectEvent.not is deprecated. Use expectEvent.notEmitted instead.',
 );
 
 module.exports = expectEvent;
