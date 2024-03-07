@@ -133,7 +133,7 @@ function decodeLogs (logs, emitter, eventName) {
   eventABI = eventABI[0];
 
   // The first topic will equal the hash of the event signature
-  const eventSignature = `${eventName}(${eventABI.inputs.map(input => input.type).join(',')})`;
+  const eventSignature = signature(eventName, eventABI.inputs);
   const eventTopic = web3.utils.sha3(eventSignature);
 
   // Only decode events of type 'EventName'
@@ -141,6 +141,12 @@ function decodeLogs (logs, emitter, eventName) {
     .filter(log => log.topics.length > 0 && log.topics[0] === eventTopic && (!address || log.address === address))
     .map(log => web3.eth.abi.decodeLog(eventABI.inputs, log.data, log.topics.slice(1)))
     .map(decoded => ({ event: eventName, args: decoded }));
+}
+
+function signature (name, inputs) {
+  return `${name}(${inputs.map(
+    input => input.type === 'tuple' ? signature('', input.components) : input.type,
+  ).join(',')})`;
 }
 
 function contains (args, key, value) {
@@ -191,11 +197,11 @@ expectEvent.notEmitted.inTransaction = notInTransaction;
 expectEvent.not = {};
 expectEvent.not.inConstruction = deprecate(
   notInConstruction,
-  'expectEvent.not is deprecated. Use expectEvent.notEmitted instead.'
+  'expectEvent.not is deprecated. Use expectEvent.notEmitted instead.',
 );
 expectEvent.not.inTransaction = deprecate(
   notInTransaction,
-  'expectEvent.not is deprecated. Use expectEvent.notEmitted instead.'
+  'expectEvent.not is deprecated. Use expectEvent.notEmitted instead.',
 );
 
 module.exports = expectEvent;
